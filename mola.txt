@@ -1,0 +1,11 @@
+MOLA
+
+-Bootstrap 5
+-FontAwesome6
+-Quicksand
+-Color Palette
+       .bg-gradient-memba {
+	background-color: #4e73df;
+	background-image: linear-gradient(131deg,#184470 10%,#000000 100%);
+       }
+
