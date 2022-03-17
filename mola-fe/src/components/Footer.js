@@ -18,7 +18,7 @@ export default function Footer() {
 	const classes = useStyles();
 	return (
 		<footer className={classes.footer}>
-			<Box sx={{ width: { xs: '80%', sm: 400 }, margin: 'auto', paddingTop: 2, borderTop: '1px solid rgb(223, 225, 230)' }}>
+			<Box sx={{ width: { xs: '80%', sm: 400 }, margin: 'auto', paddingTop: 2 }}>
 				<Box
 					component="img"
 					sx={{

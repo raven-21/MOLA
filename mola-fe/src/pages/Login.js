@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { makeStyles } from '@mui/styles';
-import Layout from '../components/Layout';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -22,7 +21,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 const useStyles = makeStyles(theme => ({
 	loginBtn: {
 		background: 'linear-gradient(45deg, #1565c0 20%, #4e73df 90%)',
-	}
+	},
 }));
 
 export default function Create() {
@@ -60,98 +59,96 @@ export default function Create() {
 	}
 
 	return (
-		<Layout>
-			<Card
-				elevation={0}
+		<Card
+			elevation={0}
+			sx={{
+				width: { xs: '100%', sm: 400, md: 400 },
+				margin: 'auto',
+				boxShadow: { xs: 'none', sm: '0 .5rem 1rem rgba(0,0,0,.15)' },
+				paddingX: { xs: 0, sm: 0, md: 0 },
+				paddingY: { xs: 0, sm: 3, md: 3 },
+				borderRadius: 4,
+			}}>
+			<CardContent
 				sx={{
-					width: { xs: '100%', sm: 400, md: 400 },
-					margin: 'auto',
-					boxShadow: { xs: 'none', sm: '0 .5rem 1rem rgba(0,0,0,.15)' },
-					paddingX: { xs: 0, sm: 1, md: 1 },
-					paddingY: { xs: 0, sm: 4, md: 4 },
-					borderRadius: 5,
+					padding: { xs: '0 30px 0' }
 				}}>
-				<CardContent
-					sx={{
-						padding: { xs: '0 40px 0' }
-					}}>
-					<Typography sx={{ fontWeight: 'bold', fontSize: { xs: 30, md: 30 } }}>
-						Sign in
+				<Typography sx={{ fontWeight: 'bold', fontSize: { xs: 30, md: 30 } }}>
+					Sign in
+				</Typography>
+				<Typography variant='subtitle2' mb={4} sx={{ fontWeight: 'light', fontStyle: 'italic' }}>
+					Loan application made easier
+				</Typography>
+				<form onSubmit={handleSubmit}>
+					<Box mb={4}>
+						<TextField
+							id="input-with-icon-textfield"
+							label="Username"
+							placeholder='Username...'
+							value={values.username}
+							onChange={handleChange('username')}
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position="start">
+										<AccountCircleOutlinedIcon />
+									</InputAdornment>
+								),
+							}}
+							variant="outlined"
+							fullWidth
+							required
+						/>
+					</Box>
+					<Box mb={2}>
+						<TextField
+							type={values.showPassword ? 'text' : 'password'}
+							value={values.password}
+							onChange={handleChange('password')}
+							label="Password"
+							placeholder='Password...'
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position="start">
+										<LockOpenOutlinedIcon />
+									</InputAdornment>
+								),
+								endAdornment: (
+									<InputAdornment position='end'>
+										<IconButton
+											aria-label="toggle password visibility"
+											onClick={handleClickShowPassword}
+											onMouseDown={handleMouseDownPassword}
+											edge="end">
+											{values.showPassword ? <VisibilityOff /> : <Visibility />}
+										</IconButton>
+									</InputAdornment>
+								)
+							}}
+							variant="outlined"
+							fullWidth
+							required
+						/>
+					</Box>
+					<Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 13, marginTop: 3 }}>Forgot
+						<Link href="#" underline="hover" ml={0.5}>
+							password?
+						</Link>
 					</Typography>
-					<Typography variant='subtitle2' mb={4} sx={{ fontWeight: 'light', fontStyle: 'italic' }}>
-						Loan application made easier
-					</Typography>
-					<form onSubmit={handleSubmit}>
-						<Box mb={4}>
-							<TextField
-								id="input-with-icon-textfield"
-								label="Username"
-								placeholder='Username...'
-								value={values.username}
-								onChange={handleChange('username')}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<AccountCircleOutlinedIcon />
-										</InputAdornment>
-									),
-								}}
-								variant="outlined"
-								fullWidth
-								required
-							/>
-						</Box>
-						<Box mb={2}>
-							<TextField
-								type={values.showPassword ? 'text' : 'password'}
-								value={values.password}
-								onChange={handleChange('password')}
-								label="Password"
-								placeholder='Password...'
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<LockOpenOutlinedIcon />
-										</InputAdornment>
-									),
-									endAdornment: (
-										<InputAdornment position='end'>
-											<IconButton
-												aria-label="toggle password visibility"
-												onClick={handleClickShowPassword}
-												onMouseDown={handleMouseDownPassword}
-												edge="end">
-												{values.showPassword ? <VisibilityOff /> : <Visibility />}
-											</IconButton>
-										</InputAdornment>
-									)
-								}}
-								variant="outlined"
-								fullWidth
-								required
-							/>
-						</Box>
-						<Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 13, marginTop: 3 }}>Forgot
-							<Link href="#" underline="hover" ml={0.5}>
-								password?
-							</Link>
-						</Typography>
-						<Box>
-							<Button
-								className={classes.loginBtn}
-								type='submit'
-								variant='contained'
-								color='primary'
-								size='large'
-								sx={{ borderRadius: 7, paddingX: 9, paddingY: 1.7 }}
-								fullWidth
-							>
-								SIGN IN
-							</Button>
-						</Box>
-					</form>
-				</CardContent>
-			</Card>
-		</Layout >
+					<Box>
+						<Button
+							className={classes.loginBtn}
+							type='submit'
+							variant='contained'
+							color='primary'
+							size='large'
+							sx={{ borderRadius: 7, paddingX: 9, paddingY: 1.7 }}
+							fullWidth
+						>
+							SIGN IN
+						</Button>
+					</Box>
+				</form>
+			</CardContent>
+		</Card>
 	)
 }
