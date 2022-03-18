@@ -19,8 +19,10 @@ const useStyles = makeStyles(theme => ({
 	page: {
 		background: 'transparent', //'#4e73df'
 		width: '100%',
-		height: '100%',
-		padding: '10px 0 20px'
+		padding: '10px 0 20px',
+		[theme.breakpoints.up('md')]: {
+			height: '100%',
+		},
 	},
 	logo: {
 		textAlign: 'center',

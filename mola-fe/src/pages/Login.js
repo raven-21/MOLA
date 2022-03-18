@@ -20,7 +20,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const useStyles = makeStyles(theme => ({
 	loginBtn: {
-		background: 'linear-gradient(45deg, #1565c0 20%, #4e73df 90%)',
+		background: 'linear-gradient(45deg, #113050 20%, #184470 90%)',
 	},
 }));
 
