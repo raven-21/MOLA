@@ -9,7 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from '@mui/material/Zoom';
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import LogoMemba from '../assets/memba_logo/memba_m.png';
+import LogoMemba from '../assets/memba_logo/memba_inline.png';
 // ICONS
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -31,11 +31,12 @@ export default function Header() {
 		<AppBar position="fixed" elevation={0} sx={{ bgcolor: '#fff' }}>
 			<Container maxWidth="lg" sx={{ paddingX: { xs: 0, sm: 0, md: '16px' } }}>
 				<Toolbar>
-					<Typography sx={{ flexGrow: 1, color: '#000', marginTop: '8px' }}>
+					<Typography sx={{ flexGrow: 1, color: '#000', margin: 'auto !important' }}>
 						<Box
 							component="img"
 							sx={{
-								width: 60
+								width: 150,
+								marginTop: '10px'
 							}}
 							alt="Memba Logo"
 							src={LogoMemba}
