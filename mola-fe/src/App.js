@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Settings from './pages/Settings';
 import Layout from "./components/Layout";
 
 const theme = createTheme({
@@ -24,6 +25,7 @@ function App() {
 					<Routes>
 						<Route exact path="/" element={<Login />} />
 						<Route path="/home" element={<Home />} />
+						<Route path="/settings" element={<Settings />} />
 					</Routes>
 				</Layout>
 			</Router>

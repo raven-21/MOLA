@@ -31,9 +31,9 @@ export default function Footer() {
 					<Typography
 						display="block"
 						sx={{
-							fontSize: { xs: 12, sm: 12, md: 12 },
+							fontSize: 11,
 							color: '#696969',
-							marginTop: -1
+							marginTop: -2
 						}}>
 						MEMBA<CopyrightIcon sx={{ fontSize: 10 }} /> 2022 &nbsp;&nbsp; Powered by: Solutions Management Systems Inc.
 					</Typography>
