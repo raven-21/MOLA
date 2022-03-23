@@ -29,8 +29,6 @@ export default function Create() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	console.log(location.pathname)
-
 	const [values, setValues] = useState({
 		username: '',
 		password: '',

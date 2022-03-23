@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
 			boxShadow: '0 .2rem .3rem rgba(0,0,0,.15)',
 			marginLeft: '8px !important'
 		}
+	},
+	link: {
+		textDecoration: 'none !important'
 	}
 }));
 
@@ -66,7 +69,7 @@ export default function Header() {
 							src={LogoMembaM}
 						/>
 					</Typography>
-
+					<Box ml={5}></Box>
 					<Tooltip TransitionComponent={Zoom} title="Home" arrow>
 						<Link to="/home">
 							<IconButton className={classes.btnIcon}>
@@ -89,10 +92,12 @@ export default function Header() {
 						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
-						<IconButton className={classes.btnIcon}>
-							{/* <AccountCircleOutlinedIcon /> */}
-							<Avatar sx={{ bgcolor: cyan[700], width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>JL</Avatar>
-						</IconButton>
+						<Link to="/profile" className={classes.link}>
+							<IconButton className={classes.btnIcon}>
+								{/* <AccountCircleOutlinedIcon /> */}
+								<Avatar sx={{ bgcolor: cyan[700], width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>JL</Avatar>
+							</IconButton>
+						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Sign Out" arrow>
 						<Link to="/">

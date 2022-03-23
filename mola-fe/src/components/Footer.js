@@ -10,19 +10,19 @@ const useStyles = makeStyles(theme => ({
 		textAlign: 'center',
 		padding: '40px 0 20px',
 		width: '100%',
-		marginTop: 'auto'
-	}
+		marginTop: 'auto',
+	},
 }));
 
 export default function Footer() {
 	const classes = useStyles();
 	return (
 		<footer className={classes.footer}>
-			<Box sx={{ width: { xs: '80%', sm: 400 }, margin: 'auto', paddingTop: 2 }}>
+			<Box sx={{ width: { xs: '80%', sm: 400 }, margin: 'auto', paddingTop: { xs: 1, sm: 2, md: 2 } }}>
 				<Box
 					component="img"
 					sx={{
-						width: 150,
+						width: { xs: 100, sm: 100, md: 150 },
 					}}
 					alt="Memba Logo"
 					src={LogoMembaFooter}
@@ -31,9 +31,9 @@ export default function Footer() {
 					<Typography
 						display="block"
 						sx={{
-							fontSize: 11,
+							fontSize: { xs: 8, sm: 8, md: 11 },
 							color: '#696969',
-							marginTop: -2
+							marginTop: { xs: -1, sm: -1, md: -2 }
 						}}>
 						MEMBA<CopyrightIcon sx={{ fontSize: 10 }} /> 2022 &nbsp;&nbsp; Powered by: Solutions Management Systems Inc.
 					</Typography>

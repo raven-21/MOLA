@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import Settings from './pages/Settings';
 import Layout from "./components/Layout";
 
@@ -24,8 +25,9 @@ function App() {
 				<Layout>
 					<Routes>
 						<Route exact path="/" element={<Login />} />
-						<Route path="/home" element={<Home />} />
-						<Route path="/settings" element={<Settings />} />
+						<Route exact path="/home" element={<Home />} />
+						<Route exact path="/profile" element={<Profile />} />
+						<Route exact path="/settings" element={<Settings />} />
 					</Routes>
 				</Layout>
 			</Router>
