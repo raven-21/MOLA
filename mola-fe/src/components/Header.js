@@ -70,6 +70,14 @@ export default function Header() {
 						/>
 					</Typography>
 					<Box ml={5}></Box>
+					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
+						<Link to="/profile" className={classes.link}>
+							<IconButton className={classes.btnIcon}>
+								{/* <AccountCircleOutlinedIcon /> */}
+								<Avatar sx={{ bgcolor: cyan[700], width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>JL</Avatar>
+							</IconButton>
+						</Link>
+					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Home" arrow>
 						<Link to="/home">
 							<IconButton className={classes.btnIcon}>
@@ -84,18 +92,11 @@ export default function Header() {
 							</Badge>
 						</IconButton>
 					</Tooltip>
+
 					<Tooltip TransitionComponent={Zoom} title="Settings" arrow>
 						<Link to="/settings">
 							<IconButton className={classes.btnIcon}>
 								<SettingsOutlinedIcon />
-							</IconButton>
-						</Link>
-					</Tooltip>
-					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
-						<Link to="/profile" className={classes.link}>
-							<IconButton className={classes.btnIcon}>
-								{/* <AccountCircleOutlinedIcon /> */}
-								<Avatar sx={{ bgcolor: cyan[700], width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>JL</Avatar>
 							</IconButton>
 						</Link>
 					</Tooltip>

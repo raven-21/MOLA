@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 	pageB: {
 		background: 'transparent', //'#4e73df'
 		width: '100%',
-		padding: '70px 0 20px',
+		paddingTop: '70px',
 		height: 'auto',
 		// [theme.breakpoints.down('sm')]: {
 		// 	height: 'auto',
