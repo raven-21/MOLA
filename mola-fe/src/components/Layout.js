@@ -35,9 +35,9 @@ const useStyles = makeStyles(theme => ({
 		width: '100%',
 		paddingTop: '70px',
 		height: 'auto',
-		// [theme.breakpoints.down('sm')]: {
-		// 	height: 'auto',
-		// },
+		[theme.breakpoints.only('xs')]: {
+			paddingTop: '55px',
+		},
 	},
 	logo: {
 		textAlign: 'center',

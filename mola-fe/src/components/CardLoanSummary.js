@@ -1,24 +1,16 @@
-
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import { grey } from "@mui/material/colors";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
 import CardActionArea from "@mui/material/CardActionArea";
 import Paper from "@mui/material/Paper";
 import Switch from "@mui/material/Switch";
 
-import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
-import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 
 const useStyles = makeStyles(theme => ({
 
