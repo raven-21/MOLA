@@ -7,7 +7,6 @@ import Grid from "@mui/material/Grid";
 import CardLoanStatus from "../components/CardLoanStatus";
 import CardLoanSummary from "../components/CardLoanSummary";
 import CardLoanApply from "../components/CardLoanApply";
-import CardSavings from "../components/CardSavings"
 
 
 const useStyles = makeStyles(theme => ({
@@ -31,14 +30,7 @@ export default function Home() {
 		<div className={classes.root}>
 			<Container maxWidth="lg">
 				<div className={classes.content}>
-					<Grid container spacing={2}>
-						<Grid item xs={12} sm={12} md={6}>
-							<CardSavings />
-						</Grid>
-						<Grid item xs={12} sm={12} md={6}>
-							<CardLoanApply />
-						</Grid>
-					</Grid>
+					<CardLoanApply />
 					<br />
 
 					{/* Loan Status List */}

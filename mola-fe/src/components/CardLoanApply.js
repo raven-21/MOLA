@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { makeStyles } from "@mui/styles";
-import { useTheme } from '@mui/material/styles';
 import { grey } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -9,19 +8,15 @@ import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Avatar from "@mui/material/Avatar";
+
 
 import LoanSvg from "../assets/svg/undraw_online_payments_re_y8f2.svg";
+import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
+
+// Custom Components
+import DialogLoanApply from "./DialogLoanApply"
+
 
 const useStyles = makeStyles(theme => ({
 
@@ -30,6 +25,12 @@ const useStyles = makeStyles(theme => ({
 		borderRadius: '12px !important',
 		minWidth: '300px',
 		height: '100%',
+	},
+	card: {
+		background: 'linear-gradient(45deg, #113050 10%, #184470 90%)',
+		borderRadius: '12px !important',
+		minWidth: '300px',
+		height: '100%'
 	},
 	title: {
 		fontWeight: 'bold !important',
@@ -41,108 +42,109 @@ const useStyles = makeStyles(theme => ({
 export default function CardLoanApply() {
 	const classes = useStyles();
 
-	const [open, setOpen] = useState(false);
-	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-	const handleClose = () => {
-		setOpen(false);
-	};
-	//Loan Product
-	const [product, setProduct] = useState('');
-	const handleChangeProduct = (event) => {
-		setProduct(event.target.value);
-	};
-	//Interest Type
-	const [interestType, setInterestType] = useState('');
-	const handleChange = (event) => {
-		setInterestType(event.target.value);
+	const [openDialog, setOpenDialog] = useState(false);
+
+	const handleDialogOpen = () => {
+		setOpenDialog(true);
 	};
 
 	return (
 		<div>
-			<Card className={classes.cardApply} elevation={0}>
-				<CardContent sx={{
-					paddingX: { xs: '25px', sm: '25px', md: '30px' },
-					paddingY: { xs: '20px', sm: '20px', md: '30px' },
-				}}>
-					<Grid container>
-						<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
-							<div>
-								<Box mb={2}>
-									<Typography
+			<Grid container spacing={2}>
+				<Grid item xs={12} sm={12} md={6} >
+					<Card className={classes.card} elevation={0}>
+						<CardContent
+							sx={{
+								paddingX: { xs: '25px', sm: '25px', md: '30px' },
+								paddingY: { xs: '20px', sm: '20px', md: '30px' },
+								color: '#fff',
+							}}>
+							<Grid container spacing={3}>
+								<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center' }}>
+									<Avatar
 										sx={{
-											fontSize: { xs: 14, sm: 16, md: 18 },
-											fontWeight: 700,
-											color: grey[400],
-											marginBottom: 1
+											bgcolor: '#fff',
+											color: 'rgba(0, 0, 0, 0.54)',
+											width: { xs: 50, sm: 60, md: 60 },
+											height: { xs: 50, sm: 60, md: 60 },
 										}}>
-										Loan Application
-									</Typography>
-									<Typography
-										sx={{
-											fontSize: { xs: 10, sm: 12, md: 14 }
-										}}>
-										Submit an application for a loan without visiting the branch!
-									</Typography>
-								</Box>
-								<Box>
-									<Button variant="contained" onClick={handleClickOpen} sx={{ borderRadius: '25px' }}>
-										<Typography variant='overline'
+										<SavingsOutlinedIcon sx={{ fontSize: { xs: 30, sm: 35, md: 35 } }} />
+									</Avatar>
+									<Box ml={2}>
+										<Typography
 											sx={{
-												marginX: 2,
-												marginY: -0.5,
-												letterSpacing: 1,
-												textTransform: 'none'
+												fontSize: { xs: 15, sm: 15, md: 18, },
+												fontWeight: 700
 											}}>
-											Apply
+											Jeovanne Lugo
 										</Typography>
-									</Button>
+										<Typography
+											sx={{
+												fontSize: { xs: 15, sm: 15, md: 18, }
+											}}>
+											Total Savings
+										</Typography>
+									</Box>
+								</Grid>
+								<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+									<Typography variant="overline">**** **** **2906</Typography>
+								</Grid>
+								<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+									<div>
+										<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+											<Typography
+												sx={{
+													fontSize: { xs: 12, sm: 14, md: 16 }
+												}}>
+												Available Balance
+											</Typography>
+										</Box>
 
-									<Dialog fullScreen={fullScreen} open={open} onClose={handleClose} maxWidth="md" fullWidth>
-										<DialogTitle>Loan Application</DialogTitle>
-										<DialogContent>
-											<Grid container spacing={2} direction={"row"}>
-												<Grid item xs={12} sm={6} md={6} lg={6} sx={{ width: '50%' }}>
-													<FormControl fullWidth margin="dense" size="small">
-														<InputLabel>Loan Product</InputLabel>
-														<Select value={product} label="Loan Product" onChange={handleChangeProduct}>
-															<MenuItem value={10}>Long Term</MenuItem>
-															<MenuItem value={20}>Short Term</MenuItem>
-															<MenuItem value={30}>Special Loan</MenuItem>
-														</Select>
-													</FormControl>
-												</Grid>
-												<Grid item xs={12} sm={6} md={6} lg={6} sx={{ width: '50%' }}>
-													<FormControl fullWidth margin="dense" size="small">
-														<InputLabel>Interest Type</InputLabel>
-														<Select value={interestType} label="Interest Type" onChange={handleChange}>
-															<MenuItem value={10}>Diminishing</MenuItem>
-															<MenuItem value={20}>Without Interest</MenuItem>
-															<MenuItem value={30}>With Interest</MenuItem>
-														</Select>
-													</FormControl>
-												</Grid>
-											</Grid>
-											{/* <DialogContentText>
-												Select your loan amount
-											</DialogContentText>
-											<Typography variant="overline">You can loan up to 200,000 Pesos</Typography>
-											<TextField
-												variant="outlined"
-												margin="dense"
-												label="Enter Loan Amount"
-												type="number"
-												size="small"
-												fullWidth
-												required
-												autoFocus
-											/> */}
-										</DialogContent>
-										<DialogActions sx={{ padding: '20px' }}>
-											<Button onClick={handleClose} sx={{ borderRadius: '25px' }}>
+										<Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
+											<Typography sx={{ marginTop: '2px', fontWeight: 'bold' }}>PHP</Typography>
+											<Typography
+												sx={{
+													marginLeft: 1,
+													fontWeight: 'bold',
+													fontSize: { xs: 21, sm: 21, md: 21 }
+												}}>
+												2,000.00
+											</Typography>
+										</Box>
+									</div>
+								</Grid>
+							</Grid>
+						</CardContent>
+					</Card>
+				</Grid>
+				<Grid item xs={12} sm={12} md={6}>
+					<Card className={classes.cardApply} elevation={0}>
+						<CardContent sx={{
+							paddingX: { xs: '25px', sm: '25px', md: '30px' },
+							paddingY: { xs: '20px', sm: '20px', md: '30px' },
+						}}>
+							<Grid container>
+								<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+									<div>
+										<Box mb={2}>
+											<Typography
+												sx={{
+													fontSize: { xs: 14, sm: 16, md: 18 },
+													fontWeight: 700,
+													color: grey[400],
+													marginBottom: 1
+												}}>
+												Loan Application
+											</Typography>
+											<Typography
+												sx={{
+													fontSize: { xs: 10, sm: 12, md: 14 }
+												}}>
+												Submit an application for a loan without visiting the branch!
+											</Typography>
+										</Box>
+										<Box>
+											<Button variant="contained" onClick={handleDialogOpen} sx={{ borderRadius: '25px' }}>
 												<Typography variant='overline'
 													sx={{
 														marginX: 2,
@@ -150,39 +152,30 @@ export default function CardLoanApply() {
 														letterSpacing: 1,
 														textTransform: 'none'
 													}}>
-													Cancel
+													Apply
 												</Typography>
 											</Button>
-											<Button variant="contained" onClick={handleClose} sx={{ borderRadius: '25px' }}>
-												<Typography variant='overline'
-													sx={{
-														marginX: 2,
-														marginY: -0.5,
-														letterSpacing: 1,
-														textTransform: 'none'
-													}}>
-													Submit
-												</Typography>
-											</Button>
-										</DialogActions>
-									</Dialog>
+											{/* Dialog/Modal */}
+											<DialogLoanApply openDialog={openDialog} setOpenDialog={setOpenDialog} />
+										</Box>
+									</div>
+								</Grid>
+								<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+									<Box
+										component="img"
+										sx={{
+											width: { xs: 150, sm: 200, md: 200 },
+										}}
+										alt="Memba Logo"
+										src={LoanSvg}
+									/>
+								</Grid>
+							</Grid>
+						</CardContent>
+					</Card>
+				</Grid>
+			</Grid>
 
-								</Box>
-							</div>
-						</Grid>
-						<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-							<Box
-								component="img"
-								sx={{
-									width: { xs: 150, sm: 200, md: 200 },
-								}}
-								alt="Memba Logo"
-								src={LoanSvg}
-							/>
-						</Grid>
-					</Grid>
-				</CardContent>
-			</Card>
 		</div>
 	);
 }
