@@ -32,7 +32,6 @@ export default function Home() {
 				<div className={classes.content}>
 					<CardLoanApply />
 					<br />
-
 					{/* Loan Status List */}
 					<CardLoanStatus />
 
