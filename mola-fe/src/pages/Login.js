@@ -62,10 +62,10 @@ export default function Create() {
 			sx={{
 				width: { xs: '100%', sm: 400, md: 400 },
 				margin: 'auto',
-				boxShadow: { xs: 'none', sm: '0 .5rem 1rem rgba(0,0,0,.15)' },
+				boxShadow: { xs: 'none', sm: '0 .4rem .5rem rgba(0,0,0,.10)' },
 				paddingX: { xs: 0, sm: 0, md: 0 },
 				paddingY: { xs: 0, sm: 3, md: 3 },
-				borderRadius: 4,
+				borderRadius: 3,
 			}}>
 			<CardContent
 				sx={{
@@ -77,7 +77,7 @@ export default function Create() {
 				<Typography variant='subtitle2' mb={4} sx={{ fontWeight: 'light', fontStyle: 'italic' }}>
 					Loan application made easier
 				</Typography>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handleSubmit} autoComplete="off">
 					<Box mb={4}>
 						<TextField
 							id="input-with-icon-textfield"

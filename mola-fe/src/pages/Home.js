@@ -3,10 +3,10 @@ import { makeStyles } from "@mui/styles";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
-// Custom Components
-import CardLoanStatus from "../components/CardLoanStatus";
-import CardLoanSummary from "../components/CardLoanSummary";
-import CardLoanApply from "../components/CardLoanApply";
+// Custom Home Components
+import CardLoanStatus from "../components/HomeComponents/CardLoanStatus";
+import CardLoanSummary from "../components/HomeComponents/CardLoanSummary";
+import CardLoanApply from "../components/HomeComponents/CardLoanApply";
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 		[theme.breakpoints.down('sm')]: {
 			padding: '24px 0'
 		}
-	}
+	},
 }));
 
 export default function Home() {

@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Settings from './pages/Settings';
 import Layout from "./components/Layout";
+import LoanApply from './pages/LoanApply';
 
 const theme = createTheme({
 	typography: {
@@ -28,6 +29,7 @@ function App() {
 						<Route exact path="/home" element={<Home />} />
 						<Route exact path="/profile" element={<Profile />} />
 						<Route exact path="/settings" element={<Settings />} />
+						<Route exact path="/loan_apply" element={<LoanApply />} />
 					</Routes>
 				</Layout>
 			</Router>

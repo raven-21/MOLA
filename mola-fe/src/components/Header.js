@@ -39,7 +39,7 @@ export default function Header() {
 
 	return (
 		<AppBar position="fixed" elevation={0} sx={{ bgcolor: '#fff' }}>
-			<Container maxWidth="lg" sx={{ paddingX: { xs: 0, sm: 0, md: '16px' }, paddingBottom: '10px', overflowX: 'auto' }}>
+			<Container maxWidth="xl" sx={{ paddingX: { xs: 0, sm: 0, md: '16px' }, paddingBottom: '10px', overflowX: 'auto' }}>
 				<Toolbar>
 					<Typography sx={{ flexGrow: 1, color: '#000', margin: 'auto !important' }}>
 						<Box
