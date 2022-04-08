@@ -5,13 +5,14 @@ import { grey, red } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
 
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-
+import TextField from "@mui/material/TextField";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -20,7 +21,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from '@mui/material/FormLabel';
 //react hook form
 import { useForm } from "react-hook-form";
-import useFetch from "../../hooks/useFetch";
+import useLoanApp from "../../hooks/useLoanApp";
 
 const useStyles = makeStyles(theme => ({
 	cardContent: {
@@ -43,13 +44,16 @@ const useStyles = makeStyles(theme => ({
 export default function LoanAppForm() {
 	const classes = useStyles();
 
-	const { data: loanProducts } = useFetch('http://localhost:5000/loanApps/loan_products');
-	const { data: loanPurposes } = useFetch('http://localhost:5000/loanApps/loan_purposes');
-	const { data: interestTypes } = useFetch('http://localhost:5000/loanApps/interest_types');
+	const { register, handleSubmit, watch, formState: { errors } } = useForm();
+	const watchProduct = watch("product");
 
-	const { register, handleSubmit, formState: { errors } } = useForm();
+	const { loanProducts, loanPurposes, interestTypes, amountEnable, maxAmount } = useLoanApp(watchProduct);
 
 	const onSubmit = (data) => {
+		console.log(data)
+	}
+
+	const handleClickNext = (data) => {
 		console.log(data)
 	}
 
@@ -155,7 +159,49 @@ export default function LoanAppForm() {
 						</FormControl>
 					</Paper>
 				</Box>
-				<Button variant="contained" type="submit" sx={{ textTransform: 'none' }}>Submit</Button>
+				<Box mb={2}>
+					<Paper variant="outlined" className={classes.cardContent} sx={errors.amount ? { borderColor: red[700] } : null}>
+						<FormControl variant="standard" margin="dense" size="small" error={!!errors?.amount} fullWidth >
+							<FormLabel>
+								<Typography className={classes.formLabel} sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
+									Loan amount
+									<span style={{ color: red[700] }}> *</span>
+								</Typography>
+							</FormLabel>
+							<TextField
+								{...register("amount", {
+									required: 'Please specify an amount!',
+									min: {
+										value: 3000,
+										message: 'Minimum loan amount is 3,000!'
+									},
+									max: {
+										value: watchProduct === 'LT' ? 5000000 : watchProduct === 'ST' ? 500000 : watchProduct === 'SL' ? 500000 : 0,
+										message: 'Loan amount must not exceed ' + maxAmount
+									}
+								})}
+								helperText={errors.product ? "Please choose a loan product" : errors.amount ? errors.amount.message : null}
+								error={!!errors?.amount}
+								placeholder="Enter amount..."
+								variant="standard"
+								margin="dense"
+								type="number"
+								sx={{ width: { xs: '100%', md: '50%' } }}
+								InputProps={{
+									readOnly: !amountEnable ? true : false,
+									startAdornment: (
+										<InputAdornment position='start'>
+											<Typography sx={{ fontSize: 20 }}> &#8369;</Typography>
+										</InputAdornment>
+									),
+								}}
+							/>
+						</FormControl>
+					</Paper>
+				</Box>
+				<Button variant="contained" type="submit" sx={{ textTransform: 'none', borderRadius: '7px' }}>Submit</Button>
+				&nbsp;&nbsp;
+				<Button variant="contained" color="secondary" onClick={() => handleSubmit(handleClickNext())} sx={{ textTransform: 'none', borderRadius: '7px' }}>Next</Button>
 			</form>
 		</div >
 	);

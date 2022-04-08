@@ -89,8 +89,8 @@ export default function LoanApplyDialog(props) {
 									<InputLabel>Interest Type</InputLabel>
 									<Select defaultValue={''} label="Interest Type">
 										<MenuItem value={'Diminishing'}>Diminishing</MenuItem>
-										<MenuItem value={'w/o'}>Without Interest</MenuItem>
-										<MenuItem value={'w'}>With Interest</MenuItem>
+										<MenuItem value={'w/o'}>Without Interesting</MenuItem>
+										<MenuItem value={'w'}>With Interesting</MenuItem>
 									</Select>
 									<FormHelperText>{''}</FormHelperText>
 								</FormControl>
