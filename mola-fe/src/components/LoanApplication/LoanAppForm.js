@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import NumberFormat from "react-number-format";
 import { makeStyles } from "@mui/styles";
 import { grey, red } from "@mui/material/colors";
 //Material UI
@@ -6,12 +7,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
-
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -19,8 +15,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from '@mui/material/FormLabel';
-//react hook form
+//react-hook-form
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+//Custom hooks
 import useLoanApp from "../../hooks/useLoanApp";
 
 const useStyles = makeStyles(theme => ({
@@ -41,21 +40,25 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
+
+
 export default function LoanAppForm() {
 	const classes = useStyles();
 
-	const { register, handleSubmit, watch, formState: { errors } } = useForm();
-	const watchProduct = watch("product");
+	const { loanProducts, loanPurposes, interestTypes, schema } = useLoanApp();
 
-	const { loanProducts, loanPurposes, interestTypes, amountEnable, maxAmount } = useLoanApp(watchProduct);
+	const { register, handleSubmit, watch, formState: { errors } } = useForm({
+		resolver: yupResolver(schema)
+	});
 
-	const onSubmit = (data) => {
-		console.log(data)
+	const [productValue, setProductValue] = useState("");
+
+	const handleChangeProduct = (e) => {
+		const value = e.target.value;
+		setProductValue(value)
 	}
 
-	const handleClickNext = (data) => {
-		console.log(data)
-	}
+	const onSubmit = data => console.log(data)
 
 	return (
 		<div>
@@ -81,24 +84,40 @@ export default function LoanAppForm() {
 				</Paper>
 			</Box>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+				{/* Product */}
 				<Box mb={2}>
-					<Paper variant="outlined" className={classes.cardContent} sx={errors.product ? { borderColor: red[700] } : null}>
-						<FormControl variant="standard" margin="dense" size="small" error={!!errors?.product} fullWidth >
+					<Paper
+						variant="outlined"
+						className={classes.cardContent}
+						sx={errors.product ? { borderColor: red[700] } : null}>
+						<FormControl
+							variant="standard"
+							margin="dense"
+							size="small"
+							error={!!errors?.product}
+							fullWidth >
 							<FormLabel>
-								<Typography className={classes.formLabel} sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
+								<Typography
+									className={classes.formLabel}
+									sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
 									Choose your loan product
 									<span style={{ color: red[700] }}> *</span>
 								</Typography>
 							</FormLabel>
 							{loanProducts &&
-								<RadioGroup defaultValue={""} >
+								<RadioGroup>
 									{loanProducts.map((loanProduct) => (
 										<FormControlLabel
+											{...register("product")}
+											onChange={handleChangeProduct}
 											key={loanProduct.id}
 											value={loanProduct.product_code}
 											control={<Radio size="small" />}
-											label={<Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>{loanProduct.product_name}</Typography>}
-											{...register("product", { required: "Required!" })}
+											label={
+												<Typography
+													sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
+													{loanProduct.product_name}
+												</Typography>}
 										/>
 									))}
 								</RadioGroup>
@@ -107,24 +126,39 @@ export default function LoanAppForm() {
 						</FormControl>
 					</Paper>
 				</Box>
+				{/* Purpose */}
 				<Box mb={2}>
-					<Paper variant="outlined" className={classes.cardContent} sx={errors.purpose ? { borderColor: red[700] } : null}>
-						<FormControl variant="standard" margin="dense" size="small" error={!!errors?.purpose} fullWidth >
+					<Paper
+						variant="outlined"
+						className={classes.cardContent}
+						sx={errors.purpose ? { borderColor: red[700] } : null}>
+						<FormControl
+							variant="standard"
+							margin="dense"
+							size="small"
+							error={!!errors?.purpose}
+							fullWidth >
 							<FormLabel>
-								<Typography className={classes.formLabel} sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
+								<Typography
+									className={classes.formLabel}
+									sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
 									Purpose of your loan
 									<span style={{ color: red[700] }}> *</span>
 								</Typography>
 							</FormLabel>
 							{loanPurposes &&
-								<RadioGroup defaultValue={""} >
+								<RadioGroup>
 									{loanPurposes.map((loanPurpose) => (
 										<FormControlLabel
+											{...register("purpose")}
 											key={loanPurpose.id}
 											value={loanPurpose.purpose}
 											control={<Radio size="small" />}
-											label={<Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>{loanPurpose.purpose}</Typography>}
-											{...register("purpose", { required: "Required!" })}
+											label={
+												<Typography
+													sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
+													{loanPurpose.purpose}
+												</Typography>}
 										/>
 									))}
 								</RadioGroup>
@@ -133,24 +167,49 @@ export default function LoanAppForm() {
 						</FormControl>
 					</Paper>
 				</Box>
+				{/* Interest Type */}
 				<Box mb={2}>
-					<Paper variant="outlined" className={classes.cardContent} sx={errors.interestType ? { borderColor: red[700] } : null}>
-						<FormControl variant="standard" margin="dense" size="small" error={!!errors?.interestType} fullWidth >
+					<Paper
+						variant="outlined"
+						className={classes.cardContent}
+						sx={errors.interestType ? { borderColor: red[700] } : null}>
+						<FormControl
+							variant="standard"
+							margin="dense"
+							size="small"
+							error={!!errors?.interestType}
+							fullWidth >
 							<FormLabel>
-								<Typography className={classes.formLabel} sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
+								<Typography
+									className={classes.formLabel}
+									sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
 									Choose interest type
 									<span style={{ color: red[700] }}> *</span>
 								</Typography>
 							</FormLabel>
 							{interestTypes &&
-								<RadioGroup defaultValue={""} >
-									{interestTypes.map((interestType) => (
+								<RadioGroup>
+									{interestTypes.filter((interestType) => {
+										if (productValue === "") {
+											return interestType
+										}
+										else if (productValue === 'LT') {
+											return interestType.interest_type === 'Diminishing'
+										}
+										else {
+											return interestType.interest_type !== 'Diminishing'
+										}
+									}).map((interestType) => (
 										<FormControlLabel
+											{...register("interestType")}
 											key={interestType.id}
 											value={interestType.interest_type}
 											control={<Radio size="small" />}
-											label={<Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>{interestType.interest_type}</Typography>}
-											{...register("interestType", { required: "Required!" })}
+											label={
+												<Typography
+													sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
+													{interestType.interest_type}
+												</Typography>}
 										/>
 									))}
 								</RadioGroup>
@@ -159,27 +218,27 @@ export default function LoanAppForm() {
 						</FormControl>
 					</Paper>
 				</Box>
+				{/* Amount */}
 				<Box mb={2}>
-					<Paper variant="outlined" className={classes.cardContent} sx={errors.amount ? { borderColor: red[700] } : null}>
-						<FormControl variant="standard" margin="dense" size="small" error={!!errors?.amount} fullWidth >
+					<Paper
+						variant="outlined"
+						className={classes.cardContent}
+						sx={errors.amount ? { borderColor: red[700] } : null}>
+						<FormControl
+							margin="dense"
+							size="small"
+							error={!!errors?.amount}
+							fullWidth >
 							<FormLabel>
-								<Typography className={classes.formLabel} sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
+								<Typography
+									className={classes.formLabel}
+									sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
 									Loan amount
 									<span style={{ color: red[700] }}> *</span>
 								</Typography>
 							</FormLabel>
 							<TextField
-								{...register("amount", {
-									required: 'Please specify an amount!',
-									min: {
-										value: 3000,
-										message: 'Minimum loan amount is 3,000!'
-									},
-									max: {
-										value: watchProduct === 'LT' ? 5000000 : watchProduct === 'ST' ? 500000 : watchProduct === 'SL' ? 500000 : 0,
-										message: 'Loan amount must not exceed ' + maxAmount
-									}
-								})}
+								{...register("amount")}
 								helperText={errors.product ? "Please choose a loan product" : errors.amount ? errors.amount.message : null}
 								error={!!errors?.amount}
 								placeholder="Enter amount..."
@@ -188,7 +247,7 @@ export default function LoanAppForm() {
 								type="number"
 								sx={{ width: { xs: '100%', md: '50%' } }}
 								InputProps={{
-									readOnly: !amountEnable ? true : false,
+									readOnly: watch("product") === null ? true : false,
 									startAdornment: (
 										<InputAdornment position='start'>
 											<Typography sx={{ fontSize: 20 }}> &#8369;</Typography>
@@ -199,9 +258,12 @@ export default function LoanAppForm() {
 						</FormControl>
 					</Paper>
 				</Box>
-				<Button variant="contained" type="submit" sx={{ textTransform: 'none', borderRadius: '7px' }}>Submit</Button>
-				&nbsp;&nbsp;
-				<Button variant="contained" color="secondary" onClick={() => handleSubmit(handleClickNext())} sx={{ textTransform: 'none', borderRadius: '7px' }}>Next</Button>
+				<Button
+					variant="contained"
+					type="submit"
+					sx={{ textTransform: 'none', borderRadius: '7px' }}>
+					Submit
+				</Button>
 			</form>
 		</div >
 	);

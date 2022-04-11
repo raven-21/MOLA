@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "./useFetch";
+import * as yup from "yup";
 
 const useLoanApp = (watchProduct) => {
 
@@ -7,21 +8,47 @@ const useLoanApp = (watchProduct) => {
 	const { data: loanPurposes } = useFetch('http://localhost:5000/loanApps/loan_purposes');
 	const { data: interestTypes } = useFetch('http://localhost:5000/loanApps/interest_types');
 
-	const [amountEnable, setAmountEnable] = useState(false);
-	const [maxAmount, setMaxAmount] = useState('');
+	const schema = yup.object({
+		product: yup.string().required("Required!").nullable(),
+		purpose: yup.string().required("Required!").nullable(),
+		interestType: yup.string().required("Required!").nullable(),
+		amount: yup.number().positive().integer().required().typeError('Amount must be a number')
+			.when(
+				'product', {
+				is: 'LT',
+				then: yup.number()
+					.positive()
+					.integer()
+					.min(3000, "Minimum amount is 3,000")
+					.max(5000000, "Loan amount must not exceed 5,000,000")
+					.required("Required!")
+					.typeError('Amount must be a number')
+			})
+			.when(
+				'product', {
+				is: 'ST',
+				then: yup.number()
+					.positive()
+					.integer()
+					.min(3000, "Minimum amount is 3,000")
+					.max(500000, "Loan amount must not exceed 500,000")
+					.required("Required!")
+					.typeError('Amount must be a number')
+			})
+			.when(
+				'product', {
+				is: 'SL',
+				then: yup.number()
+					.positive()
+					.integer()
+					.min(3000, "Minimum amount is 3,000")
+					.max(500000, "Loan amount must not exceed 500,000")
+					.required("Required!")
+					.typeError('Amount must be a number')
+			}),
+	}).required();
 
-	useEffect(() => {
-		if (watchProduct) {
-			setAmountEnable(true);
-			if (watchProduct === 'LT') setMaxAmount('5,000,000')
-			if (watchProduct === 'ST') setMaxAmount('500,000')
-			if (watchProduct === 'SL') setMaxAmount('500,000')
-		} else {
-			setAmountEnable(false);
-		}
-	}, [watchProduct])
-
-	return { loanProducts, loanPurposes, interestTypes, amountEnable, maxAmount };
+	return { loanProducts, loanPurposes, interestTypes, schema };
 }
 
 export default useLoanApp;
