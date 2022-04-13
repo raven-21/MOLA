@@ -8,11 +8,77 @@ const useLoanApp = (watchProduct) => {
 	const { data: loanPurposes } = useFetch('http://localhost:5000/loanApps/loan_purposes');
 	const { data: interestTypes } = useFetch('http://localhost:5000/loanApps/interest_types');
 
-	const schema = yup.object({
-		product: yup.string().required("Required!").nullable(),
-		purpose: yup.string().required("Required!").nullable(),
-		interestType: yup.string().required("Required!").nullable(),
-		amount: yup.number().positive().integer().required().typeError('Amount must be a number')
+	const schema2 = yup.object().shape({
+		product: yup
+			.string()
+			.required("Required!"),
+		purpose: yup
+			.string()
+			.required("Required!"),
+		amount: yup
+			.number()
+			.transform((o, v) => parseFloat(v.replace(/,/g, '')))
+			.positive("Amount must be a positive number")
+			.required("Specify amount!")
+			.typeError('Required! Amount must be a number')
+			.min(3000, "Minimum amount is 3,000")
+			.when(
+				'product', {
+				is: 'LT',
+				then: yup
+					.number()
+					.transform((o, v) => parseFloat(v.replace(/,/g, '')))
+					.positive("Amount must be a positive number")
+					.required("Specify amount!")
+					.typeError('Required! Amount must be a number')
+					.min(3000, "Minimum amount is 3,000")
+					.max(5000000, "Loan amount must not exceed 5,000,000")
+			})
+			.when(
+				'product', {
+				is: 'ST',
+				then: yup
+					.number()
+					.transform((o, v) => parseFloat(v.replace(/,/g, '')))
+					.positive("Amount must be a positive number")
+					.required("Specify amount!")
+					.typeError('Required! Amount must be a number')
+					.min(3000, "Minimum amount is 3,000")
+					.max(500000, "Loan amount must not exceed 500,000")
+			})
+			.when(
+				'product', {
+				is: 'SL',
+				then: yup
+					.number()
+					.transform((o, v) => parseFloat(v.replace(/,/g, '')))
+					.positive("Amount must be a positive number")
+					.required("Specify amount!")
+					.typeError('Required! Amount must be a number')
+					.min(3000, "Minimum amount is 3,000")
+					.max(500000, "Loan amount must not exceed 500,000")
+			})
+	});
+
+	const schema = yup.object().shape({
+		product: yup
+			.string()
+			.required("Required!")
+			.nullable(),
+		purpose: yup
+			.string()
+			.required("Required!")
+			.nullable(),
+		interestType: yup
+			.string()
+			.required("Required!")
+			.nullable(),
+		amount: yup
+			.number()
+			.positive()
+			.integer()
+			.required()
+			.typeError('Amount must be a number')
 			.when(
 				'product', {
 				is: 'LT',
@@ -48,7 +114,7 @@ const useLoanApp = (watchProduct) => {
 			}),
 	}).required();
 
-	return { loanProducts, loanPurposes, interestTypes, schema };
+	return { loanProducts, loanPurposes, interestTypes, schema2 };
 }
 
 export default useLoanApp;
