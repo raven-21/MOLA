@@ -1,21 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { red } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from "@mui/material/FormHelperText";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 import { Controller } from "react-hook-form";
-import useFetch from "../../../hooks/useFetch";
 import useStyles from "./useStyles";
 
-export const FormRadioProducts = ({ control, name, label }) => {
+export const FormSelectTerm = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
-	const { data: loanProducts } = useFetch('http://localhost:5000/loanApps/loan_products');
+
+	const [productLoans, setProductLoans] = useState([]);
+
+	const termRange = (min, max) => {
+		let arr = [];
+		for (let i = min; i <= max; i++)
+			arr.push(i);
+		return arr;
+	}
+
+	useEffect(() => {
+		if (product === "ST") {
+			setProductLoans(termRange(3, 12))
+		}
+		else {
+			setProductLoans(termRange(3, 36))
+		}
+	}, [product])
+
+
 
 	return (
 		<Controller
@@ -29,7 +47,7 @@ export const FormRadioProducts = ({ control, name, label }) => {
 					variant="outlined"
 					className={classes.cardContent}
 					sx={error ? { borderColor: red[700] } : null}>
-					<FormLabel>
+					<FormLabel htmlFor="term">
 						<Typography
 							className={classes.formLabel}
 							sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
@@ -38,28 +56,17 @@ export const FormRadioProducts = ({ control, name, label }) => {
 						</Typography>
 					</FormLabel>
 					<FormControl
+						variant="standard"
 						margin="dense"
 						size="small"
 						error={!!error}
-						fullWidth >
-
-						{loanProducts &&
-							<RadioGroup value={value}>
-								{loanProducts.map((loanProduct) => (
-									<FormControlLabel
-										onChange={onChange}
-										key={loanProduct.id}
-										value={loanProduct.product_code}
-										control={<Radio size="small" />}
-										label={
-											<Typography
-												sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-												{loanProduct.product_name}
-											</Typography>}
-									/>
-								))}
-							</RadioGroup>
-						}
+						sx={{ width: { xs: '100%', md: '50%' } }}>
+						<InputLabel>Your answer</InputLabel>
+						<Select id="term" value={value} onChange={onChange} placeholder="Term">
+							{productLoans.map((productLoan) => (
+								<MenuItem key={productLoan} value={productLoan}>{productLoan}</MenuItem>
+							))}
+						</Select>
 						<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
 
 					</FormControl>
@@ -68,4 +75,3 @@ export const FormRadioProducts = ({ control, name, label }) => {
 		/>
 	)
 }
-

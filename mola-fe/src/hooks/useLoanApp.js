@@ -15,12 +15,15 @@ const useLoanApp = (watchProduct) => {
 		purpose: yup
 			.string()
 			.required("Required!"),
+		term: yup
+			.string()
+			.required("Required!"),
 		amount: yup
 			.number()
 			.transform((o, v) => parseFloat(v.replace(/,/g, '')))
 			.positive("Amount must be a positive number")
 			.required("Specify amount!")
-			.typeError('Required! Amount must be a number')
+			.typeError('Required!')
 			.min(3000, "Minimum amount is 3,000")
 			.when(
 				'product', {
@@ -30,7 +33,7 @@ const useLoanApp = (watchProduct) => {
 					.transform((o, v) => parseFloat(v.replace(/,/g, '')))
 					.positive("Amount must be a positive number")
 					.required("Specify amount!")
-					.typeError('Required! Amount must be a number')
+					.typeError('Required!')
 					.min(3000, "Minimum amount is 3,000")
 					.max(5000000, "Loan amount must not exceed 5,000,000")
 			})
@@ -42,7 +45,7 @@ const useLoanApp = (watchProduct) => {
 					.transform((o, v) => parseFloat(v.replace(/,/g, '')))
 					.positive("Amount must be a positive number")
 					.required("Specify amount!")
-					.typeError('Required! Amount must be a number')
+					.typeError('Required!')
 					.min(3000, "Minimum amount is 3,000")
 					.max(500000, "Loan amount must not exceed 500,000")
 			})
@@ -54,7 +57,7 @@ const useLoanApp = (watchProduct) => {
 					.transform((o, v) => parseFloat(v.replace(/,/g, '')))
 					.positive("Amount must be a positive number")
 					.required("Specify amount!")
-					.typeError('Required! Amount must be a number')
+					.typeError('Required!')
 					.min(3000, "Minimum amount is 3,000")
 					.max(500000, "Loan amount must not exceed 500,000")
 			})

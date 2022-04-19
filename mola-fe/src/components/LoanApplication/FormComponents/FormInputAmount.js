@@ -11,7 +11,7 @@ import { Controller } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInput = ({ control, name, label, product }) => {
+export const FormInputAmount = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
 
 	return (
@@ -26,19 +26,20 @@ export const FormInput = ({ control, name, label, product }) => {
 					variant="outlined"
 					className={classes.cardContent}
 					sx={error ? { borderColor: red[700] } : null}>
+					<FormLabel htmlFor="amount">
+						<Typography
+							className={classes.formLabel}
+							sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
+							{label}
+							<span style={{ color: red[700] }}> *</span>
+						</Typography>
+					</FormLabel>
 					<FormControl
 						margin="dense"
 						size="small"
 						error={!!error}
 						fullWidth >
-						<FormLabel htmlFor="amount">
-							<Typography
-								className={classes.formLabel}
-								sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-								{label}
-								<span style={{ color: red[700] }}> *</span>
-							</Typography>
-						</FormLabel>
+
 
 						<NumberFormat
 							id="amount"

@@ -1,63 +1,37 @@
 import React, { useEffect, useState } from "react";
-import NumberFormat from "react-number-format";
-import { makeStyles } from "@mui/styles";
-import { grey, red } from "@mui/material/colors";
+
 //Material UI
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from "@mui/material/FormHelperText";
-import FormLabel from '@mui/material/FormLabel';
+
 //react-hook-form
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 //Custom hooks
 import useLoanApp from "../../hooks/useLoanApp";
+import useStyles from "./FormComponents/useStyles";
 
-import { FormInput } from "./FormComponents/FormInput";
+import { FormInputAmount } from "./FormComponents/FormInputAmount";
 import { FormRadioProducts } from "./FormComponents/FormRadioProducts";
 import { FormRadioPurposes } from "./FormComponents/FormRadioPurpose";
-
-const useStyles = makeStyles(theme => ({
-	cardContent: {
-		padding: '24px !important',
-		[theme.breakpoints.down('sm')]: {
-			padding: '15px 20px !important'
-		},
-		borderRadius: '7px !important',
-	},
-	textGrey: {
-		color: grey[700]
-	},
-	formLabel: {
-		fontWeight: '700 !important',
-		color: 'grey[700] important',
-		marginBottom: '1rem !important'
-	}
-}));
-
+import { FormSelectTerm } from "./FormComponents/FormSelect";
+import { FormInputRate } from "./FormComponents/FormInputRate";
 
 
 export default function LoanAppForm() {
-	const classes = useStyles();
+	const { classes } = useStyles();
 	const [productValue, setProductValue] = useState("");
+
 
 	const { loanProducts, loanPurposes, interestTypes, schema2 } = useLoanApp(productValue);
 
-	// const { unregister, register, handleSubmit, watch, formState: { errors } } = useForm({
-	// 	resolver: yupResolver(schema)
-	// });
 	const defaultValues = {
 		amount: "",
 		product: "",
-		purpose: ""
+		purpose: "",
+		term: ""
 	}
 
 	const { handleSubmit, reset, control, watch } = useForm({
@@ -65,23 +39,22 @@ export default function LoanAppForm() {
 		resolver: yupResolver(schema2)
 	});
 
-	// const handleChangeProduct = (e) => {
-	// 	const value = e.target.value;
-	// 	setProductValue(value)
-	// 	console.log(productValue)
-	// }
-	// console.log(watch("product"))
-
 	const handleClickReset = () => {
-		reset()
+		reset();
 	}
 
+	const watchProduct = watch("product");
+
 	useEffect(() => {
-		const productSelected = control._fields.product._f.value
-		setProductValue(productSelected)
-	}, [watch("product")])
+		function setValueProduct() {
+			// const productSelected = control._fields.product._f.value
+			setProductValue(watchProduct)
+		}
+		setValueProduct();
+	}, [watchProduct])
 
 	const onSubmit = data => console.log(data)
+
 	return (
 		<div>
 			<Box mb={3}>
@@ -296,11 +269,26 @@ export default function LoanAppForm() {
 					/>
 				</Box>
 				<Box mb={2}>
-					<FormInput
+					<FormInputAmount
 						name="amount"
 						control={control}
 						label="Loan Amount"
 						product={productValue}
+					/>
+				</Box>
+				<Box mb={2}>
+					<FormSelectTerm
+						name="term"
+						control={control}
+						label="Choose term"
+						product={productValue}
+					/>
+				</Box>
+				<Box mb={2}>
+					<FormInputRate
+						name="rate"
+						control={control}
+						label="Rate %"
 					/>
 				</Box>
 
@@ -310,6 +298,7 @@ export default function LoanAppForm() {
 					sx={{ textTransform: 'none', borderRadius: '7px' }}>
 					Submit
 				</Button>
+				&nbsp;
 				<Button
 					variant="inherit"
 					onClick={() => handleClickReset()}

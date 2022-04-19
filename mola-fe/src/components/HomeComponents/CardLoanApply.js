@@ -144,7 +144,7 @@ export default function CardLoanApply() {
 												sx={{
 													fontSize: { xs: 10, sm: 12, md: 14 }
 												}}>
-												Submit an application for a loan without visiting the branch!
+												Submit a loan application without visiting the branch!
 											</Typography>
 										</Box>
 										<Box>

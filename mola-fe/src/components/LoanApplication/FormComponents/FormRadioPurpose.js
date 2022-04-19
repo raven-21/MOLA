@@ -29,19 +29,19 @@ export const FormRadioPurposes = ({ control, name, label }) => {
 					variant="outlined"
 					className={classes.cardContent}
 					sx={error ? { borderColor: red[700] } : null}>
+					<FormLabel>
+						<Typography
+							className={classes.formLabel}
+							sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
+							{label}
+							<span style={{ color: red[700] }}> *</span>
+						</Typography>
+					</FormLabel>
 					<FormControl
 						margin="dense"
 						size="small"
 						error={!!error}
 						fullWidth >
-						<FormLabel>
-							<Typography
-								className={classes.formLabel}
-								sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-								{label}
-								<span style={{ color: red[700] }}> *</span>
-							</Typography>
-						</FormLabel>
 
 						{loanPurposes &&
 							<RadioGroup value={value}>
