@@ -100,7 +100,7 @@ export default function CardLoanSummary() {
 							<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
 								<Typography
 									sx={{
-										fontSize: { xs: 8, sm: 12, md: 14 }
+										fontSize: { xs: 10, sm: 12, md: 14 }
 									}}>
 									Voucher NO. 117007
 								</Typography>

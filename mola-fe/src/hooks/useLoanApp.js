@@ -16,8 +16,10 @@ const useLoanApp = (watchProduct) => {
 			.string()
 			.required("Required!"),
 		term: yup
-			.string()
-			.required("Required!"),
+			.number()
+			.required("Required!")
+			.positive("Amount must be a positive number")
+			.typeError('Required!'),
 		amount: yup
 			.number()
 			.transform((o, v) => parseFloat(v.replace(/,/g, '')))
@@ -60,7 +62,7 @@ const useLoanApp = (watchProduct) => {
 					.typeError('Required!')
 					.min(3000, "Minimum amount is 3,000")
 					.max(500000, "Loan amount must not exceed 500,000")
-			})
+			}),
 	});
 
 	const schema = yup.object().shape({

@@ -77,14 +77,16 @@ export default function CardLoanApply() {
 									<Box ml={2}>
 										<Typography
 											sx={{
-												fontSize: { xs: 15, sm: 15, md: 18, },
-												fontWeight: 700
+												fontSize: { xs: 16, sm: 16, md: 18, },
+												fontWeight: 700,
+
 											}}>
-											Jeovanne Lugo
+											Maria Theresita Dela Cruz
 										</Typography>
 										<Typography
 											sx={{
-												fontSize: { xs: 15, sm: 15, md: 18, }
+												fontSize: { xs: 14, sm: 14, md: 18, },
+												color: grey[400],
 											}}>
 											Total Savings
 										</Typography>
@@ -133,16 +135,16 @@ export default function CardLoanApply() {
 										<Box mb={2}>
 											<Typography
 												sx={{
-													fontSize: { xs: 14, sm: 16, md: 18 },
+													fontSize: { xs: 16, sm: 16, md: 18 },
 													fontWeight: 700,
-													color: grey[400],
+													// color: grey[400],
 													marginBottom: 1
 												}}>
 												Loan Application
 											</Typography>
 											<Typography
 												sx={{
-													fontSize: { xs: 10, sm: 12, md: 14 }
+													fontSize: { xs: 12, sm: 12, md: 14 }
 												}}>
 												Submit a loan application without visiting the branch!
 											</Typography>

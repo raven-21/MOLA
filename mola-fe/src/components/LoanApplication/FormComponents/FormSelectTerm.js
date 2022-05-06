@@ -1,19 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { red } from "@mui/material/colors";
-import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
+import FormHelperText from "@mui/material/FormHelperText";
 import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
 import { Controller } from "react-hook-form";
-import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputAmount = ({ control, name, label, product }) => {
+export const FormSelectTerm = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
+
+	const [productLoans, setProductLoans] = useState([]);
+
+	const termRange = (min, max) => {
+		let arr = [];
+		for (let i = min; i <= max; i++)
+			arr.push(i);
+		return arr;
+	}
+
+	useEffect(() => {
+		if (product === "ST") {
+			setProductLoans(termRange(3, 12))
+		}
+		else {
+			setProductLoans(termRange(3, 36))
+		}
+	}, [product])
 
 	return (
 		<Controller
@@ -25,7 +42,7 @@ export const FormInputAmount = ({ control, name, label, product }) => {
 			}) => (
 				<Grid container spacing={1}>
 					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-						<FormLabel htmlFor="amount">
+						<FormLabel htmlFor="term">
 							<Typography
 								className={classes.formLabel}
 								sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
@@ -38,30 +55,16 @@ export const FormInputAmount = ({ control, name, label, product }) => {
 						<FormControl
 							size="small"
 							error={!!error}
-							fullWidth>
-							<NumberFormat
-								id="amount"
-								customInput={TextField}
-								decimalScale={2}
-								allowEmptyFormatting={false}
-								fixedDecimalScale={true}
-								thousandSeparator={true}
-								error={!!error}
-								onChange={onChange}
-								value={value}
-								placeholder="0.00"
+							sx={{ width: { xs: '100%', md: '50%' } }}>
+							<TextField
+								id="term"
+								type="number"
 								variant="outlined"
 								size="small"
-								sx={{ width: { xs: '100%', md: '100%' } }}
-								InputProps={{
-									readOnly: product ? false : true,
-									startAdornment: (
-										<InputAdornment position='start'>
-											<Typography> &#8369;</Typography>
-										</InputAdornment>
-									),
-								}}
-							/>
+								placeholder="0"
+								error={!!error}
+								onChange={onChange}
+								value={value} />
 							<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
 						</FormControl>
 					</Grid>

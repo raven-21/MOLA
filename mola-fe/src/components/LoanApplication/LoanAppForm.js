@@ -5,6 +5,8 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider"
 
 //react-hook-form
 import { useForm } from "react-hook-form";
@@ -16,9 +18,10 @@ import useStyles from "./FormComponents/useStyles";
 import { FormInputAmount } from "./FormComponents/FormInputAmount";
 import { FormRadioProducts } from "./FormComponents/FormRadioProducts";
 import { FormRadioPurposes } from "./FormComponents/FormRadioPurpose";
-import { FormSelectTerm } from "./FormComponents/FormSelect";
+import { FormSelectTerm } from "./FormComponents/FormSelectTerm";
 import { FormInputRate } from "./FormComponents/FormInputRate";
-
+import { FormInputAmort } from "./FormComponents/FormInputAmort";
+import { FormInputCharges } from "./FormComponents/FormInputCharges";
 
 export default function LoanAppForm() {
 	const { classes } = useStyles();
@@ -31,7 +34,9 @@ export default function LoanAppForm() {
 		amount: "",
 		product: "",
 		purpose: "",
-		term: ""
+		term: 3,
+		rate: "",
+		amort: ""
 	}
 
 	const { handleSubmit, reset, control, watch } = useForm({
@@ -63,7 +68,7 @@ export default function LoanAppForm() {
 						sx={{
 							fontWeight: 700,
 							fontSize: { xs: 20, sm: 22, md: 22, lg: 24 },
-							marginBottom: { xs: 1, sm: 1.5, md: 1.5, lg: 2 },
+							marginBottom: { xs: 0, sm: 0, md: .5, lg: .5 },
 							color: '#FFF'
 						}}>
 						Loan Application Form
@@ -71,10 +76,10 @@ export default function LoanAppForm() {
 					<Typography
 						sx={{
 							fontWeight: 500,
-							fontSize: { xs: 12, sm: 14, md: 14, lg: 16 },
+							fontSize: { xs: 10, sm: 14, md: 14, lg: 16 },
 							color: '#FFF'
 						}}>
-						Some information here.
+						Please fill all the required fields
 					</Typography>
 				</Paper>
 			</Box>
@@ -268,41 +273,58 @@ export default function LoanAppForm() {
 						label="Purpose of loan"
 					/>
 				</Box>
+
 				<Box mb={2}>
-					<FormInputAmount
-						name="amount"
-						control={control}
-						label="Loan Amount"
-						product={productValue}
-					/>
-				</Box>
-				<Box mb={2}>
-					<FormSelectTerm
-						name="term"
-						control={control}
-						label="Choose term"
-						product={productValue}
-					/>
-				</Box>
-				<Box mb={2}>
-					<FormInputRate
-						name="rate"
-						control={control}
-						label="Rate %"
-					/>
+					<Paper
+						variant="outlined"
+						className={classes.cardContent}>
+						<FormInputAmount
+							name="amount"
+							control={control}
+							label="Loan Amount"
+							product={productValue}
+						/>
+						<br />
+						<FormSelectTerm
+							name="term"
+							control={control}
+							label="Term (Months)"
+							product={productValue}
+						/>
+						<br />
+						<FormInputRate
+							name="rate"
+							control={control}
+							label="Interest Rate"
+						/>
+						<br />
+						<FormInputAmort
+							name="amort"
+							control={control}
+							label="Amort"
+						/>
+						<br />
+						<Divider />
+						<br />
+						<FormInputCharges
+							name="charges"
+							control={control}
+							label="Charges (6%)"
+						/>
+					</Paper>
 				</Box>
 
 				<Button
 					variant="contained"
 					type="submit"
-					sx={{ textTransform: 'none', borderRadius: '7px' }}>
+					sx={{ textTransform: 'none', borderRadius: '6px' }}>
 					Submit
 				</Button>
 				&nbsp;
 				<Button
 					variant="inherit"
 					onClick={() => handleClickReset()}
-					sx={{ textTransform: 'none', borderRadius: '7px' }}>
+					sx={{ textTransform: 'none', borderRadius: '5px' }}>
 					Reset
 				</Button>
 			</form>

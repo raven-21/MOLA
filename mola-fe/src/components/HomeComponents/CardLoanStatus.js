@@ -54,14 +54,14 @@ export default function CardLoanStatus() {
 								<Box>
 									<Typography
 										sx={{
-											fontSize: { xs: 15, sm: 18, md: 20, },
+											fontSize: { xs: 18, sm: 18, md: 20, },
 											fontWeight: 700
 										}}>
 										Verified
 									</Typography>
 									<Typography
 										sx={{
-											fontSize: { xs: 12, sm: 12, md: 16, }
+											fontSize: { xs: 13, sm: 13, md: 16, }
 										}}>
 										Loan Status
 									</Typography>
@@ -70,7 +70,7 @@ export default function CardLoanStatus() {
 							<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
 								<Typography
 									sx={{
-										fontSize: { xs: 8, sm: 12, md: 14 }
+										fontSize: { xs: 10, sm: 12, md: 14 }
 									}}>
 									Date Applied: 06-17-2022
 								</Typography>
@@ -80,7 +80,7 @@ export default function CardLoanStatus() {
 									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
 										<Typography
 											sx={{
-												fontSize: { xs: 10, sm: 14, md: 16 }
+												fontSize: { xs: 11, sm: 14, md: 16 }
 											}}>
 											Loan Amount
 										</Typography>

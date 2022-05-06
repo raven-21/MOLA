@@ -1,15 +1,18 @@
 import React from "react";
+import { red } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 
 import { Controller } from "react-hook-form";
+import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputRate = ({ control, name, label }) => {
+export const FormInputAmort = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
 
 	return (
@@ -34,62 +37,33 @@ export const FormInputRate = ({ control, name, label }) => {
 						<FormControl
 							size="small"
 							error={!!error}
-							sx={{ width: { xs: '100%', md: '50%' } }}>
-							<TextField
-								variant="outlined"
-								placeholder="0"
-								size="small"
+							fullWidth>
+							<NumberFormat
+								customInput={TextField}
+								decimalScale={2}
+								allowEmptyFormatting={false}
+								fixedDecimalScale={true}
+								thousandSeparator={true}
+								error={!!error}
 								onChange={onChange}
 								value={value}
+								placeholder="0.00"
+								variant="outlined"
+								size="small"
+								sx={{ width: { xs: '100%', md: '100%' } }}
 								InputProps={{
 									readOnly: true,
-									endAdornment: (
-										<InputAdornment position='end'>
-											%
+									startAdornment: (
+										<InputAdornment position='start'>
+											<Typography> &#8369;</Typography>
 										</InputAdornment>
-									)
+									),
 								}}
 							/>
+							<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
 						</FormControl>
 					</Grid>
 				</Grid>
-				// <Paper
-				// 	variant="outlined"
-				// 	className={classes.cardContent}
-				// 	sx={error ? { borderColor: red[700] } : null}>
-				// 	<FormLabel>
-				// 		<Typography
-				// 			className={classes.formLabel}
-				// 			sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-				// 			{label}
-				// 			<span style={{ color: red[700] }}> *</span>
-				// 		</Typography>
-				// 	</FormLabel>
-				// 	<FormControl
-				// 		margin="dense"
-				// 		size="small"
-				// 		error={!!error}
-				// 		fullWidth >
-
-				// 		<TextField
-				// 			variant="standard"
-				// 			margin="dense"
-				// 			placeholder="0"
-				// 			size="small"
-				// 			onChange={onChange}
-				// 			value={value}
-				// 			sx={{ width: { xs: '100%', md: '50%' } }}
-				// 			InputProps={{
-				// 				readOnly: true,
-				// 				endAdornment: (
-				// 					<InputAdornment position='end'>
-				// 						%
-				// 					</InputAdornment>
-				// 				)
-				// 			}}
-				// 		/>
-				// 	</FormControl>
-				// </Paper>
 			)}
 		/>
 	)

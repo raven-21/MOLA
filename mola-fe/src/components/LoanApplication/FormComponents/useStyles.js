@@ -6,7 +6,7 @@ const myStyles = makeStyles(theme => ({
 	cardContent: {
 		padding: '24px !important',
 		[theme.breakpoints.down('sm')]: {
-			padding: '15px 20px !important'
+			padding: '15px 15px !important'
 		},
 		borderRadius: '7px !important',
 	},
@@ -16,7 +16,7 @@ const myStyles = makeStyles(theme => ({
 	formLabel: {
 		fontWeight: '700 !important',
 		color: 'grey[700] important',
-		marginBottom: '1rem !important'
+		margin: '0 !important'
 	},
 	formText: {
 		marginLeft: '0 !important'
