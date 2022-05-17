@@ -27,7 +27,6 @@ export const FormInputCharges = ({ control, name, label }) => {
 					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
 						<FormLabel>
 							<Typography
-								className={classes.formLabel}
 								sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
 								{label}
 							</Typography>
@@ -50,7 +49,7 @@ export const FormInputCharges = ({ control, name, label }) => {
 								placeholder="0.00"
 								variant="outlined"
 								size="small"
-								sx={{ width: { xs: '100%', md: '100%' } }}
+								sx={{ width: { xs: '100%', sm: '50%', md: '50%' } }}
 								InputProps={{
 									readOnly: true,
 									startAdornment: (

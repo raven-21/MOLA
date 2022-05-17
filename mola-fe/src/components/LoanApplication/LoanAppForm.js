@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 //Material UI
+import { red } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider"
+import Divider from "@mui/material/Divider";
+import FormLabel from "@mui/material/FormLabel";
 
 //react-hook-form
-import { useForm } from "react-hook-form";
+import { appendErrors, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 //Custom hooks
 import useLoanApp from "../../hooks/useLoanApp";
@@ -22,11 +24,15 @@ import { FormSelectTerm } from "./FormComponents/FormSelectTerm";
 import { FormInputRate } from "./FormComponents/FormInputRate";
 import { FormInputAmort } from "./FormComponents/FormInputAmort";
 import { FormInputCharges } from "./FormComponents/FormInputCharges";
+import { FormInputGross } from "./FormComponents/FormInputGross";
+import { FormInputBal } from "./FormComponents/FormInputBal";
+import { FormInputPdi } from "./FormComponents/FormInputPdi";
+import { FormInputNet } from "./FormComponents/FormInputNet";
 
 export default function LoanAppForm() {
 	const { classes } = useStyles();
 	const [productValue, setProductValue] = useState("");
-
+	const [termValue, setTermValue] = useState("");
 
 	const { loanProducts, loanPurposes, interestTypes, schema2 } = useLoanApp(productValue);
 
@@ -36,10 +42,15 @@ export default function LoanAppForm() {
 		purpose: "",
 		term: 3,
 		rate: "",
-		amort: ""
+		amort: "",
+		charges: "",
+		gross: "",
+		balance: "",
+		pdi: "",
+		net: ""
 	}
 
-	const { handleSubmit, reset, control, watch } = useForm({
+	const { handleSubmit, reset, control, watch, formState: { errors } } = useForm({
 		defaultValues: defaultValues,
 		resolver: yupResolver(schema2)
 	});
@@ -49,6 +60,7 @@ export default function LoanAppForm() {
 	}
 
 	const watchProduct = watch("product");
+	const watchTerm = watch("term");
 
 	useEffect(() => {
 		function setValueProduct() {
@@ -57,6 +69,11 @@ export default function LoanAppForm() {
 		}
 		setValueProduct();
 	}, [watchProduct])
+
+	useEffect(() => {
+		setTermValue(watchTerm)
+	}, [watchTerm])
+
 
 	const onSubmit = data => console.log(data)
 
@@ -277,7 +294,16 @@ export default function LoanAppForm() {
 				<Box mb={2}>
 					<Paper
 						variant="outlined"
-						className={classes.cardContent}>
+						className={classes.cardContent}
+						sx={errors.amount || errors.term ? { borderColor: red[700] } : null}>
+						<FormLabel>
+							<Typography
+								className={classes.formLabel}
+								sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' }, textDecoration: 'underline' }}>
+								Loan Computation
+							</Typography>
+						</FormLabel>
+						<br />
 						<FormInputAmount
 							name="amount"
 							control={control}
@@ -288,7 +314,7 @@ export default function LoanAppForm() {
 						<FormSelectTerm
 							name="term"
 							control={control}
-							label="Term (Months)"
+							label="Term"
 							product={productValue}
 						/>
 						<br />
@@ -296,6 +322,7 @@ export default function LoanAppForm() {
 							name="rate"
 							control={control}
 							label="Interest Rate"
+							term={termValue}
 						/>
 						<br />
 						<FormInputAmort
@@ -311,6 +338,43 @@ export default function LoanAppForm() {
 							control={control}
 							label="Charges (6%)"
 						/>
+						<br />
+						<FormInputGross
+							name="gross"
+							control={control}
+							label="Gross Proceeds"
+						/>
+						<br />
+						<Divider />
+						<br />
+						<FormLabel>
+							<Typography
+								className={classes.formLabel}
+								sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' }, textDecoration: 'underline' }}>
+								Less
+							</Typography>
+						</FormLabel>
+						<br />
+						<FormInputBal
+							name="balance"
+							control={control}
+							label="Loan Balance"
+						/>
+						<br />
+						<FormInputPdi
+							name="pdi"
+							control={control}
+							label="PDI"
+						/>
+						<br />
+						<Divider />
+						<br />
+						<FormInputNet
+							name="net"
+							control={control}
+							label="Net Proceeds"
+						/>
+						<br />
 					</Paper>
 				</Box>
 

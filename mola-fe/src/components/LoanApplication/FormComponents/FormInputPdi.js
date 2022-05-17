@@ -12,7 +12,7 @@ import { Controller } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputAmount = ({ control, name, label, product }) => {
+export const FormInputPdi = ({ control, name, label }) => {
 	const { classes } = useStyles();
 
 	return (
@@ -25,11 +25,10 @@ export const FormInputAmount = ({ control, name, label, product }) => {
 			}) => (
 				<Grid container spacing={1}>
 					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-						<FormLabel htmlFor="amount">
+						<FormLabel>
 							<Typography
 								sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
 								{label}
-								<span style={{ color: red[700] }}> *</span>
 							</Typography>
 						</FormLabel>
 					</Grid>
@@ -39,7 +38,6 @@ export const FormInputAmount = ({ control, name, label, product }) => {
 							error={!!error}
 							fullWidth>
 							<NumberFormat
-								id="amount"
 								customInput={TextField}
 								decimalScale={2}
 								allowEmptyFormatting={false}
@@ -53,7 +51,7 @@ export const FormInputAmount = ({ control, name, label, product }) => {
 								size="small"
 								sx={{ width: { xs: '100%', sm: '50%', md: '50%' } }}
 								InputProps={{
-									readOnly: product ? false : true,
+									readOnly: true,
 									startAdornment: (
 										<InputAdornment position='start'>
 											<Typography> &#8369;</Typography>

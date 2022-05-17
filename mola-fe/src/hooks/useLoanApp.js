@@ -17,13 +17,50 @@ const useLoanApp = (watchProduct) => {
 			.required("Required!"),
 		term: yup
 			.number()
+			.integer("Must be an integer")
 			.required("Required!")
-			.positive("Amount must be a positive number")
-			.typeError('Required!'),
+			.positive("Must be a positive no.")
+			.typeError('Required!')
+			.when(
+				'product', {
+				is: 'LT',
+				then: yup
+					.number()
+					.integer("Must be an integer")
+					.required("Required!")
+					.positive("Must be a positive no.")
+					.typeError('Required!')
+					.min(3, "Minimum of 3 mos.")
+					.max(36, "Must not exceed 36 mos.")
+			})
+			.when(
+				'product', {
+				is: 'ST',
+				then: yup
+					.number()
+					.integer("Must be an integer")
+					.required("Required!")
+					.positive("Must be a positive no.")
+					.typeError('Required!')
+					.min(3, "Minimum of 3 mos.")
+					.max(12, "Must not exceed 12 mos.")
+			})
+			.when(
+				'product', {
+				is: 'SL',
+				then: yup
+					.number()
+					.integer("Must be an integer")
+					.required("Required!")
+					.positive("Must be a positive no.")
+					.typeError('Required!')
+					.min(3, "Minimum of 3 mos.")
+					.max(36, "Must not exceed 36 mos.")
+			}),
 		amount: yup
 			.number()
 			.transform((o, v) => parseFloat(v.replace(/,/g, '')))
-			.positive("Amount must be a positive number")
+			.positive("Must be a positive no.")
 			.required("Specify amount!")
 			.typeError('Required!')
 			.min(3000, "Minimum amount is 3,000")

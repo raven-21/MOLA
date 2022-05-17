@@ -14,22 +14,27 @@ import useStyles from "./useStyles";
 export const FormSelectTerm = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
 
-	const [productLoans, setProductLoans] = useState([]);
+	// const [productLoans, setProductLoans] = useState([]);
 
-	const termRange = (min, max) => {
-		let arr = [];
-		for (let i = min; i <= max; i++)
-			arr.push(i);
-		return arr;
-	}
+	// const termRange = (min, max) => {
+	// 	let arr = [];
+	// 	for (let i = min; i <= max; i++)
+	// 		arr.push(i);
+	// 	return arr;
+	// }
 
+	// useEffect(() => {
+	// 	if (product === "ST") {
+	// 		setProductLoans(termRange(3, 12))
+	// 	}
+	// 	else {
+	// 		setProductLoans(termRange(3, 36))
+	// 	}
+	// }, [product])
+
+	const [rangeMo, setRangeMo] = useState([]);
 	useEffect(() => {
-		if (product === "ST") {
-			setProductLoans(termRange(3, 12))
-		}
-		else {
-			setProductLoans(termRange(3, 36))
-		}
+		product === "ST" ? setRangeMo("3-12") : setRangeMo("3-36")
 	}, [product])
 
 	return (
@@ -44,9 +49,8 @@ export const FormSelectTerm = ({ control, name, label, product }) => {
 					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
 						<FormLabel htmlFor="term">
 							<Typography
-								className={classes.formLabel}
 								sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-								{label}
+								{label} ({rangeMo} Months)
 								<span style={{ color: red[700] }}> *</span>
 							</Typography>
 						</FormLabel>
@@ -55,7 +59,7 @@ export const FormSelectTerm = ({ control, name, label, product }) => {
 						<FormControl
 							size="small"
 							error={!!error}
-							sx={{ width: { xs: '100%', md: '50%' } }}>
+							fullWidth>
 							<TextField
 								id="term"
 								type="number"
@@ -64,7 +68,8 @@ export const FormSelectTerm = ({ control, name, label, product }) => {
 								placeholder="0"
 								error={!!error}
 								onChange={onChange}
-								value={value} />
+								value={value}
+								sx={{ width: { xs: '50%', sm: '25%', md: '25%' } }} />
 							<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
 						</FormControl>
 					</Grid>
