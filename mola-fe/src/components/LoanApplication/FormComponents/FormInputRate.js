@@ -15,15 +15,16 @@ export const FormInputRate = ({ control, name, label, term }) => {
 
 	useEffect(() => {
 		if (term >= 3 && term <= 12) {
-			setRateValue("6")
+			setRateValue('6')
 		}
 		else if (term >= 13 && term <= 24) {
-			setRateValue("7")
+			setRateValue('7')
 		}
 		else if (term >= 25 && term <= 36) {
-			setRateValue("8")
+			setRateValue('8')
 		}
 	}, [term])
+
 
 	return (
 		<Controller
@@ -31,7 +32,7 @@ export const FormInputRate = ({ control, name, label, term }) => {
 			control={control}
 			render={({
 				field: { onChange, value },
-				fieldState: { error },
+				fieldState: { error }
 			}) => (
 				<Grid container spacing={1}>
 					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>

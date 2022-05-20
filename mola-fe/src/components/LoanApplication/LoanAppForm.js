@@ -364,7 +364,7 @@ export default function LoanAppForm() {
 						<FormInputPdi
 							name="pdi"
 							control={control}
-							label="PDI"
+							label="Interest %"
 						/>
 						<br />
 						<Divider />

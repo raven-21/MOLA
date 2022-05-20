@@ -81,7 +81,7 @@ export default function CardLoanApply() {
 												fontWeight: 700,
 
 											}}>
-											Maria Theresita Dela Cruz
+											Monjae Steven Lugo
 										</Typography>
 										<Typography
 											sx={{

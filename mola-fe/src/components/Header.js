@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,25 +20,43 @@ import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import CottageOutlinedIcon from '@mui/icons-material/CottageOutlined';
+import MeetingRoomOutlinedIcon from '@mui/icons-material/MeetingRoomOutlined';
+
+import CottageIcon from '@mui/icons-material/Cottage';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import SettingsIcon from '@mui/icons-material/Settings';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 
 const useStyles = makeStyles(theme => ({
 	btnIcon: {
-		[theme.breakpoints.down('sm')]: {
-			boxShadow: '0 .2rem .3rem rgba(0,0,0,.15)',
-			marginLeft: '8px !important'
-		}
+		background: '#F0F2F5 !important',
+		color: '#000 !important',
+		"&:hover": {
+			background: '#D8DADF !important',
+		},
+		// [theme.breakpoints.down('sm')]: {
+		// 	boxShadow: '0 .2rem .3rem rgba(0,0,0,.15)',
+		// 	marginLeft: '8px !important'
+		// }
+	},
+	active: {
+		background: '#DAE6F1 !important',
+		color: '#1770E6 !important',
 	},
 	link: {
-		textDecoration: 'none !important'
+		textDecoration: 'none !important',
+		marginTop: '10px !important',
+		marginLeft: '7px !important'
 	}
 }));
 
 export default function Header() {
 	const classes = useStyles();
+	const location = useLocation();
 
 	return (
-		<AppBar position="fixed" elevation={0} sx={{ bgcolor: '#fff' }}>
+		<AppBar position="fixed" elevation={0} sx={{ bgcolor: '#fff', boxShadow: '0 .1rem .3rem rgba(0,0,0,.10)', }}>
 			<Container maxWidth="lg" sx={{ paddingX: { xs: 0, sm: 0, md: '16px' }, paddingBottom: '10px', overflowX: 'auto' }}>
 				<Toolbar>
 					<Typography sx={{ flexGrow: 1, color: '#000', margin: 'auto !important' }}>
@@ -72,38 +90,45 @@ export default function Header() {
 					<Box ml={5}></Box>
 					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
 						<Link to="/profile" className={classes.link}>
-							<IconButton className={classes.btnIcon}>
+							<IconButton className={location.pathname == '/profile' ? classes.active : classes.btnIcon}>
 								{/* <AccountCircleOutlinedIcon /> */}
-								<Avatar sx={{ bgcolor: cyan[700], width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>JL</Avatar>
+								<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>M</Avatar>
 							</IconButton>
 						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Home" arrow>
-						<Link to="/home">
-							<IconButton className={classes.btnIcon}>
-								<CottageOutlinedIcon />
+						<Link to="/home" className={classes.link}>
+							<IconButton className={location.pathname == '/home' ? classes.active : classes.btnIcon}>
+								{/* <CottageOutlinedIcon /> */}
+								<CottageIcon />
 							</IconButton>
 						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Notifications" arrow>
-						<IconButton className={classes.btnIcon}>
-							<Badge badgeContent="7" color="error">
-								<NotificationsOutlinedIcon />
-							</Badge>
-						</IconButton>
+						<Link to="/home" className={classes.link}>
+							<IconButton className={classes.btnIcon}>
+								<Badge badgeContent="7" color="error">
+									{/* <NotificationsOutlinedIcon /> */}
+									<NotificationsIcon />
+								</Badge>
+							</IconButton>
+						</Link>
 					</Tooltip>
 
 					<Tooltip TransitionComponent={Zoom} title="Settings" arrow>
-						<Link to="/settings">
-							<IconButton className={classes.btnIcon}>
-								<SettingsOutlinedIcon />
+						<Link to="/settings" className={classes.link}>
+							<IconButton className={location.pathname == '/settings' ? classes.active : classes.btnIcon}>
+								{/* <SettingsOutlinedIcon /> */}
+								<SettingsIcon />
 							</IconButton>
 						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Sign Out" arrow>
-						<Link to="/">
+						<Link to="/" className={classes.link}>
 							<IconButton className={classes.btnIcon}>
-								<LogoutOutlinedIcon />
+								{/* <LogoutOutlinedIcon /> */}
+								{/* <MeetingRoomOutlinedIcon /> */}
+								<MeetingRoomIcon />
 							</IconButton>
 						</Link>
 					</Tooltip>

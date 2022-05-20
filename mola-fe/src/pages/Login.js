@@ -74,14 +74,15 @@ export default function Create() {
 				<Typography sx={{ fontWeight: 'bold', fontSize: { xs: 30, md: 30 } }}>
 					Sign in
 				</Typography>
-				<Typography variant='subtitle2' mb={4} sx={{ fontWeight: 'light', fontStyle: 'italic' }}>
+				<Typography variant='subtitle2' mb={2} sx={{ fontWeight: 'light', fontStyle: 'italic' }}>
 					Loan application made easier
 				</Typography>
 				<form onSubmit={handleSubmit} autoComplete="off">
-					<Box mb={4}>
+					<Box mb={2}>
 						<TextField
+							// size="small"
 							id="input-with-icon-textfield"
-							label="Username"
+							// label="Username"
 							placeholder='Username...'
 							value={values.username}
 							onChange={handleChange('username')}
@@ -97,12 +98,13 @@ export default function Create() {
 							required
 						/>
 					</Box>
-					<Box mb={2}>
+					<Box mb={3}>
 						<TextField
+							// size="small"
 							type={values.showPassword ? 'text' : 'password'}
 							value={values.password}
 							onChange={handleChange('password')}
-							label="Password"
+							// label="Password"
 							placeholder='Password...'
 							InputProps={{
 								startAdornment: (
@@ -127,10 +129,13 @@ export default function Create() {
 							required
 						/>
 					</Box>
-					<Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 13, marginTop: 3 }}>Forgot
+					{/* <Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 13, marginTop: 3 }}>Forgot
 						<Link href="#" underline="hover" ml={0.5}>
 							password?
 						</Link>
+					</Typography> */}
+					<Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 11, marginTop: 3 }}>
+						Forgot password? Please contact your administrator.
 					</Typography>
 					<Box>
 						<Button
