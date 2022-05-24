@@ -94,6 +94,7 @@ export default function Header() {
 								{/* <AccountCircleOutlinedIcon /> */}
 								<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>M</Avatar>
 							</IconButton>
+
 						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Home" arrow>

@@ -41,7 +41,7 @@ export default function LoanAppForm() {
 		product: "",
 		purpose: "",
 		term: 3,
-		rate: "",
+		rate: 0,
 		amort: "",
 		charges: "",
 		gross: "",
@@ -50,7 +50,7 @@ export default function LoanAppForm() {
 		net: ""
 	}
 
-	const { handleSubmit, reset, control, watch, formState: { errors } } = useForm({
+	const { handleSubmit, reset, control, watch, setValue, formState: { errors } } = useForm({
 		defaultValues: defaultValues,
 		resolver: yupResolver(schema2)
 	});
@@ -96,7 +96,7 @@ export default function LoanAppForm() {
 							fontSize: { xs: 10, sm: 14, md: 14, lg: 16 },
 							color: '#FFF'
 						}}>
-						Please fill all the required fields
+						Please fill the form below!
 					</Typography>
 				</Paper>
 			</Box>
@@ -323,6 +323,7 @@ export default function LoanAppForm() {
 							control={control}
 							label="Interest Rate"
 							term={termValue}
+							setValue={setValue}
 						/>
 						<br />
 						<FormInputAmort

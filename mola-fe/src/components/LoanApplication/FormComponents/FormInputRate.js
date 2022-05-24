@@ -9,21 +9,24 @@ import Grid from "@mui/material/Grid";
 import { Controller } from "react-hook-form";
 import useStyles from "./useStyles";
 
-export const FormInputRate = ({ control, name, label, term }) => {
+export const FormInputRate = ({ control, name, label, term, setValue }) => {
 	const { classes } = useStyles();
 	const [rateValue, setRateValue] = useState("");
 
 	useEffect(() => {
 		if (term >= 3 && term <= 12) {
-			setRateValue('6')
+			setRateValue(6);
+			setValue("rate", rateValue);
 		}
 		else if (term >= 13 && term <= 24) {
-			setRateValue('7')
+			setRateValue(7);
+			setValue("rate", rateValue);
 		}
 		else if (term >= 25 && term <= 36) {
-			setRateValue('8')
+			setRateValue(8);
+			setValue("rate", rateValue);
 		}
-	}, [term])
+	}, [term, rateValue])
 
 
 	return (
@@ -31,7 +34,7 @@ export const FormInputRate = ({ control, name, label, term }) => {
 			name={name}
 			control={control}
 			render={({
-				field: { onChange, value },
+				field: { onChange },
 				fieldState: { error }
 			}) => (
 				<Grid container spacing={1}>
@@ -52,8 +55,8 @@ export const FormInputRate = ({ control, name, label, term }) => {
 								variant="outlined"
 								placeholder="0"
 								size="small"
+								value={rateValue}
 								onChange={onChange}
-								value={value}
 								InputProps={{
 									readOnly: true,
 									endAdornment: (
@@ -66,43 +69,6 @@ export const FormInputRate = ({ control, name, label, term }) => {
 						</FormControl>
 					</Grid>
 				</Grid>
-				// <Paper
-				// 	variant="outlined"
-				// 	className={classes.cardContent}
-				// 	sx={error ? { borderColor: red[700] } : null}>
-				// 	<FormLabel>
-				// 		<Typography
-				// 			className={classes.formLabel}
-				// 			sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-				// 			{label}
-				// 			<span style={{ color: red[700] }}> *</span>
-				// 		</Typography>
-				// 	</FormLabel>
-				// 	<FormControl
-				// 		margin="dense"
-				// 		size="small"
-				// 		error={!!error}
-				// 		fullWidth >
-
-				// 		<TextField
-				// 			variant="standard"
-				// 			margin="dense"
-				// 			placeholder="0"
-				// 			size="small"
-				// 			onChange={onChange}
-				// 			value={value}
-				// 			sx={{ width: { xs: '100%', md: '50%' } }}
-				// 			InputProps={{
-				// 				readOnly: true,
-				// 				endAdornment: (
-				// 					<InputAdornment position='end'>
-				// 						%
-				// 					</InputAdornment>
-				// 				)
-				// 			}}
-				// 		/>
-				// 	</FormControl>
-				// </Paper>
 			)}
 		/>
 	)
