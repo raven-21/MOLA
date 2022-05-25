@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { grey } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
@@ -7,7 +6,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 
 
@@ -30,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function Profileinfo() {
+export default function ProfileInfo() {
 	const classes = useStyles();
 
 	return (
@@ -142,7 +140,7 @@ export default function Profileinfo() {
 											fontWeight: 600,
 											color: '#000',
 										}}>
-										857-2926 / +63935-649-789
+										0935-649-789
 									</Typography>
 								</CardContent>
 							</Card>
@@ -178,7 +176,6 @@ export default function Profileinfo() {
 
 				</Grid>
 			</Grid>
-
 		</div >
 	);
 }

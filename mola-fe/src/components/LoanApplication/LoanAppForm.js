@@ -41,7 +41,7 @@ export default function LoanAppForm() {
 		product: "",
 		purpose: "",
 		term: 3,
-		rate: 0,
+		rate: 6,
 		amort: "",
 		charges: "",
 		gross: "",
@@ -280,7 +280,7 @@ export default function LoanAppForm() {
 					<FormRadioProducts
 						name="product"
 						control={control}
-						label="Choose your loan product"
+						label="Choose a loan product"
 					/>
 				</Box>
 				<Box mb={2}>

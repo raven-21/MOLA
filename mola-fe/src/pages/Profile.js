@@ -1,12 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-
+import { Box } from '@mui/material';
+//Custom components
 import BtnGrp from '../components/ProfileComponents/BtnGrp';
-import Profileinfo from '../components/ProfileComponents/ProfileInfo';
+import ProfileInfo from '../components/ProfileComponents/ProfileInfo';
+import ProfileInfoLG from '../components/ProfileComponents/ProfileInfoLG';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -30,7 +29,12 @@ export default function Profile() {
 		<div className={classes.root}>
 			<Container maxWidth="lg">
 				<div className={classes.content}>
-					<Profileinfo />
+					<Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
+						<ProfileInfoLG />
+					</Box>
+					<Box sx={{ display: { xs: 'block', sm: 'block', md: 'none' } }}>
+						<ProfileInfo />
+					</Box>
 
 					<BtnGrp />
 				</div>

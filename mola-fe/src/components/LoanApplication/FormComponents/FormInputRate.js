@@ -18,11 +18,11 @@ export const FormInputRate = ({ control, name, label, term, setValue }) => {
 			setRateValue(6);
 			setValue("rate", rateValue);
 		}
-		else if (term >= 13 && term <= 24) {
+		if (term >= 13 && term <= 24) {
 			setRateValue(7);
 			setValue("rate", rateValue);
 		}
-		else if (term >= 25 && term <= 36) {
+		if (term >= 25 && term <= 36) {
 			setRateValue(8);
 			setValue("rate", rateValue);
 		}
