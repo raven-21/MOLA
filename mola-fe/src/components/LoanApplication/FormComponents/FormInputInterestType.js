@@ -1,19 +1,19 @@
-import React from "react";
-import { red } from "@mui/material/colors";
-import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
-import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
-import Grid from "@mui/material/Grid";
+import FormHelperText from "@mui/material/FormHelperText";
+import TextField from "@mui/material/TextField";
 
 import { Controller } from "react-hook-form";
-import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputCharges = ({ control, name, label }) => {
+export const FormInputInterestType = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
+	const [type, setType] = useState([]);
+	useEffect(() => {
+		product === "LT" ? setType("Diminishing") : setType("With Interest")
+	}, [product])
 
 	return (
 		<Controller
@@ -38,27 +38,16 @@ export const FormInputCharges = ({ control, name, label }) => {
 						size="small"
 						error={!!error}
 						fullWidth>
-						<NumberFormat
-							customInput={TextField}
-							decimalScale={2}
-							allowEmptyFormatting={false}
-							fixedDecimalScale={true}
-							thousandSeparator={true}
-							error={!!error}
-							onChange={onChange}
-							value={value}
-							placeholder="0.00"
+						<TextField
 							variant="outlined"
 							size="small"
+							placeholder="..."
+							error={!!error}
+							onChange={onChange}
+							value={type}
 							InputProps={{
 								readOnly: true,
-								startAdornment: (
-									<InputAdornment position='start'>
-										<Typography> &#8369;</Typography>
-									</InputAdornment>
-								),
-							}}
-						/>
+							}} />
 						<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
 					</FormControl>
 				</div>

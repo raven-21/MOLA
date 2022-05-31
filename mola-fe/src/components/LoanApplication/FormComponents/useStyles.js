@@ -3,19 +3,26 @@ import { makeStyles } from "@mui/styles";
 import { grey, red } from "@mui/material/colors";
 
 const myStyles = makeStyles(theme => ({
-	cardContent: {
-		padding: '24px !important',
+	cardTitle: {
+		padding: '30px 90px !important',
 		[theme.breakpoints.down('sm')]: {
-			padding: '15px 15px !important'
+			padding: '20px 30px !important'
 		},
-		borderRadius: '7px !important',
+		borderRadius: '15px !important',
+	},
+	cardContent: {
+		padding: '60px 90px !important',
+		[theme.breakpoints.down('sm')]: {
+			padding: '40px 30px !important'
+		},
+		borderRadius: '12px !important',
 	},
 	textGrey: {
 		color: grey[700]
 	},
 	formLabel: {
-		fontWeight: '700 !important',
-		color: 'grey[700] important',
+		fontWeight: '600 !important',
+		color: grey[400],
 		margin: '0 !important'
 	},
 	formText: {

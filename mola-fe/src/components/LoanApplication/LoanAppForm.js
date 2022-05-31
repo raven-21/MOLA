@@ -28,6 +28,8 @@ import { FormInputGross } from "./FormComponents/FormInputGross";
 import { FormInputBal } from "./FormComponents/FormInputBal";
 import { FormInputPdi } from "./FormComponents/FormInputPdi";
 import { FormInputNet } from "./FormComponents/FormInputNet";
+import { FormInputInterestType } from "./FormComponents/FormInputInterestType"
+import { FormInputClass } from "./FormComponents/FormInputClass";
 
 export default function LoanAppForm() {
 	const { classes } = useStyles();
@@ -80,7 +82,7 @@ export default function LoanAppForm() {
 	return (
 		<div>
 			<Box mb={3}>
-				<Paper elevation={0} className={classes.cardContent} variant="outlined" sx={{ background: 'linear-gradient(45deg, #113050 10%, #184470 90%)' }}>
+				<Paper elevation={0} className={classes.cardTitle} variant="outlined" sx={{ background: 'linear-gradient(45deg, #113050 10%, #184470 90%)' }}>
 					<Typography
 						sx={{
 							fontWeight: 700,
@@ -103,295 +105,296 @@ export default function LoanAppForm() {
 			<form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
 				<div>
 					{/* <Box mb={2}>
-						<Paper
-							variant="outlined"
-							className={classes.cardContent}
-							sx={errors.product ? { borderColor: red[700] } : null}>
-							<FormControl
-								variant="standard"
-								margin="dense"
-								size="small"
-								error={!!errors?.product}
-								fullWidth >
-								<FormLabel>
-									<Typography
-										className={classes.formLabel}
-										sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-										Choose your loan product
-										<span style={{ color: red[700] }}> *</span>
-									</Typography>
-								</FormLabel>
-								{loanProducts &&
-									<RadioGroup>
-										{loanProducts.map((loanProduct) => (
-											<FormControlLabel
-												{...register("product", {
-													onChange: (e) => { handleChangeProduct(e) }
-												})}
-												key={loanProduct.id}
-												value={loanProduct.product_code}
-												control={<Radio size="small" />}
-												label={
-													<Typography
-														sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-														{loanProduct.product_name}
-													</Typography>}
-											/>
-										))}
-									</RadioGroup>
-								}
-								<FormHelperText>{errors.product ? errors.product.message : null}</FormHelperText>
-							</FormControl>
-						</Paper>
+						<FormRadioProducts
+							name="product"
+							control={control}
+							label="Choose a loan product"
+						/>
+					</Box>
+					<Box mb={2}>
+						<FormRadioPurposes
+							name="purpose"
+							control={control}
+							label="Purpose of loan"
+						/>
 					</Box>
 
 					<Box mb={2}>
 						<Paper
 							variant="outlined"
 							className={classes.cardContent}
-							sx={errors.purpose ? { borderColor: red[700] } : null}>
-							<FormControl
-								variant="standard"
-								margin="dense"
-								error={!!errors?.purpose}>
-								<FormLabel>
-									<Typography
-										className={classes.formLabel}
-										sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-										Purpose of your loan
-										<span style={{ color: red[700] }}> *</span>
-									</Typography>
-								</FormLabel>
-								{loanPurposes &&
-									<RadioGroup>
-										{loanPurposes.map((loanPurpose) => (
-											<FormControlLabel
-												{...register("purpose")}
-												key={loanPurpose.id}
-												value={loanPurpose.purpose}
-												control={<Radio size="small" />}
-												label={
-													<Typography
-														sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-														{loanPurpose.purpose}
-													</Typography>}
-											/>
-										))}
-									</RadioGroup>
-								}
-								<FormHelperText>{errors.purpose ? errors.purpose.message : null}</FormHelperText>
-							</FormControl>
+							sx={errors.amount || errors.term ? { borderColor: red[700] } : null}>
+							<FormLabel>
+								<Typography
+									className={classes.formLabel}
+									sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' }, textDecoration: 'underline' }}>
+									Loan Computation
+								</Typography>
+							</FormLabel>
+							<br />
+							<FormInputAmount
+								name="amount"
+								control={control}
+								label="Loan Amount"
+								product={productValue}
+							/>
+							<br />
+							<FormSelectTerm
+								name="term"
+								control={control}
+								label="Term"
+								product={productValue}
+							/>
+							<br />
+							<FormInputRate
+								name="rate"
+								control={control}
+								label="Interest Rate"
+								term={termValue}
+								setValue={setValue}
+							/>
+							<br />
+							<FormInputAmort
+								name="amort"
+								control={control}
+								label="Amort"
+							/>
+							<br />
+							<Divider />
+							<br />
+							<FormInputCharges
+								name="charges"
+								control={control}
+								label="Charges (6%)"
+							/>
+							<br />
+							<FormInputGross
+								name="gross"
+								control={control}
+								label="Gross Proceeds"
+							/>
+							<br />
+							<Divider />
+							<br />
+							<FormLabel>
+								<Typography
+									className={classes.formLabel}
+									sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' }, textDecoration: 'underline' }}>
+									Less
+								</Typography>
+							</FormLabel>
+							<br />
+							<FormInputBal
+								name="balance"
+								control={control}
+								label="Loan Balance"
+							/>
+							<br />
+							<FormInputPdi
+								name="pdi"
+								control={control}
+								label="Interest %"
+							/>
+							<br />
+							<Divider />
+							<br />
+							<FormInputNet
+								name="net"
+								control={control}
+								label="Net Proceeds"
+							/>
+							<br />
 						</Paper>
 					</Box>
 
-					<Box mb={2}>
-						<Paper
-							variant="outlined"
-							className={classes.cardContent}
-							sx={errors.interestType ? { borderColor: red[700] } : null}>
-							<FormControl
-								variant="standard"
-								margin="dense"
-								size="small"
-								error={!!errors?.interestType}
-								fullWidth >
-								<FormLabel>
-									<Typography
-										className={classes.formLabel}
-										sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-										Choose interest type
-										<span style={{ color: red[700] }}> *</span>
-									</Typography>
-								</FormLabel>
-								{interestTypes &&
-									<RadioGroup>
-										{interestTypes.filter((interestType) => {
-											if (productValue === "") {
-												return interestType
-											}
-											else if (productValue === 'LT') {
-												return interestType.interest_type === 'Diminishing'
-											}
-											else {
-												return interestType.interest_type !== 'Diminishing'
-											}
-										}).map((interestType) => (
-											<FormControlLabel
-												{...register("interestType")}
-												key={interestType.id}
-												value={interestType.interest_type}
-												control={<Radio size="small" />}
-												label={
-													<Typography
-														sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-														{interestType.interest_type}
-													</Typography>}
-											/>
-										))}
-									</RadioGroup>
-								}
-								<FormHelperText>{errors.interestType ? errors.interestType.message : null}</FormHelperText>
-							</FormControl>
-						</Paper>
-					</Box>
-
-					<Box mb={2}>
-						<Paper
-							variant="outlined"
-							className={classes.cardContent}
-							sx={errors.amount ? { borderColor: red[700] } : null}>
-							<FormControl
-								margin="dense"
-								size="small"
-								error={!!errors?.amount}
-								fullWidth >
-								<FormLabel>
-									<Typography
-										className={classes.formLabel}
-										sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-										Loan amount
-										<span style={{ color: red[700] }}> *</span>
-									</Typography>
-								</FormLabel>
-								<TextField
-									{...register("amount")}
-									helperText={errors.product ? "Please choose a loan product" : errors.amount ? errors.amount.message : null}
-									error={!!errors?.amount}
-									placeholder="Enter amount..."
-									variant="standard"
-									margin="dense"
-									type="number"
-									sx={{ width: { xs: '100%', md: '50%' } }}
-									InputProps={{
-										readOnly: watch("product") === null ? true : false,
-										startAdornment: (
-											<InputAdornment position='start'>
-												<Typography sx={{ fontSize: 20 }}> &#8369;</Typography>
-											</InputAdornment>
-										),
-									}}
-								/>
-							</FormControl>
-						</Paper>
-					</Box> */}
+					<Button
+						variant="contained"
+						type="submit"
+						sx={{ textTransform: 'none', borderRadius: '6px' }}>
+						Submit
+					</Button>
+					&nbsp;
+					<Button
+						variant="inherit"
+						onClick={() => handleClickReset()}
+						sx={{ textTransform: 'none', borderRadius: '5px' }}>
+						Reset
+					</Button> */}
 				</div>
 
-				<Box mb={2}>
-					<FormRadioProducts
-						name="product"
-						control={control}
-						label="Choose a loan product"
-					/>
-				</Box>
-				<Box mb={2}>
-					<FormRadioPurposes
-						name="purpose"
-						control={control}
-						label="Purpose of loan"
-					/>
-				</Box>
-
-				<Box mb={2}>
-					<Paper
-						variant="outlined"
-						className={classes.cardContent}
-						sx={errors.amount || errors.term ? { borderColor: red[700] } : null}>
-						<FormLabel>
-							<Typography
-								className={classes.formLabel}
-								sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' }, textDecoration: 'underline' }}>
-								Loan Computation
-							</Typography>
-						</FormLabel>
-						<br />
-						<FormInputAmount
-							name="amount"
-							control={control}
-							label="Loan Amount"
-							product={productValue}
-						/>
-						<br />
-						<FormSelectTerm
-							name="term"
-							control={control}
-							label="Term"
-							product={productValue}
-						/>
-						<br />
-						<FormInputRate
-							name="rate"
-							control={control}
-							label="Interest Rate"
-							term={termValue}
-							setValue={setValue}
-						/>
-						<br />
-						<FormInputAmort
-							name="amort"
-							control={control}
-							label="Amort"
-						/>
-						<br />
-						<Divider />
-						<br />
-						<FormInputCharges
-							name="charges"
-							control={control}
-							label="Charges (6%)"
-						/>
-						<br />
-						<FormInputGross
-							name="gross"
-							control={control}
-							label="Gross Proceeds"
-						/>
-						<br />
-						<Divider />
-						<br />
-						<FormLabel>
-							<Typography
-								className={classes.formLabel}
-								sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' }, textDecoration: 'underline' }}>
+				<Paper
+					variant="outlined"
+					className={classes.cardContent}
+					sx={errors.amount || errors.term ? { borderColor: red[700] } : { borderColor: '#FFF' }}>
+					<Typography mb={{ xs: 0, sm: 1, md: 2 }} sx={{
+						fontWeight: 700,
+						fontSize: { xs: 16, sm: 16, md: 18 }
+					}}>
+						Loan Information
+					</Typography>
+					<br />
+					<Grid container spacing={3}>
+						<Grid item xs={12} sm={12} md={6}>
+							<FormRadioProducts
+								name="product"
+								control={control}
+								label="Choose a loan product"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={6}>
+							<FormRadioPurposes
+								name="purpose"
+								control={control}
+								label="Loan Purpose"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={6}>
+							<FormInputInterestType
+								name="type"
+								control={control}
+								label="Interest Type"
+								product={watchProduct}
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={6}>
+							<FormInputClass
+								name="class"
+								control={control}
+								label="Classification"
+								product={watchProduct}
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<Divider />
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<FormInputAmount
+								name="amount"
+								control={control}
+								label="Enter loan amount"
+								product={watchProduct}
+							/>
+						</Grid>
+						<Grid item xs={12} sm={6} md={6}>
+							<FormSelectTerm
+								name="term"
+								control={control}
+								label="Term"
+								product={productValue}
+							/>
+						</Grid>
+						<Grid item xs={12} sm={6} md={6}>
+							<FormInputRate
+								name="rate"
+								control={control}
+								label="Interest Rate"
+								term={termValue}
+								setValue={setValue}
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<FormInputAmort
+								name="amort"
+								control={control}
+								label="Amort"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<Divider />
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<FormInputCharges
+								name="charges"
+								control={control}
+								label="Charges (6%)"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<FormInputGross
+								name="gross"
+								control={control}
+								label="Gross Proceeds"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<Divider />
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<Typography sx={{
+								fontWeight: 800,
+								fontSize: { xs: 15, sm: 15, md: 16 }
+							}}>
 								Less
 							</Typography>
-						</FormLabel>
-						<br />
-						<FormInputBal
-							name="balance"
-							control={control}
-							label="Loan Balance"
-						/>
-						<br />
-						<FormInputPdi
-							name="pdi"
-							control={control}
-							label="Interest %"
-						/>
-						<br />
-						<Divider />
-						<br />
-						<FormInputNet
-							name="net"
-							control={control}
-							label="Net Proceeds"
-						/>
-						<br />
-					</Paper>
-				</Box>
-
-				<Button
-					variant="contained"
-					type="submit"
-					sx={{ textTransform: 'none', borderRadius: '6px' }}>
-					Submit
-				</Button>
-				&nbsp;
-				<Button
-					variant="inherit"
-					onClick={() => handleClickReset()}
-					sx={{ textTransform: 'none', borderRadius: '5px' }}>
-					Reset
-				</Button>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<FormInputBal
+								name="balance"
+								control={control}
+								label="Loan Balance"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<FormInputPdi
+								name="pdi"
+								control={control}
+								label="Interest %"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<Divider />
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<FormInputNet
+								name="net"
+								control={control}
+								label="Net Proceeds"
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={6}>
+							<Button
+								variant="contained"
+								type="submit"
+								sx={{
+									textTransform: 'none',
+									borderRadius: '25px',
+									boxShadow: 'none',
+									width: '100%'
+								}}>
+								<Typography variant='overline'
+									sx={{
+										marginX: 2,
+										marginY: -0.1,
+										letterSpacing: 1,
+										textTransform: 'none',
+									}}>
+									Submit
+								</Typography>
+							</Button>
+						</Grid>
+						<Grid item xs={12} sm={12} md={6}>
+							<Button
+								variant="outlined"
+								onClick={() => handleClickReset()}
+								sx={{
+									textTransform: 'none',
+									borderRadius: '25px',
+									boxShadow: 'none',
+									width: '100%'
+								}}>
+								<Typography variant='overline'
+									sx={{
+										marginX: 2,
+										marginY: -0.1,
+										letterSpacing: 1,
+										textTransform: 'none',
+									}}>
+									Reset
+								</Typography>
+							</Button>
+						</Grid>
+					</Grid>
+				</Paper>
 			</form>
 		</div >
 	);

@@ -16,11 +16,13 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 
 
 const useStyles = makeStyles(theme => ({
 	loginBtn: {
 		background: 'linear-gradient(45deg, #113050 20%, #184470 90%)',
+		textTransform: 'none !important'
 	},
 }));
 
@@ -137,17 +139,17 @@ export default function Create() {
 					<Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 11, marginTop: 3 }}>
 						Forgot password? Please contact your administrator.
 					</Typography>
-					<Box>
+					<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 						<Button
 							className={classes.loginBtn}
 							type='submit'
 							variant='contained'
 							color='primary'
 							size='large'
-							sx={{ borderRadius: 7, paddingX: 9, paddingY: 1.7 }}
-							fullWidth
+							sx={{ borderRadius: 6, paddingLeft: 6, paddingRight: 5, paddingY: 1 }}
 						>
-							SIGN IN
+							Sign In
+							<KeyboardArrowRightRoundedIcon />
 						</Button>
 					</Box>
 				</form>

@@ -23,48 +23,47 @@ export const FormInputAmount = ({ control, name, label, product }) => {
 				field: { onChange, value },
 				fieldState: { error },
 			}) => (
-				<Grid container spacing={1}>
-					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-						<FormLabel htmlFor="amount">
-							<Typography
-								sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-								{label}
-								<span style={{ color: red[700] }}> *</span>
-							</Typography>
-						</FormLabel>
-					</Grid>
-					<Grid item xs={12} sm={12} md={8} lg={8} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start' }}>
-						<FormControl
-							size="small"
+				<div>
+					<FormLabel htmlFor="amount">
+						<Typography
+							className={classes.formLabel}
+							sx={{
+								fontSize: { xs: '11px', sm: '12px', md: '12px', lg: '13px' },
+							}}>
+							{label}
+							<span style={{ color: red[400] }}> *</span>
+						</Typography>
+					</FormLabel>
+					<FormControl
+						margin="dense"
+						size="small"
+						error={!!error}
+						fullWidth>
+						<NumberFormat
+							id="amount"
+							customInput={TextField}
+							decimalScale={2}
+							allowEmptyFormatting={false}
+							fixedDecimalScale={true}
+							thousandSeparator={true}
 							error={!!error}
-							fullWidth>
-							<NumberFormat
-								id="amount"
-								customInput={TextField}
-								decimalScale={2}
-								allowEmptyFormatting={false}
-								fixedDecimalScale={true}
-								thousandSeparator={true}
-								error={!!error}
-								onChange={onChange}
-								value={value}
-								placeholder="0.00"
-								variant="outlined"
-								size="small"
-								sx={{ width: { xs: '100%', sm: '50%', md: '50%' } }}
-								InputProps={{
-									readOnly: product ? false : true,
-									startAdornment: (
-										<InputAdornment position='start'>
-											<Typography> &#8369;</Typography>
-										</InputAdornment>
-									),
-								}}
-							/>
-							<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
-						</FormControl>
-					</Grid>
-				</Grid>
+							onChange={onChange}
+							value={value}
+							placeholder="0.00"
+							variant="outlined"
+							size="small"
+							InputProps={{
+								readOnly: product ? false : true,
+								startAdornment: (
+									<InputAdornment position='start'>
+										<Typography> &#8369;</Typography>
+									</InputAdornment>
+								),
+							}}
+						/>
+						<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
+					</FormControl>
+				</div>
 			)}
 		/>
 	)

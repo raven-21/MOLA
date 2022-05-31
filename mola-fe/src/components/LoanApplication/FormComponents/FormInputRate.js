@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { red } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -37,38 +38,39 @@ export const FormInputRate = ({ control, name, label, term, setValue }) => {
 				field: { onChange },
 				fieldState: { error }
 			}) => (
-				<Grid container spacing={1}>
-					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-						<FormLabel>
-							<Typography
-								sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-								{label}
-							</Typography>
-						</FormLabel>
-					</Grid>
-					<Grid item xs={12} sm={12} md={8} lg={8} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start' }}>
-						<FormControl
+				<div>
+					<FormLabel>
+						<Typography
+							className={classes.formLabel}
+							sx={{
+								fontSize: { xs: '11px', sm: '12px', md: '12px', lg: '13px' },
+							}}>
+							{label}
+						</Typography>
+					</FormLabel>
+
+					<FormControl
+						margin="dense"
+						size="small"
+						error={!!error}
+						fullWidth>
+						<TextField
+							variant="outlined"
+							placeholder="0"
 							size="small"
-							error={!!error}
-							sx={{ width: { xs: '50%', sm: '25%', md: '25%' } }}>
-							<TextField
-								variant="outlined"
-								placeholder="0"
-								size="small"
-								value={rateValue}
-								onChange={onChange}
-								InputProps={{
-									readOnly: true,
-									endAdornment: (
-										<InputAdornment position='end'>
-											%
-										</InputAdornment>
-									)
-								}}
-							/>
-						</FormControl>
-					</Grid>
-				</Grid>
+							value={rateValue}
+							onChange={onChange}
+							InputProps={{
+								readOnly: true,
+								endAdornment: (
+									<InputAdornment position='end'>
+										%
+									</InputAdornment>
+								)
+							}}
+						/>
+					</FormControl>
+				</div>
 			)}
 		/>
 	)

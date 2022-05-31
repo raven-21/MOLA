@@ -45,35 +45,34 @@ export const FormSelectTerm = ({ control, name, label, product }) => {
 				field: { onChange, value },
 				fieldState: { error },
 			}) => (
-				<Grid container spacing={1}>
-					<Grid item xs={12} sm={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-						<FormLabel htmlFor="term">
-							<Typography
-								sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-								{label} ({rangeMo} Months)
-								<span style={{ color: red[700] }}> *</span>
-							</Typography>
-						</FormLabel>
-					</Grid>
-					<Grid item xs={12} sm={12} md={8} lg={8} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start' }}>
-						<FormControl
+				<div>
+					<FormLabel htmlFor="term">
+						<Typography
+							className={classes.formLabel}
+							sx={{
+								fontSize: { xs: '11px', sm: '12px', md: '12px', lg: '13px' },
+							}}>
+							{label} ({rangeMo} mos.)
+							<span style={{ color: red[400] }}> *</span>
+						</Typography>
+					</FormLabel>
+					<FormControl
+						margin="dense"
+						size="small"
+						error={!!error}
+						fullWidth>
+						<TextField
+							id="term"
+							type="number"
+							variant="outlined"
 							size="small"
+							placeholder="0"
 							error={!!error}
-							fullWidth>
-							<TextField
-								id="term"
-								type="number"
-								variant="outlined"
-								size="small"
-								placeholder="0"
-								error={!!error}
-								onChange={onChange}
-								value={value}
-								sx={{ width: { xs: '50%', sm: '25%', md: '25%' } }} />
-							<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
-						</FormControl>
-					</Grid>
-				</Grid>
+							onChange={onChange}
+							value={value} />
+						<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
+					</FormControl>
+				</div>
 			)}
 		/>
 	)

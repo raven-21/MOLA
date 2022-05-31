@@ -162,7 +162,7 @@ export default function CardLoanApply() {
 												</Typography>
 											</Button> */}
 											<Link to="/loan_apply" className={classes.link}>
-												<Button variant="contained" sx={{ borderRadius: '25px' }}>
+												<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none' }}>
 													<Typography variant='overline'
 														sx={{
 															marginX: 2,
