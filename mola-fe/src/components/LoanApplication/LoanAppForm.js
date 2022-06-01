@@ -42,6 +42,7 @@ export default function LoanAppForm() {
 		amount: "",
 		product: "",
 		purpose: "",
+		class: "",
 		term: 3,
 		rate: 6,
 		amort: "",
@@ -63,6 +64,7 @@ export default function LoanAppForm() {
 
 	const watchProduct = watch("product");
 	const watchTerm = watch("term");
+	const watchAmount = watch("amount");
 
 	useEffect(() => {
 		function setValueProduct() {
@@ -226,7 +228,7 @@ export default function LoanAppForm() {
 					variant="outlined"
 					className={classes.cardContent}
 					sx={errors.amount || errors.term ? { borderColor: red[700] } : { borderColor: '#FFF' }}>
-					<Typography mb={{ xs: 0, sm: 1, md: 2 }} sx={{
+					<Typography mb={{ xs: 1, sm: 1, md: 2 }} sx={{
 						fontWeight: 700,
 						fontSize: { xs: 16, sm: 16, md: 18 }
 					}}>
@@ -307,6 +309,8 @@ export default function LoanAppForm() {
 								name="charges"
 								control={control}
 								label="Charges (6%)"
+								amount={watchAmount}
+								setValue={setValue}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={12} md={12}>
@@ -343,6 +347,14 @@ export default function LoanAppForm() {
 						</Grid>
 						<Grid item xs={12} sm={12} md={12}>
 							<Divider />
+						</Grid>
+						<Grid item xs={12} sm={12} md={12}>
+							<Typography sx={{
+								fontWeight: 800,
+								fontSize: { xs: 15, sm: 15, md: 16 }
+							}}>
+								Net
+							</Typography>
 						</Grid>
 						<Grid item xs={12} sm={12} md={12}>
 							<FormInputNet

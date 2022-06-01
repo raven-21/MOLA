@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { red } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -12,8 +12,17 @@ import { Controller } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputCharges = ({ control, name, label }) => {
+export const FormInputCharges = ({ control, name, label, amount, setValue }) => {
 	const { classes } = useStyles();
+
+	const [chargeValue, setChargeValue] = useState();
+
+	useEffect(() => {
+		const parsed = parseFloat(amount.replace(/,/g, ""));
+		setChargeValue(parsed * 0.06);
+		setValue("charges", chargeValue);
+
+	}, [amount, chargeValue]);
 
 	return (
 		<Controller
@@ -46,7 +55,7 @@ export const FormInputCharges = ({ control, name, label }) => {
 							thousandSeparator={true}
 							error={!!error}
 							onChange={onChange}
-							value={value}
+							value={chargeValue}
 							placeholder="0.00"
 							variant="outlined"
 							size="small"
