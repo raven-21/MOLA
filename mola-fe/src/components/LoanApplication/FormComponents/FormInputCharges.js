@@ -14,7 +14,6 @@ import useStyles from "./useStyles";
 
 export const FormInputCharges = ({ control, name, label, amount, setValue }) => {
 	const { classes } = useStyles();
-
 	const [chargeValue, setChargeValue] = useState();
 
 	useEffect(() => {

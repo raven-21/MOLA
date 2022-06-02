@@ -21,6 +21,7 @@ const useLoanApp = (watchProduct) => {
 			.required("Required!")
 			.positive("Must be a positive no.")
 			.typeError('Required!')
+			.min(3, "Minimum of 3 mos.")
 			.when(
 				'product', {
 				is: 'LT',

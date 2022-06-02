@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { red } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -12,8 +12,22 @@ import { Controller } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputAmort = ({ control, name, label }) => {
+export const FormInputAmort = ({ control, name, label, term, rate, amount, setValue }) => {
 	const { classes } = useStyles();
+	const [amortValue, setAmortValue] = useState();
+
+	useEffect(() => {
+		const annualRate = (Number(rate) / 100) / 12;
+		const parsedAmount = parseFloat(amount.replace(/,/g, ""));
+		const terms = Math.pow(1 + annualRate, Number(term));
+		const result = (0 * annualRate) / (terms - 1) + (parsedAmount * annualRate) / (1 - 1 / terms);
+		// console.log(Number(result.toFixed(2)))
+
+		setAmortValue(Number(result.toFixed(2)));
+		setValue("amort", amortValue)
+	}, [amount, term, rate, amortValue])
+
+
 
 	return (
 		<Controller
@@ -46,7 +60,7 @@ export const FormInputAmort = ({ control, name, label }) => {
 							thousandSeparator={true}
 							error={!!error}
 							onChange={onChange}
-							value={value}
+							value={amortValue}
 							placeholder="0.00"
 							variant="outlined"
 							size="small"

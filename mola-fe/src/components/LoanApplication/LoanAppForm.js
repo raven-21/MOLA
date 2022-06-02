@@ -65,6 +65,8 @@ export default function LoanAppForm() {
 	const watchProduct = watch("product");
 	const watchTerm = watch("term");
 	const watchAmount = watch("amount");
+	const watchCharges = watch("charges");
+	const watchRate = watch("rate");
 
 	useEffect(() => {
 		function setValueProduct() {
@@ -299,6 +301,10 @@ export default function LoanAppForm() {
 								name="amort"
 								control={control}
 								label="Amort"
+								amount={watchAmount}
+								term={watchTerm}
+								rate={watchRate}
+								setValue={setValue}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={12} md={12}>
@@ -318,6 +324,9 @@ export default function LoanAppForm() {
 								name="gross"
 								control={control}
 								label="Gross Proceeds"
+								charges={watchCharges}
+								amount={watchAmount}
+								setValue={setValue}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={12} md={12}>
@@ -379,6 +388,7 @@ export default function LoanAppForm() {
 										marginY: -0.1,
 										letterSpacing: 1,
 										textTransform: 'none',
+										fontWeight: 600
 									}}>
 									Submit
 								</Typography>
@@ -400,8 +410,9 @@ export default function LoanAppForm() {
 										marginY: -0.1,
 										letterSpacing: 1,
 										textTransform: 'none',
+										fontWeight: 600
 									}}>
-									Reset
+									Clear Form
 								</Typography>
 							</Button>
 						</Grid>

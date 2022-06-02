@@ -26,7 +26,7 @@ export const FormInputAmount = ({ control, name, label, product }) => {
 				<div>
 					<FormLabel htmlFor="amount">
 						<Typography
-							className={classes.formLabel}
+							className={!error ? classes.formLabel : classes.formLabelError}
 							sx={{
 								fontSize: { xs: '11px', sm: '12px', md: '12px', lg: '13px' },
 							}}>

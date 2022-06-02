@@ -25,6 +25,11 @@ const myStyles = makeStyles(theme => ({
 		color: grey[400],
 		margin: '0 !important'
 	},
+	formLabelError: {
+		fontWeight: '600 !important',
+		color: red[700],
+		margin: '0 !important'
+	},
 	formText: {
 		marginLeft: '0 !important'
 	}
