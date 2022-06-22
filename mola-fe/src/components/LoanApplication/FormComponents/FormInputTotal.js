@@ -12,16 +12,21 @@ import { Controller } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputGross = ({ control, name, label, charges, amount, setValue }) => {
+export const FormInputTotal = ({ control, name, label, amount, addon, setValue }) => {
 	const { classes } = useStyles();
-
-	const [grossValue, setGrossValue] = useState();
+	const [totalValue, setTotalValue] = useState();
 
 	useEffect(() => {
-		const parsedAmount = parseFloat(amount.replace(/,/g, ""));
-		setGrossValue(parsedAmount - charges);
-		setValue("gross", grossValue)
-	}, [charges, grossValue])
+		const parsed = parseFloat(amount.replace(/,/g, ""));
+		const total = parsed + addon;
+		if (!total) {
+			setTotalValue(amount);
+		}
+		else {
+			setTotalValue(total);
+		}
+		setValue("total", totalValue);
+	}, [amount, addon, totalValue]);
 
 	return (
 		<Controller
@@ -54,7 +59,7 @@ export const FormInputGross = ({ control, name, label, charges, amount, setValue
 							thousandSeparator={true}
 							error={!!error}
 							onChange={onChange}
-							value={grossValue}
+							value={totalValue}
 							placeholder="0.00"
 							variant="outlined"
 							size="small"

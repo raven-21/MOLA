@@ -30,6 +30,8 @@ import { FormInputPdi } from "./FormComponents/FormInputPdi";
 import { FormInputNet } from "./FormComponents/FormInputNet";
 import { FormInputInterestType } from "./FormComponents/FormInputInterestType"
 import { FormInputClass } from "./FormComponents/FormInputClass";
+import { FormInputAddOn } from "./FormComponents/FormInputAddOn";
+import { FormInputTotal } from "./FormComponents/FormInputTotal";
 
 export default function LoanAppForm() {
 	const { classes } = useStyles();
@@ -43,6 +45,7 @@ export default function LoanAppForm() {
 		product: "",
 		purpose: "",
 		class: "",
+		type: "",
 		term: 3,
 		rate: 6,
 		amort: "",
@@ -50,7 +53,9 @@ export default function LoanAppForm() {
 		gross: "",
 		balance: "",
 		pdi: "",
-		net: ""
+		net: "",
+		addon: 0,
+		total: 0
 	}
 
 	const { handleSubmit, reset, control, watch, setValue, formState: { errors } } = useForm({
@@ -67,13 +72,15 @@ export default function LoanAppForm() {
 	const watchAmount = watch("amount");
 	const watchCharges = watch("charges");
 	const watchRate = watch("rate");
+	const watchAddon = watch("addon");
+	const watchTotal = watch("total");
 
 	useEffect(() => {
-		function setValueProduct() {
-			// const productSelected = control._fields.product._f.value
-			setProductValue(watchProduct)
+		setProductValue(watchProduct)
+
+		if (watchProduct === 'LT') {
+			setValue("addon", 0);
 		}
-		setValueProduct();
 	}, [watchProduct])
 
 	useEffect(() => {
@@ -81,7 +88,9 @@ export default function LoanAppForm() {
 	}, [watchTerm])
 
 
-	const onSubmit = data => console.log(data)
+	const onSubmit = (data) => {
+		console.log(data)
+	}
 
 	return (
 		<div>
@@ -229,7 +238,7 @@ export default function LoanAppForm() {
 				<Paper
 					variant="outlined"
 					className={classes.cardContent}
-					sx={errors.amount || errors.term ? { borderColor: red[700] } : { borderColor: '#FFF' }}>
+					sx={errors.amount || errors.term || errors.purpose ? { borderColor: red[700] } : { borderColor: '#FFF' }}>
 					<Typography mb={{ xs: 1, sm: 1, md: 2 }} sx={{
 						fontWeight: 700,
 						fontSize: { xs: 16, sm: 16, md: 18 }
@@ -258,6 +267,7 @@ export default function LoanAppForm() {
 								control={control}
 								label="Interest Type"
 								product={watchProduct}
+								setValue={setValue}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={12} md={6}>
@@ -284,7 +294,7 @@ export default function LoanAppForm() {
 								name="term"
 								control={control}
 								label="Term"
-								product={productValue}
+								product={watchProduct}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6} md={6}>
@@ -301,12 +311,41 @@ export default function LoanAppForm() {
 								name="amort"
 								control={control}
 								label="Amort"
-								amount={watchAmount}
+								total={watchTotal}
 								term={watchTerm}
 								rate={watchRate}
+								product={watchProduct}
 								setValue={setValue}
 							/>
 						</Grid>
+						{watchProduct !== 'LT' &&
+							<Grid item xs={12} sm={12} md={12}>
+								<Divider />
+							</Grid>
+						}
+						{watchProduct !== 'LT' &&
+							<Grid item xs={12} sm={12} md={12}>
+								<FormInputAddOn
+									name="addon"
+									control={control}
+									label="Interest (Add-on)"
+									amount={watchAmount}
+									rate={watchRate}
+									setValue={setValue}
+								/>
+							</Grid>
+						}
+						<Grid item xs={12} sm={12} md={12} sx={watchProduct !== 'LT' ? { display: 'block' } : { display: 'none' }}>
+							<FormInputTotal
+								name="total"
+								control={control}
+								label="Total Loan"
+								amount={watchAmount}
+								addon={watchAddon}
+								setValue={setValue}
+							/>
+						</Grid>
+
 						<Grid item xs={12} sm={12} md={12}>
 							<Divider />
 						</Grid>

@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Axios from 'axios';
+import swal from 'sweetalert';
 
 import { makeStyles } from '@mui/styles';
+import { red } from "@mui/material/colors";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -11,12 +15,12 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import FormHelperText from '@mui/material/FormHelperText';
 // ICONS
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +33,6 @@ const useStyles = makeStyles(theme => ({
 export default function Create() {
 	const classes = useStyles();
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [values, setValues] = useState({
 		username: '',
@@ -52,10 +55,37 @@ export default function Create() {
 		event.preventDefault();
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		const credentials = { values };
-		navigate('/home');
+	const [loginError, setLoginError] = useState('');
+	const [loginBool, setLoginBool] = useState(false);
+
+	const { register, handleSubmit, formState: { errors } } = useForm();
+
+	const onSubmit = (data) => {
+		Axios.post('http://localhost:5000/login', data).then((response) => {
+
+			if (response.data.error) {
+				setLoginError(response.data.error);
+				setLoginBool(true);
+			}
+			else {
+				setLoginError();
+				setLoginBool(false);
+				const user = response.data;
+				localStorage.setItem("accessToken", user.accessToken);
+				localStorage.setItem("userId", user.userId);
+
+				swal({
+					icon: "success",
+					title: "Welcome back, " + user.username + "!",
+					text: "Login successful.",
+					buttons: false,
+					timer: 2000,
+				});
+				setTimeout(() => {
+					navigate('/home');
+				}, 1500)
+			}
+		})
 	}
 
 	return (
@@ -79,15 +109,17 @@ export default function Create() {
 				<Typography variant='subtitle2' mb={2} sx={{ fontWeight: 'light', fontStyle: 'italic' }}>
 					Loan application made easier
 				</Typography>
-				<form onSubmit={handleSubmit} autoComplete="off">
+				<form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+					<Box mb={2}>
+						<Typography sx={{ fontSize: 13, fontWeight: 'regular', color: red[700] }}>{loginError}</Typography>
+					</Box>
+
 					<Box mb={2}>
 						<TextField
-							// size="small"
+							{...register("username", { required: '*Username is required!' })}
+							error={!!errors?.username || loginBool}
 							id="input-with-icon-textfield"
-							// label="Username"
 							placeholder='Username...'
-							value={values.username}
-							onChange={handleChange('username')}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -97,16 +129,14 @@ export default function Create() {
 							}}
 							variant="outlined"
 							fullWidth
-							required
 						/>
+						<FormHelperText sx={{ color: red[700] }}>{errors.username ? errors.username.message : null}</FormHelperText>
 					</Box>
 					<Box mb={3}>
 						<TextField
-							// size="small"
+							{...register("password", { required: '*Password is required!' })}
+							error={!!errors?.password || loginBool}
 							type={values.showPassword ? 'text' : 'password'}
-							value={values.password}
-							onChange={handleChange('password')}
-							// label="Password"
 							placeholder='Password...'
 							InputProps={{
 								startAdornment: (
@@ -128,8 +158,8 @@ export default function Create() {
 							}}
 							variant="outlined"
 							fullWidth
-							required
 						/>
+						<FormHelperText sx={{ color: red[700] }}>{errors.password ? errors.password.message : null}</FormHelperText>
 					</Box>
 					{/* <Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 13, marginTop: 3 }}>Forgot
 						<Link href="#" underline="hover" ml={0.5}>
@@ -146,14 +176,13 @@ export default function Create() {
 							variant='contained'
 							color='primary'
 							size='large'
-							sx={{ borderRadius: 6, paddingLeft: 6, paddingRight: 5, paddingY: 1 }}
+							sx={{ borderRadius: 6, paddingLeft: 8, paddingRight: 8, paddingY: 1 }}
 						>
 							Sign In
-							<KeyboardArrowRightRoundedIcon />
 						</Button>
 					</Box>
 				</form>
 			</CardContent>
-		</Card>
+		</Card >
 	)
 }

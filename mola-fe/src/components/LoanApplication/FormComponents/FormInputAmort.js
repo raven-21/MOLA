@@ -12,20 +12,26 @@ import { Controller } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import useStyles from "./useStyles";
 
-export const FormInputAmort = ({ control, name, label, term, rate, amount, setValue }) => {
+export const FormInputAmort = ({ control, name, label, product, term, rate, total, setValue }) => {
 	const { classes } = useStyles();
 	const [amortValue, setAmortValue] = useState();
 
 	useEffect(() => {
 		const annualRate = (Number(rate) / 100) / 12;
-		const parsedAmount = parseFloat(amount.replace(/,/g, ""));
+		// const parsedAmount = parseFloat(total.replace(/,/g, ""));
 		const terms = Math.pow(1 + annualRate, Number(term));
-		const result = (0 * annualRate) / (terms - 1) + (parsedAmount * annualRate) / (1 - 1 / terms);
+		const result = (0 * annualRate) / (terms - 1) + (total * annualRate) / (1 - 1 / terms);
+		const diminishing = Number(result.toFixed(2));
+		const winterest = Number((total / term).toFixed(2));
 		// console.log(Number(result.toFixed(2)))
-
-		setAmortValue(Number(result.toFixed(2)));
+		if (product !== 'LT') {
+			setAmortValue(winterest);
+		}
+		else {
+			setAmortValue(diminishing);
+		}
 		setValue("amort", amortValue)
-	}, [amount, term, rate, amortValue])
+	}, [product, total, term, rate, amortValue])
 
 
 

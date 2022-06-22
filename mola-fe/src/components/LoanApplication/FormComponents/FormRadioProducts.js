@@ -21,54 +21,6 @@ export const FormRadioProducts = ({ control, name, label }) => {
 	const { data: loanProducts } = useFetch('http://localhost:5000/loanApps/loan_products');
 
 	return (
-		// <Controller
-		// 	name={name}
-		// 	control={control}
-		// 	render={({
-		// 		field: { onChange, value },
-		// 		fieldState: { error },
-		// 	}) => (
-		// 		<Paper
-		// 			variant="outlined"
-		// 			className={classes.cardContent}
-		// 			sx={error ? { borderColor: red[700] } : null}>
-		// 			<FormLabel>
-		// 				<Typography
-		// 					className={classes.formLabel}
-		// 					sx={{ fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '18px' } }}>
-		// 					{label}
-		// 					<span style={{ color: red[700] }}> *</span>
-		// 				</Typography>
-		// 			</FormLabel>
-		// 			<FormControl
-		// 				margin="dense"
-		// 				size="small"
-		// 				error={!!error}
-		// 				fullWidth >
-
-		// 				{loanProducts &&
-		// 					<RadioGroup value={value}>
-		// 						{loanProducts.map((loanProduct) => (
-		// 							<FormControlLabel
-		// 								onChange={onChange}
-		// 								key={loanProduct.id}
-		// 								value={loanProduct.product_code}
-		// 								control={<Radio size="small" />}
-		// 								label={
-		// 									<Typography
-		// 										sx={{ fontSize: { xs: '12px', sm: '14px', md: '14px', lg: '16px' } }}>
-		// 										{loanProduct.product_name}
-		// 									</Typography>}
-		// 							/>
-		// 						))}
-		// 					</RadioGroup>
-		// 				}
-		// 				<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
-
-		// 			</FormControl>
-		// 		</Paper>
-		// 	)}
-		// />
 
 		<Controller
 			name={name}

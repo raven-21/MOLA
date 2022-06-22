@@ -9,7 +9,6 @@ export const getLoanProducts = (req, res) => {
 	});
 }
 
-
 export const getLoanPurposes = (req, res) => {
 	db.query('SELECT * FROM purposes', (error, result) => {
 		if (error) throw error;
@@ -26,4 +25,17 @@ export const getInterestTypes = (req, res) => {
 		res.send(result);
 		console.log(result)
 	});
+}
+
+export const getProductCount = (req, res) => {
+	db.query(
+		'SELECT COUNT(IF(loan_product = "LT", 1, NULL)) "LT",' +
+		'COUNT(IF(loan_product = "ST", 1, NULL)) "ST",' +
+		'COUNT(IF(loan_product = "SL", 1, NULL)) "SL"' +
+		'FROM loans WHERE status = "Active"', (error, result) => {
+			if (error) throw error;
+
+			res.send(result);
+			console.log(result)
+		});
 }

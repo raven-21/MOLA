@@ -8,12 +8,13 @@ import TextField from "@mui/material/TextField";
 import { Controller } from "react-hook-form";
 import useStyles from "./useStyles";
 
-export const FormInputInterestType = ({ control, name, label, product }) => {
+export const FormInputInterestType = ({ control, name, label, product, setValue }) => {
 	const { classes } = useStyles();
 	const [type, setType] = useState([]);
 	useEffect(() => {
 		product === "LT" ? setType("Diminishing") : setType("With Interest")
-	}, [product])
+		setValue("type", type)
+	}, [product, type])
 
 	return (
 		<Controller

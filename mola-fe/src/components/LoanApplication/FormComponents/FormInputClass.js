@@ -6,10 +6,13 @@ import FormHelperText from "@mui/material/FormHelperText";
 import TextField from "@mui/material/TextField";
 
 import { Controller } from "react-hook-form";
+import useFetch from "../../../hooks/useFetch";
 import useStyles from "./useStyles";
 
 export const FormInputClass = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
+	const { data: productCount } = useFetch('http://localhost:5000/loanApps/product_count');
+
 	const [type, setType] = useState([]);
 	useEffect(() => {
 		product === "LT" ? setType("Reloan") : setType("New")
