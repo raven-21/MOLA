@@ -14,10 +14,6 @@ import Avatar from "@mui/material/Avatar";
 import LoanSvg from "../../assets/svg/undraw_online_payments_re_y8f2.svg";
 import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
 
-// Custom Components
-import DialogLoanApply from ".././DialogLoanApply"
-import LoanApplyDialog from ".././LoanApplyDialog"
-
 
 const useStyles = makeStyles(theme => ({
 
@@ -45,12 +41,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function CardLoanApply() {
 	const classes = useStyles();
-
-	const [openDialog, setOpenDialog] = useState(false);
-
-	const handleDialogOpen = () => {
-		setOpenDialog(true);
-	};
 
 	return (
 		<div>
@@ -150,17 +140,6 @@ export default function CardLoanApply() {
 											</Typography>
 										</Box>
 										<Box>
-											{/* <Button variant="contained" onClick={handleDialogOpen} sx={{ borderRadius: '25px' }}>
-												<Typography variant='overline'
-													sx={{
-														marginX: 2,
-														marginY: -0.5,
-														letterSpacing: 1,
-														textTransform: 'none'
-													}}>
-													Apply
-												</Typography>
-											</Button> */}
 											<Link to="/loan_apply" className={classes.link}>
 												<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none' }}>
 													<Typography variant='overline'
@@ -174,10 +153,6 @@ export default function CardLoanApply() {
 													</Typography>
 												</Button>
 											</Link>
-
-											{/* Dialog/Modal */}
-											{/* <DialogLoanApply openDialog={openDialog} setOpenDialog={setOpenDialog} /> */}
-											<LoanApplyDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
 										</Box>
 									</div>
 								</Grid>

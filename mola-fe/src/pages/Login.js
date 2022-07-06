@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import Axios from 'axios';
-import swal from 'sweetalert';
-
+//Custom Hooks
+import useLogin from '../hooks/useLogin';
+//Material UI Components
 import { makeStyles } from '@mui/styles';
 import { red } from "@mui/material/colors";
 import Card from '@mui/material/Card';
@@ -12,7 +11,6 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -30,63 +28,12 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function Create() {
+export default function Login() {
 	const classes = useStyles();
-	const navigate = useNavigate();
-
-	const [values, setValues] = useState({
-		username: '',
-		password: '',
-		showPassword: false,
-	});
-
-	const handleChange = (prop) => (event) => {
-		setValues({ ...values, [prop]: event.target.value });
-	};
-
-	const handleClickShowPassword = () => {
-		setValues({
-			...values,
-			showPassword: !values.showPassword,
-		});
-	};
-
-	const handleMouseDownPassword = (event) => {
-		event.preventDefault();
-	};
-
-	const [loginError, setLoginError] = useState('');
-	const [loginBool, setLoginBool] = useState(false);
 
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
-	const onSubmit = (data) => {
-		Axios.post('http://localhost:5000/login', data).then((response) => {
-
-			if (response.data.error) {
-				setLoginError(response.data.error);
-				setLoginBool(true);
-			}
-			else {
-				setLoginError();
-				setLoginBool(false);
-				const user = response.data;
-				localStorage.setItem("accessToken", user.accessToken);
-				localStorage.setItem("userId", user.userId);
-
-				swal({
-					icon: "success",
-					title: "Welcome back, " + user.username + "!",
-					text: "Login successful.",
-					buttons: false,
-					timer: 2000,
-				});
-				setTimeout(() => {
-					navigate('/home');
-				}, 1500)
-			}
-		})
-	}
+	const { values, loginError, loginBool, isPending, handleClickShowPassword, handleMouseDownPassword, onSubmit } = useLogin();
 
 	return (
 		<Card
@@ -147,6 +94,7 @@ export default function Create() {
 								endAdornment: (
 									<InputAdornment position='end'>
 										<IconButton
+											size="small"
 											aria-label="toggle password visibility"
 											onClick={handleClickShowPassword}
 											onMouseDown={handleMouseDownPassword}
@@ -161,25 +109,30 @@ export default function Create() {
 						/>
 						<FormHelperText sx={{ color: red[700] }}>{errors.password ? errors.password.message : null}</FormHelperText>
 					</Box>
-					{/* <Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 13, marginTop: 3 }}>Forgot
-						<Link href="#" underline="hover" ml={0.5}>
-							password?
-						</Link>
-					</Typography> */}
 					<Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 11, marginTop: 3 }}>
 						Forgot password? Please contact your administrator.
 					</Typography>
 					<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-						<Button
-							className={classes.loginBtn}
-							type='submit'
-							variant='contained'
-							color='primary'
-							size='large'
-							sx={{ borderRadius: 6, paddingLeft: 8, paddingRight: 8, paddingY: 1 }}
-						>
-							Sign In
-						</Button>
+						{!isPending &&
+							<Button
+								className={classes.loginBtn}
+								type='submit'
+								variant='contained'
+								color='primary'
+								size='large'
+								sx={{ borderRadius: 6, paddingLeft: 8, paddingRight: 8, paddingY: 1 }}>
+								Sign In
+							</Button>}
+						{isPending &&
+							<Button
+								className={classes.loginBtn}
+								type='submit'
+								variant='contained'
+								color='primary'
+								size='large'
+								sx={{ borderRadius: 6, paddingLeft: 8, paddingRight: 8, paddingY: 1 }}>
+								Signing in...
+							</Button>}
 					</Box>
 				</form>
 			</CardContent>

@@ -1,11 +1,10 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { makeStyles } from '@mui/styles'
 import Box from '@mui/material/Box'
 
 import LogoMemba from '../assets/memba_logo/memba.png'
 
-import Header from './Header';
+import Header from './UserComponents/UserNavbar';
 import Footer from './Footer';
 
 
@@ -48,11 +47,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Layout({ children }) {
 	const classes = useStyles();
-	const location = useLocation();
+
+	const authToken = localStorage.getItem("accessToken");
 
 	return (
 		<div>
-			{location.pathname === '/' &&
+			{!authToken &&
 				<div className={classes.rootA}>
 					<div className={classes.logo}>
 						<Box
@@ -70,7 +70,7 @@ export default function Layout({ children }) {
 					<Footer />
 				</div>
 			}
-			{location.pathname !== '/' &&
+			{authToken &&
 				<div className={classes.rootB}>
 					<Header />
 					<div className={classes.pageB}>
@@ -79,28 +79,5 @@ export default function Layout({ children }) {
 				</div>
 			}
 		</div>
-		// <div className={classes.root}>
-		// 	{/* Header */}
-		// 	{location.pathname !== '/' && <Header />}
-		// 	{location.pathname === '/' &&
-		// 		<div className={classes.logo}>
-		// 			<Box
-		// 				component="img"
-		// 				sx={{
-		// 					width: 250,
-		// 				}}
-		// 				alt="Memba Logo hihi"
-		// 				src={LogoMemba}
-		// 			/>
-		// 		</div>
-		// 	}
-		// 	{/* Main */}
-		// 	<div className={classes.page}>
-		// 		{location.pathname !== '/' && <div className={classes.toolbar}></div>}
-		// 		{children}
-		// 	</div>
-		// 	{/* Footer */}
-		// 	<Footer />
-		// </div>
 	)
 }

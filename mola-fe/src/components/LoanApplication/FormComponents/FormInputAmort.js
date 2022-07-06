@@ -33,8 +33,6 @@ export const FormInputAmort = ({ control, name, label, product, term, rate, tota
 		setValue("amort", amortValue)
 	}, [product, total, term, rate, amortValue])
 
-
-
 	return (
 		<Controller
 			name={name}

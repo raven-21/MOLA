@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
+import axios from "axios";
 
 const useFetch = (url) => {
 	const [data, setData] = useState(null);
@@ -12,7 +12,7 @@ const useFetch = (url) => {
 		// 	.then(data => {
 		// 		setData(data);
 		// 	})
-		Axios.get(url).then((res) => {
+		axios.get(url).then((res) => {
 			setData(res.data);
 		})
 	}, []);
