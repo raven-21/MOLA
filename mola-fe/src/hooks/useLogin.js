@@ -46,6 +46,7 @@ const useLogin = () => {
 				const user = response.data;
 
 				localStorage.setItem("accessToken", user.accessToken);
+				localStorage.setItem("userAuth", JSON.stringify({ id: user.userId, role: user.role }));
 
 				swal({
 					icon: "success",

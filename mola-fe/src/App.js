@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import PrivateRoutes from './utils/PrivateRoutes';
 import PublicRoutes from './utils/PublicRoutes';
 import LoginLayout from './components/LoginComponents/LoginLayout';
 import UserLayout from './components/UserComponents/UserLayout';
+import AdminLayout from './components/AdminComponents/AdminLayout';
 
 import Login from './pages/Login';
-import Home from "./pages/Home";
-
-import Profile from "./pages/Profile";
-import Settings from './pages/Settings';
-import LoanApply from './pages/LoanApply';
 import NotFound from './pages/NotFound';
+//USER PAGE
+import Home from "./pages/UserPages/Home";
+import Profile from "./pages/UserPages/Profile";
+import { useEffect, useState } from 'react';
+
 
 
 const theme = createTheme({
@@ -28,23 +28,37 @@ const theme = createTheme({
 
 function App() {
 
+	const user = JSON.parse(localStorage.getItem("userAuth"));
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>
 				<Routes>
 					<Route path="*" element={<NotFound />} />
-
 					<Route element={<PublicRoutes />}>
 						<Route path="/" element={<LoginLayout />}>
 							<Route index element={<Login />} />
 						</Route>
 					</Route>
-
-					<Route element={<PrivateRoutes />}>
-						<Route path="/" element={<UserLayout />}>
-							<Route index path="/home" element={<Home />} />
+					{user &&
+						<Route element={<PrivateRoutes />}>
+							{user.role === 'member' ? (
+								<Route path="/" element={<UserLayout />}>
+									<Route index path="/home" element={<Home />} />
+									<Route exact path="/profile" element={<Profile />} />
+								</Route>
+							) : (
+								<Route path="/" element={<AdminLayout />}>
+									<Route index path="/home" element={<Home />} />
+									<Route exact path="/profile" element={<Profile />} />
+								</Route>
+							)
+							}
 						</Route>
-					</Route>
+					}
+
+
+
 
 					{/* <Route element={<Navigate to="/" />} path="*" />
 						<Route element={<Login />} path="/" />

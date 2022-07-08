@@ -3,12 +3,6 @@ import { makeStyles } from "@mui/styles";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
-// Custom Home Components
-import CardLoanStatus from "../components/HomeComponents/CardLoanStatus";
-import CardLoanSummary from "../components/HomeComponents/CardLoanSummary";
-import CardLoanApply from "../components/HomeComponents/CardLoanApply";
-
-
 const useStyles = makeStyles(theme => ({
 	root: {
 		background: '#F0F1F3',
@@ -30,13 +24,7 @@ export default function Home() {
 		<div className={classes.root}>
 			<Container maxWidth="lg">
 				<div className={classes.content}>
-					<CardLoanApply />
-					<br />
-					{/* Loan Status List */}
-					<CardLoanStatus />
-
-					{/* Loan Summary List */}
-					<CardLoanSummary />
+					<h1>Hello, Admin!</h1>
 				</div>
 			</Container >
 		</div >

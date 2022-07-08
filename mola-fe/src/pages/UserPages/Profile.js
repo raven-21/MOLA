@@ -3,9 +3,9 @@ import { makeStyles } from '@mui/styles';
 import Container from '@mui/material/Container';
 import { Box } from '@mui/material';
 //Custom components
-import BtnGrp from '../components/ProfileComponents/BtnGrp';
-import ProfileInfo from '../components/ProfileComponents/ProfileInfo';
-import ProfileInfoLG from '../components/ProfileComponents/ProfileInfoLG';
+import BtnGrp from '../../components/ProfileComponents/BtnGrp';
+import ProfileInfo from '../../components/ProfileComponents/ProfileInfo';
+import ProfileInfoLG from '../../components/ProfileComponents/ProfileInfoLG';
 
 const useStyles = makeStyles(theme => ({
 	root: {
