@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
+// CUSTOM
+import Configs from "../../utils/Configs"
+// MATERIAL UI
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -12,6 +15,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Avatar from '@mui/material/Avatar';
 import { cyan } from '@mui/material/colors';
+//IMAGES
 import LogoMemba from '../../assets/memba_logo/memba_inline.png';
 import LogoMembaM from '../../assets/memba_logo/memba_abbrv.png';
 // ICONS
@@ -41,15 +45,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UserNavbar() {
+	const { userId } = Configs();
 	const classes = useStyles();
 	const location = useLocation();
 
 	const handleLogOut = () => {
-		// localStorage.removeItem("accessToken");
-		// localStorage.removeItem("authID");
-		// localStorage.removeItem("role");
-
-		//clear all
 		localStorage.clear();
 	}
 
@@ -63,10 +63,7 @@ export default function UserNavbar() {
 							sx={{
 								width: 150,
 								marginTop: '10px',
-								display: {
-									xs: 'none',
-									sm: 'block'
-								}
+								display: { xs: 'none', sm: 'block' }
 							}}
 							alt="Memba Logo"
 							src={LogoMemba}
@@ -76,10 +73,7 @@ export default function UserNavbar() {
 							sx={{
 								width: 40,
 								marginTop: '10px',
-								display: {
-									xs: 'block',
-									sm: 'none'
-								}
+								display: { xs: 'block', sm: 'none' }
 							}}
 							alt="Memba Logo"
 							src={LogoMembaM}
@@ -87,11 +81,10 @@ export default function UserNavbar() {
 					</Typography>
 					<Box ml={5}></Box>
 					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
-						<Link to="/profile" className={classes.link}>
+						<Link to={`/profile/${userId}`} className={classes.link}>
 							<IconButton className={location.pathname == '/profile' ? classes.active : classes.btnIcon}>
 								<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>M</Avatar>
 							</IconButton>
-
 						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Home" arrow>
@@ -110,7 +103,6 @@ export default function UserNavbar() {
 							</IconButton>
 						</Link>
 					</Tooltip>
-
 					<Tooltip TransitionComponent={Zoom} title="Settings" arrow>
 						<Link to="/settings" className={classes.link}>
 							<IconButton className={location.pathname == '/settings' ? classes.active : classes.btnIcon}>

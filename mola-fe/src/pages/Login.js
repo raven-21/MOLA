@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormHelperText from '@mui/material/FormHelperText';
+import CircularProgress from '@mui/material/CircularProgress';
 // ICONS
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -24,7 +25,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 const useStyles = makeStyles(theme => ({
 	loginBtn: {
 		background: 'linear-gradient(45deg, #113050 20%, #184470 90%)',
-		textTransform: 'none !important'
+		textTransform: 'none !important',
+		color: '#FFF'
 	},
 }));
 
@@ -126,12 +128,14 @@ export default function Login() {
 						{isPending &&
 							<Button
 								className={classes.loginBtn}
-								type='submit'
 								variant='contained'
 								color='primary'
 								size='large'
-								sx={{ borderRadius: 6, paddingLeft: 8, paddingRight: 8, paddingY: 1 }}>
-								Signing in...
+								sx={{ borderRadius: 6, paddingLeft: 5, paddingRight: 5, paddingY: 1, }}>
+								Signing in... &nbsp;&nbsp;
+								<CircularProgress
+									color="inherit"
+									size={23} />
 							</Button>}
 					</Box>
 				</form>

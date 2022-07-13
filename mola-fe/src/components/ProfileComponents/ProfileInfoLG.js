@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { grey } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
@@ -28,8 +28,11 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function ProfileInfoLG() {
+export default function ProfileInfoLG({ user }) {
 	const classes = useStyles();
+	let info = user[0];
+	let fname = info.firstname;
+	let avatar = fname.charAt(0);
 
 	return (
 		<div>
@@ -49,7 +52,7 @@ export default function ProfileInfoLG() {
 									fontSize: { xs: 30, sm: 35, md: 40 },
 									fontWeight: 700
 								}}>
-								M
+								{avatar}
 							</Avatar>
 							<Box ml={3}>
 								<Typography
@@ -58,7 +61,7 @@ export default function ProfileInfoLG() {
 										fontWeight: 700,
 										color: '#000',
 									}}>
-									Monjae Steven Lugo
+									{info.firstname + ' ' + info.middlename + ' ' + info.lastname}
 								</Typography>
 								<Typography
 									sx={{
@@ -66,14 +69,15 @@ export default function ProfileInfoLG() {
 										color: grey[400],
 										fontWeight: 700,
 									}}>
-									ID: 5007979
+									ID: {info.employee_id}
 								</Typography>
 								<Typography
 									sx={{
 										fontSize: { xs: 12, sm: 12, md: 14, },
 										color: '#649FEE',
 										fontWeight: 700,
-									}}> monjae.lugo@gmail.com
+									}}>
+									{info.email}
 								</Typography>
 							</Box>
 						</Grid>
@@ -97,7 +101,7 @@ export default function ProfileInfoLG() {
 											fontWeight: 600,
 											color: '#000',
 										}}>
-										05/07/2019
+										{info.membership_date}
 									</Typography>
 								</Grid>
 							</Grid>
@@ -119,7 +123,7 @@ export default function ProfileInfoLG() {
 											fontWeight: 600,
 											color: '#000',
 										}}>
-										0935-649-789
+										{info.mobile_no}
 									</Typography>
 								</Grid>
 							</Grid>
@@ -141,7 +145,7 @@ export default function ProfileInfoLG() {
 											fontWeight: 600,
 											color: '#000',
 										}}>
-										001-033H
+										{info.stadiv}
 									</Typography>
 								</Grid>
 							</Grid>

@@ -28,8 +28,12 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function ProfileInfo() {
+export default function ProfileInfo({ user }) {
 	const classes = useStyles();
+	let info = user[0];
+	let suffix = info.suffix ? info.suffix : '';
+	let fname = info.firstname;
+	let avatar = fname.charAt(0);
 
 	return (
 		<div>
@@ -52,7 +56,7 @@ export default function ProfileInfo() {
 											fontSize: { xs: 30, sm: 35, md: 40 },
 											fontWeight: 700
 										}}>
-										M
+										{avatar}
 									</Avatar>
 								</Grid>
 								<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -64,7 +68,7 @@ export default function ProfileInfo() {
 												color: '#000',
 												textAlign: 'center'
 											}}>
-											Monjae Chan
+											{info.firstname + ' ' + info.middlename + ' ' + info.lastname + ' ' + suffix}
 										</Typography>
 										<Typography
 											sx={{
@@ -73,7 +77,7 @@ export default function ProfileInfo() {
 												fontWeight: 700,
 												textAlign: 'center'
 											}}>
-											ID: 5007979
+											ID: {info.employee_id}
 										</Typography>
 										<Typography
 											sx={{
@@ -81,7 +85,8 @@ export default function ProfileInfo() {
 												color: '#649FEE',
 												fontWeight: 700,
 												textAlign: 'center'
-											}}> monjae.lugo@gmail.com
+											}}>
+											{info.email}
 										</Typography>
 									</Box>
 								</Grid>
@@ -113,7 +118,7 @@ export default function ProfileInfo() {
 											fontWeight: 600,
 											color: '#000',
 										}}>
-										05/07/2019
+										{info.membership_date}
 									</Typography>
 								</CardContent>
 							</Card>
@@ -140,7 +145,7 @@ export default function ProfileInfo() {
 											fontWeight: 600,
 											color: '#000',
 										}}>
-										0935-649-789
+										{info.mobile_no}
 									</Typography>
 								</CardContent>
 							</Card>
@@ -167,7 +172,7 @@ export default function ProfileInfo() {
 											fontWeight: 600,
 											color: '#000',
 										}}>
-										001-033H
+										{info.stadiv}
 									</Typography>
 								</CardContent>
 							</Card>

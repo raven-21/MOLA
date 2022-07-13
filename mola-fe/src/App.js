@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
 
-import PrivateRoutes from './utils/PrivateRoutes';
+import ProtectedRoutes from './utils/ProtectedRoutes';
 import PublicRoutes from './utils/PublicRoutes';
 import LoginLayout from './components/LoginComponents/LoginLayout';
 import UserLayout from './components/UserComponents/UserLayout';
@@ -12,9 +13,13 @@ import NotFound from './pages/NotFound';
 //USER PAGE
 import Home from "./pages/UserPages/Home";
 import Profile from "./pages/UserPages/Profile";
-import { useEffect, useState } from 'react';
+import LoanApply from "./pages/UserPages/LoanApply";
 
+//ADMIN
+import AdminHome from "./pages/AdminPages/Home";
 
+import { useAuth } from './context/authContext';
+import useAuthToken from './hooks/useAuthToken';
 
 const theme = createTheme({
 	typography: {
@@ -27,37 +32,43 @@ const theme = createTheme({
 });
 
 function App() {
+	const { user } = useAuth();
+	const [role, setRole] = useState(null);
 
-	const user = JSON.parse(localStorage.getItem("userAuth"));
+	useEffect(() => {
+		let userRole = localStorage.getItem("userRole");
+		if (userRole) {
+			setRole(userRole)
+		}
+	}, [user]);
+
 
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>
 				<Routes>
-					<Route path="*" element={<NotFound />} />
+
 					<Route element={<PublicRoutes />}>
 						<Route path="/" element={<LoginLayout />}>
 							<Route index element={<Login />} />
 						</Route>
 					</Route>
-					{user &&
-						<Route element={<PrivateRoutes />}>
-							{user.role === 'member' ? (
-								<Route path="/" element={<UserLayout />}>
-									<Route index path="/home" element={<Home />} />
-									<Route exact path="/profile" element={<Profile />} />
-								</Route>
-							) : (
-								<Route path="/" element={<AdminLayout />}>
-									<Route index path="/home" element={<Home />} />
-									<Route exact path="/profile" element={<Profile />} />
-								</Route>
-							)
-							}
-						</Route>
-					}
 
-
+					<Route element={<ProtectedRoutes />}>
+						{role === 'admin' && (
+							<Route path="/" element={<AdminLayout />}>
+								<Route index path="/home" element={<AdminHome />} />
+							</Route>
+						)}
+						{role === 'member' && (
+							<Route path="/" element={<UserLayout />}>
+								<Route index path="/home" element={<Home />} />
+								<Route exact path="/profile/:id" element={<Profile />} />
+								<Route exact path="/loan_apply" element={<LoanApply />} />
+							</Route>
+						)}
+					</Route>
+					<Route path="*" element={<NotFound />} />
 
 
 					{/* <Route element={<Navigate to="/" />} path="*" />

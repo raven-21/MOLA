@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 //Material UI
 import Container from "@mui/material/Container";
 //Custom Components
-import LoanAppForm from "../components/LoanApplication/LoanAppForm";
+import LoanAppForm from "../../components/LoanApplication/LoanAppForm";
 
 const useStyles = makeStyles(theme => ({
 	root: {

@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import swal from 'sweetalert';
+import { useAuth } from "../context/authContext";
 
 const useLogin = () => {
 
 	const navigate = useNavigate();
+	const { login } = useAuth();
 
 	const [loginError, setLoginError] = useState('');
 	const [loginBool, setLoginBool] = useState(false);
@@ -29,7 +31,6 @@ const useLogin = () => {
 	};
 
 	const onSubmit = (data) => {
-
 		setIsPending(true);
 
 		axios.post('http://localhost:5000/user/login', data).then((response) => {
@@ -44,9 +45,11 @@ const useLogin = () => {
 				setLoginError();
 				setLoginBool(false);
 				const user = response.data;
+				login(user);
 
 				localStorage.setItem("accessToken", user.accessToken);
-				localStorage.setItem("userAuth", JSON.stringify({ id: user.userId, role: user.role }));
+				localStorage.setItem("userRole", user.role);
+				localStorage.setItem("userId", user.userId);
 
 				swal({
 					icon: "success",

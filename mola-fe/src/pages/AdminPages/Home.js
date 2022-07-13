@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuth } from "../../context/authContext";
 import { makeStyles } from "@mui/styles";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -19,12 +20,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home() {
 	const classes = useStyles();
-
+	const auth = useAuth();
 	return (
 		<div className={classes.root}>
 			<Container maxWidth="lg">
 				<div className={classes.content}>
-					<h1>Hello, Admin!</h1>
+					<h1>Hello, admin!</h1>
 				</div>
 			</Container >
 		</div >

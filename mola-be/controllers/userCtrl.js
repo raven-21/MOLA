@@ -1,10 +1,9 @@
 import db from '../config/database.js';
 import dotenv from "dotenv";
 import jwt from 'jsonwebtoken';
-import md5 from 'md5';
+import MD5 from 'MD5';
 
 dotenv.config();
-
 
 export const login = (req, res) => {
 	const data = req.body;
@@ -26,7 +25,7 @@ export const login = (req, res) => {
 
 				const responseData = {
 					accessToken: accessToken,
-					userId: md5(user.id_member),
+					userId: MD5(JSON.stringify(user.id_member)),
 					username: user.username,
 					role: user.role
 				};
@@ -39,4 +38,13 @@ export const login = (req, res) => {
 export const authToken = (req, res) => {
 	res.send(req.user)
 }
+
+export const getUser = (req, res) => {
+	db.query('SELECT * FROM members a LEFT JOIN div_stations b ON a.id_statdiv = b.id WHERE MD5(a.id) = ?', req.params.id, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+	});
+}
+
+
 

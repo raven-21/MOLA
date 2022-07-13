@@ -1,5 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
+import { useParams } from 'react-router-dom';
+import useFetchId from '../../hooks/useFetchId';
+import Configs from '../../utils/Configs';
+//MATERIAL
 import Container from '@mui/material/Container';
 import { Box } from '@mui/material';
 //Custom components
@@ -22,20 +26,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Profile() {
-
 	const classes = useStyles();
+	const { id } = useParams();
+	const { API } = Configs();
+	const { data: user } = useFetchId(API + 'user/', id);
 
 	return (
 		<div className={classes.root}>
 			<Container maxWidth="lg">
 				<div className={classes.content}>
 					<Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-						<ProfileInfoLG />
+						{user &&
+							<ProfileInfoLG user={user} />
+						}
 					</Box>
 					<Box sx={{ display: { xs: 'block', sm: 'block', md: 'none' } }}>
-						<ProfileInfo />
+						{user &&
+							<ProfileInfo user={user} />
+						}
 					</Box>
-
 					<BtnGrp />
 				</div>
 			</Container >

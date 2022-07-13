@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
 import useFetch from "./useFetch";
 import * as yup from "yup";
+import Configs from "../utils/Configs";
 
 const useLoanApp = (watchProduct) => {
 
-	const { data: loanProducts } = useFetch('http://localhost:5000/loanApps/loan_products');
-	const { data: loanPurposes } = useFetch('http://localhost:5000/loanApps/loan_purposes');
-	const { data: interestTypes } = useFetch('http://localhost:5000/loanApps/interest_types');
+	const { API } = Configs();
+
+	const { data: loanProducts } = useFetch(API + 'loanApps/loan_products');
+	const { data: loanPurposes } = useFetch(API + 'loanApps/loan_purposes');
+	const { data: interestTypes } = useFetch(API + 'loanApps/interest_types');
 
 	const schema2 = yup.object().shape({
 		product: yup

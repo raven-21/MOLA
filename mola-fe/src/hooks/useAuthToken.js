@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useAuth = (url) => {
+//Authenticate TOKEN
+const useAuthToken = (url) => {
 	const [isAuth, setIsAuth] = useState();
-	const [user, setUser] = useState();
 	const token = localStorage.getItem("accessToken");
 
 	useEffect(() => {
 		if (token) {
-			setUser(JSON.parse(localStorage.getItem("userAuth")));
 			axios.get(url, {
 				headers: {
 					accessToken: token
@@ -23,7 +22,7 @@ const useAuth = (url) => {
 
 	}, []);
 
-	return { isAuth, user };
+	return { isAuth };
 }
 
-export default useAuth;
+export default useAuthToken;
