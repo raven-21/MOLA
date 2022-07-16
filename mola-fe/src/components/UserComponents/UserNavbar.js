@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, matchRoutes } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 // CUSTOM
 import Configs from "../../utils/Configs"
+import useFetchId from '../../hooks/useFetchId';
 // MATERIAL UI
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -45,9 +46,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UserNavbar() {
-	const { userId } = Configs();
 	const classes = useStyles();
 	const location = useLocation();
+	const { API, userId } = Configs();
+	const { data: user } = useFetchId(API + 'user/', userId);
 
 	const handleLogOut = () => {
 		localStorage.clear();
@@ -82,8 +84,8 @@ export default function UserNavbar() {
 					<Box ml={5}></Box>
 					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
 						<Link to={`/profile/${userId}`} className={classes.link}>
-							<IconButton className={location.pathname == '/profile' ? classes.active : classes.btnIcon}>
-								<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>M</Avatar>
+							<IconButton className={location.pathname == `/profile/${userId}` ? classes.active : classes.btnIcon}>
+								<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>{user ? user[0].firstname.charAt(0) : null}</Avatar>
 							</IconButton>
 						</Link>
 					</Tooltip>

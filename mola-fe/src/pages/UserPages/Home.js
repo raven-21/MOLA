@@ -1,8 +1,10 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
+import Configs from '../../utils/Configs';
+import useFetchId from '../../hooks/useFetchId';
+//MUI
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-
 // Custom Home Components
 import CardLoanStatus from "../../components/HomeComponents/CardLoanStatus";
 import CardLoanSummary from "../../components/HomeComponents/CardLoanSummary";
@@ -25,19 +27,24 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home() {
 	const classes = useStyles();
+	const { API, userId } = Configs();
+	const { data } = useFetchId(API + 'user/savings/', userId);
 
 	return (
 		<div className={classes.root}>
 			<Container maxWidth="lg">
-				<div className={classes.content}>
-					<CardLoanApply />
-					<br />
-					{/* Loan Status List */}
-					<CardLoanStatus />
+				{data &&
+					<div className={classes.content}>
+						<CardLoanApply data={data} />
+						<br />
+						{/* Loan Status List */}
+						<CardLoanStatus />
 
-					{/* Loan Summary List */}
-					<CardLoanSummary />
-				</div>
+						{/* Loan Summary List */}
+						<CardLoanSummary />
+					</div>
+				}
+
 			</Container >
 		</div >
 	);

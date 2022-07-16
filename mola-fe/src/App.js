@@ -2,6 +2,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
+//HOOKS
+import { useAuth } from './context/authContext';
+
+//COMPONENTS
 import ProtectedRoutes from './utils/ProtectedRoutes';
 import PublicRoutes from './utils/PublicRoutes';
 import LoginLayout from './components/LoginComponents/LoginLayout';
@@ -10,6 +14,7 @@ import AdminLayout from './components/AdminComponents/AdminLayout';
 
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+
 //USER PAGE
 import Home from "./pages/UserPages/Home";
 import Profile from "./pages/UserPages/Profile";
@@ -18,8 +23,6 @@ import LoanApply from "./pages/UserPages/LoanApply";
 //ADMIN
 import AdminHome from "./pages/AdminPages/Home";
 
-import { useAuth } from './context/authContext';
-import useAuthToken from './hooks/useAuthToken';
 
 const theme = createTheme({
 	typography: {
@@ -37,11 +40,8 @@ function App() {
 
 	useEffect(() => {
 		let userRole = localStorage.getItem("userRole");
-		if (userRole) {
-			setRole(userRole)
-		}
+		if (userRole) setRole(userRole);
 	}, [user]);
-
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -67,8 +67,9 @@ function App() {
 								<Route exact path="/loan_apply" element={<LoanApply />} />
 							</Route>
 						)}
+						<Route path="*" element={<NotFound />} />
 					</Route>
-					<Route path="*" element={<NotFound />} />
+
 
 
 					{/* <Route element={<Navigate to="/" />} path="*" />

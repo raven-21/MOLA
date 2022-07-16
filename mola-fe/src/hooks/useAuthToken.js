@@ -15,7 +15,7 @@ const useAuthToken = (url) => {
 			}).then((response) => {
 				if (response.data.error) {
 					setIsAuth(response.data.error)
-					localStorage.removeItem("accessToken");
+					localStorage.clear();
 				}
 			})
 		}

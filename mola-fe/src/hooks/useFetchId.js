@@ -7,8 +7,8 @@ const useFetchId = (url, id) => {
 	useEffect(() => {
 		axios.get(url + id).then((res) => {
 			setData(res.data);
-		})
-	}, []);
+		});
+	}, [id]);
 
 	return { data }
 }

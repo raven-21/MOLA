@@ -46,5 +46,19 @@ export const getUser = (req, res) => {
 	});
 }
 
+export const getUserLoans = (req, res) => {
+	db.query('SELECT * FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE MD5(a.id) = ?', req.params.id, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+	})
+}
+
+export const getUserSavings = (req, res) => {
+	db.query('SELECT * FROM members a LEFT JOIN savings b ON a.id = b.member_id WHERE MD5(a.id) = ?', req.params.id, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+	})
+}
+
 
 
