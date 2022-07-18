@@ -59,6 +59,27 @@ export const getUserSavings = (req, res) => {
 		res.send(result);
 	})
 }
+//Loan APPLICATIONS
+export const getUserInactives = (req, res) => {
+	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Inactive" AND MD5(a.id) = ?', req.params.id, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+	})
+}
+//Loan SUMMARY (active/completed)
+export const getUserActives = (req, res) => {
+	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Active" AND MD5(a.id) = ?', req.params.id, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+	})
+}
+
+export const getUserCompleted = (req, res) => {
+	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Completed" AND MD5(a.id) = ?', req.params.id, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+	})
+}
 
 
 

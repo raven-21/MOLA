@@ -39,13 +39,13 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function CardLoanApply({ data }) {
+export default function CardLoanApply({ savings }) {
 	const classes = useStyles();
-	const value = data[0];
+	const value = savings[0];
 
 	return (
 		<div>
-			{data &&
+			{savings &&
 				<Grid container spacing={2}>
 					<Grid item xs={12} sm={12} md={6} >
 						<Card className={classes.card} elevation={0}>
@@ -106,7 +106,7 @@ export default function CardLoanApply({ data }) {
 														fontWeight: 'bold',
 														fontSize: { xs: 21, sm: 21, md: 21 }
 													}}>
-													{value.balance.toLocaleString(2)}
+													{value.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 												</Typography>
 											</Box>
 										</div>

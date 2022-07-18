@@ -5,13 +5,12 @@ import useFetchId from '../../hooks/useFetchId';
 import Configs from '../../utils/Configs';
 //MATERIAL
 import Container from '@mui/material/Container';
-import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 //Custom components
 import BtnGrp from '../../components/ProfileComponents/BtnGrp';
 import ProfileInfo from '../../components/ProfileComponents/ProfileInfo';
 import ProfileInfoLG from '../../components/ProfileComponents/ProfileInfoLG';
+import SkeletonLoader from '../../components/SkeletonLoader';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -38,20 +37,18 @@ export default function Profile() {
 			<Container maxWidth="lg">
 				<div className={classes.content}>
 					{user ?
-						(<div>
-							<Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-								<ProfileInfoLG user={user} />
-							</Box>
-							<Box sx={{ display: { xs: 'block', sm: 'block', md: 'none' } }}>
-								<ProfileInfo user={user} />
-							</Box>
-						</div>)
+						(
+							<div>
+								<Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
+									<ProfileInfoLG user={user} />
+								</Box>
+								<Box sx={{ display: { xs: 'block', sm: 'block', md: 'none' } }}>
+									<ProfileInfo user={user} />
+								</Box>
+							</div>
+						)
 						:
-						(<Stack spacing={1}>
-							<Skeleton variant="rectangular" animation="wave" height={118} />
-							<Skeleton variant="text" animation="wave" />
-							<Skeleton variant="text" animation="wave" width="70%" />
-						</Stack>)
+						(<SkeletonLoader />)
 					}
 
 					{/* <BtnGrp /> */}
