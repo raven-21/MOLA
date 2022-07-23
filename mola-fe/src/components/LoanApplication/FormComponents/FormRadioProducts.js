@@ -52,10 +52,10 @@ export const FormRadioProducts = ({ control, name, label }) => {
 								value={value}
 								displayEmpty
 							>
-								{/* <MenuItem value="">
+								<MenuItem disabled value="">
 									<em>...</em>
-								</MenuItem> */}
-								{loanProducts.map((loanProduct) => (
+								</MenuItem>
+								{loanProducts.map((loanProduct, index) => (
 									<MenuItem
 										key={loanProduct.id}
 										value={loanProduct.product_code}>

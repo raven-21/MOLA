@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { grey } from "@mui/material/colors";
+//MUI Components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
+//CUSTOM Components
+import DialogStatus from "./DialogStatus";
 
 const useStyles = makeStyles(theme => ({
 
@@ -17,18 +20,33 @@ const useStyles = makeStyles(theme => ({
 		minWidth: '300px',
 		height: '100%',
 		cursor: 'pointer',
+		marginBottom: '20px !important'
 	},
+	verified: {
+		color: '#57CBA7 !important'
+	},
+	approved: {
+		color: '#74C0FC !important'
+	}
 
 }));
 
 export default function CardLoanStatus({ inactives }) {
 	const classes = useStyles();
 
+	const [openDialog, setOpenDialog] = useState(false);
+	const [value, setValue] = useState();
+
+	const handleDialogOpen = (inactive) => {
+		setOpenDialog(true);
+		setValue(inactive)
+	}
+
 	return (
 		<div>
 			{inactives.map((inactive) => (
 				<Card className={classes.cardLoan} elevation={0} key={inactive.id}>
-					<CardActionArea>
+					<CardActionArea onClick={() => handleDialogOpen(inactive)}>
 						<CardContent
 							sx={{
 								paddingX: { xs: '18px', sm: '25px', md: '30px' },
@@ -36,12 +54,13 @@ export default function CardLoanStatus({ inactives }) {
 								color: grey[600],
 							}}>
 							<Grid container spacing={2}>
-								<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center' }}>
+								<Grid item xs={12} sm={12} md={12}>
 									<Box>
 										<Typography
+											className={inactive.app_status === 'Verified' ? classes.verified : classes.approved}
 											sx={{
 												fontSize: { xs: 18, sm: 18, md: 20, },
-												fontWeight: 700
+												fontWeight: 700,
 											}}>
 											{inactive.app_status}
 										</Typography>
@@ -89,7 +108,7 @@ export default function CardLoanStatus({ inactives }) {
 					</CardActionArea>
 				</Card>
 			))}
-
+			<DialogStatus openDialog={openDialog} setOpenDialog={setOpenDialog} value={value} />
 		</div>
 	);
 }

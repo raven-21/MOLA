@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
-//HOOKS
+//HOOKS /CONTEXT
 import { useAuth } from './context/authContext';
 
 //COMPONENTS
@@ -69,8 +69,6 @@ function App() {
 						)}
 						<Route path="*" element={<NotFound />} />
 					</Route>
-
-
 
 					{/* <Route element={<Navigate to="/" />} path="*" />
 						<Route element={<Login />} path="/" />

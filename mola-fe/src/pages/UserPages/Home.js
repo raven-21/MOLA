@@ -44,7 +44,7 @@ export default function Home() {
 	const { data: actives } = useFetchId(API + 'user/actives/', userId);
 	const { data: completed } = useFetchId(API + 'user/completed/', userId);
 
-	const [checked, setChecked] = React.useState(false);
+	const [checked, setChecked] = useState(false);
 
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
@@ -92,7 +92,7 @@ export default function Home() {
 							<SkeletonLoader />
 						)
 					}
-
+					<br />
 					{/* Loan Summary List */}
 					<Grid container my="15px" sx={{ display: 'flex', alignItems: 'center', minWidth: '300px' }}>
 						<Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'center', paddingLeft: { xs: '10px', sm: '20px' } }}>
@@ -143,6 +143,7 @@ export default function Home() {
 									</Typography>
 								</Grid>
 							</Grid>
+
 							{completed ?
 								(
 									<CardLoanCompleted completed={completed} />

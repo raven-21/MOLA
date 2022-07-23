@@ -97,9 +97,9 @@ export const FormRadioPurposes = ({ control, name, label }) => {
 								value={value}
 								displayEmpty
 							>
-								{/* <MenuItem value="">
+								<MenuItem disabled value="">
 									<em>...</em>
-								</MenuItem> */}
+								</MenuItem>
 								{loanPurposes.map((loanPurpose) => (
 									<MenuItem
 										key={loanPurpose.id}

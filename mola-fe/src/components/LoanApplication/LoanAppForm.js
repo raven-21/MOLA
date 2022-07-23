@@ -77,7 +77,6 @@ export default function LoanAppForm() {
 
 	useEffect(() => {
 		setProductValue(watchProduct)
-
 		if (watchProduct === 'LT') {
 			setValue("addon", 0);
 		}
@@ -86,7 +85,6 @@ export default function LoanAppForm() {
 	useEffect(() => {
 		setTermValue(watchTerm)
 	}, [watchTerm])
-
 
 	const onSubmit = (data) => {
 		console.log(data)

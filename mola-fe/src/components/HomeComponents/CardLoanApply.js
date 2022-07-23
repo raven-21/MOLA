@@ -73,7 +73,7 @@ export default function CardLoanApply({ savings }) {
 													fontWeight: 700,
 
 												}}>
-												{value.firstname + ' ' + value.middlename + ' ' + value.lastname} {value.suffix ? value.suffix : ''}
+												{value.firstname + ' ' + value.middlename.charAt(0) + '. ' + value.lastname} {value.suffix ? value.suffix : ''}
 											</Typography>
 											<Typography
 												sx={{
@@ -122,7 +122,7 @@ export default function CardLoanApply({ savings }) {
 								paddingY: { xs: '20px', sm: '20px', md: '30px' },
 							}}>
 								<Grid container>
-									<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+									<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'center' }}>
 										<div>
 											<Box mb={2}>
 												<Typography
@@ -143,7 +143,7 @@ export default function CardLoanApply({ savings }) {
 											</Box>
 											<Box>
 												<Link to="/loan_apply" className={classes.link}>
-													<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none' }}>
+													<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none', minWidth: 140 }}>
 														<Typography variant='overline'
 															sx={{
 																marginX: 2,
@@ -151,7 +151,7 @@ export default function CardLoanApply({ savings }) {
 																letterSpacing: 1,
 																textTransform: 'none',
 															}}>
-															Apply
+															Apply now!
 														</Typography>
 													</Button>
 												</Link>
@@ -162,7 +162,7 @@ export default function CardLoanApply({ savings }) {
 										<Box
 											component="img"
 											sx={{
-												width: { xs: 150, sm: 200, md: 200 },
+												width: { xs: 180, sm: 200, md: 200 },
 											}}
 											alt="Memba Logo"
 											src={LoanSvg}

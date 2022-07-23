@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 		minWidth: '300px',
 		height: '100%',
 		cursor: 'pointer',
+		marginBottom: '20px !important'
 	},
 
 }));
