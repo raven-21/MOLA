@@ -15,18 +15,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import useStyles from "./useStyles";
 //
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
-import ContentPasteSearchRoundedIcon from '@mui/icons-material/ContentPasteSearchRounded';
-import ApprovalRoundedIcon from '@mui/icons-material/ApprovalRounded';
-import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
-import LoopRoundedIcon from '@mui/icons-material/LoopRounded';
-import ManageSearchRoundedIcon from '@mui/icons-material/ManageSearchRounded';
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
 
 
-const DialogStatus = (props) => {
-
+const DialogSummary = (props) => {
 	const { classes } = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -55,39 +47,16 @@ const DialogStatus = (props) => {
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={12}>
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									{
-										data.app_status === 'For Verification' ?
-											<ContentPasteSearchRoundedIcon
-												sx={{
-													fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-													color: '#57CBA7 !important'
-												}}
-											/> :
-											data.app_status === 'Verified' ?
-												<TaskAltRoundedIcon
-													sx={{
-														fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-														color: '#57CBA7 !important'
-													}}
-												/> :
-												data.app_status === 'For Approval' ?
-													<ManageSearchRoundedIcon
-														sx={{
-															fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-															color: '#74C0FC !important'
-														}}
-													/> :
-													<VerifiedRoundedIcon
-														sx={{
-															fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-															color: '#74C0FC !important'
-														}}
-													/>
-									}
+									<CreditCardRoundedIcon
+										sx={{
+											fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
+											color: '#74C0FC !important'
+										}}
+									/>
 								</Box>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={-.7} mt={-1.5}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={-.5} mt={-2}>
 									<Typography
 										sx={{
 											fontSize: { xs: 11, sm: 11, md: 12 },
@@ -95,33 +64,48 @@ const DialogStatus = (props) => {
 											color: grey[400],
 											letterSpacing: 1
 										}}>
-										Status
-									</Typography>
-								</Box>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={.5}>
-									<Typography
-										sx={{
-											fontSize: { xs: 23, sm: 23, md: 25 },
-											fontWeight: 700,
-											letterSpacing: 1
-										}}>
-										{data.app_status}
+										Outstanding Balance
 									</Typography>
 								</Box>
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									<LoopRoundedIcon fontSize="small" className={classes.rotateIcon} /> &nbsp;
-									<Typography color="primary"
+									<Typography
 										sx={{
-											fontSize: { xs: 11, sm: 11, md: 12 },
+											fontSize: { xs: 25, sm: 25, md: 27 },
 											fontWeight: 700,
 											letterSpacing: 1
 										}}>
-										Processing...
+										PHP {data.outstanding_bal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
 						<br /><br />
+						<Grid container spacing={2} className={classes.dContainer}>
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dLabel}>
+									<Typography
+										className={classes.label}
+										sx={{
+											fontSize: { xs: 12, sm: 12, md: 13, },
+										}}>
+										Voucher No.
+									</Typography>
+								</Box>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dValue}>
+									<Typography
+										className={classes.value}
+										sx={{
+											fontSize: { xs: 14, sm: 14, md: 16 },
+											color: '#74C0FC',
+											letterSpacing: 2
+										}}>
+										{data.voucher_no}
+									</Typography>
+								</Box>
+							</Grid>
+						</Grid>
 						<Grid container spacing={2} className={classes.dContainer}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
@@ -154,7 +138,7 @@ const DialogStatus = (props) => {
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
-										Purpose of Loan
+										Purpose
 									</Typography>
 								</Box>
 							</Grid>
@@ -226,7 +210,7 @@ const DialogStatus = (props) => {
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
-										Date Applied
+										Date Granted
 									</Typography>
 								</Box>
 							</Grid>
@@ -237,7 +221,31 @@ const DialogStatus = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.date_applied}
+										{data.date_granted}
+									</Typography>
+								</Box>
+							</Grid>
+						</Grid>
+						<Grid container spacing={2} className={classes.dContainer}>
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dLabel}>
+									<Typography
+										className={classes.label}
+										sx={{
+											fontSize: { xs: 12, sm: 12, md: 13, },
+										}}>
+										Termination Date
+									</Typography>
+								</Box>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dValue}>
+									<Typography
+										className={classes.value}
+										sx={{
+											fontSize: { xs: 13, sm: 13, md: 14 }
+										}}>
+										{data.termination_date}
 									</Typography>
 								</Box>
 							</Grid>
@@ -392,7 +400,9 @@ const DialogStatus = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
-						<br />
+						{data.add_on !== 0 &&
+							<br />
+						}
 						{data.add_on !== 0 &&
 							<Grid container spacing={2} className={classes.dContainer}>
 								<Grid item xs={6} sm={6} md={6}>
@@ -419,30 +429,32 @@ const DialogStatus = (props) => {
 								</Grid>
 							</Grid>
 						}
-						<Grid container spacing={2} className={classes.dContainer}>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dLabel}>
-									<Typography
-										className={classes.gLabel}
-										sx={{
-											fontSize: { xs: 12, sm: 12, md: 13, },
-										}}>
-										Total Loan
-									</Typography>
-								</Box>
+						{data.add_on !== 0 &&
+							<Grid container spacing={2} className={classes.dContainer}>
+								<Grid item xs={6} sm={6} md={6}>
+									<Box className={classes.dLabel}>
+										<Typography
+											className={classes.gLabel}
+											sx={{
+												fontSize: { xs: 12, sm: 12, md: 13, },
+											}}>
+											Total Loan
+										</Typography>
+									</Box>
+								</Grid>
+								<Grid item xs={6} sm={6} md={6}>
+									<Box className={classes.dValue}>
+										<Typography
+											className={classes.gValue}
+											sx={{
+												fontSize: { xs: 13, sm: 13, md: 14 }
+											}}>
+											PHP {data.total_loan.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										</Typography>
+									</Box>
+								</Grid>
 							</Grid>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dValue}>
-									<Typography
-										className={classes.gValue}
-										sx={{
-											fontSize: { xs: 13, sm: 13, md: 14 }
-										}}>
-										PHP {data.total_loan.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-									</Typography>
-								</Box>
-							</Grid>
-						</Grid>
+						}
 						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
@@ -560,4 +572,4 @@ const DialogStatus = (props) => {
 	);
 }
 
-export default DialogStatus;
+export default DialogSummary;

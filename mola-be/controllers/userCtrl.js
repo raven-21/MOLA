@@ -61,7 +61,7 @@ export const getUserSavings = (req, res) => {
 }
 //Loan APPLICATIONS
 export const getUserInactives = (req, res) => {
-	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Inactive" AND MD5(a.id) = ?', req.params.id, (error, result) => {
+	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Inactive" AND MD5(a.id) = ? ORDER BY b.date_applied', req.params.id, (error, result) => {
 		if (error) throw error;
 		res.send(result);
 	})

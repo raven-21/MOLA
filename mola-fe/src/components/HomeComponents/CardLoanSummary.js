@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { grey } from "@mui/material/colors";
 //MUI
@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 //MUI icons
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
+//CUSTOM Components
+import DialogSummary from "./DialogSummary";
 
 const useStyles = makeStyles(theme => ({
 
@@ -28,11 +30,19 @@ const useStyles = makeStyles(theme => ({
 export default function CardLoanSummary({ actives }) {
 	const classes = useStyles();
 
+	const [openDialog, setOpenDialog] = useState(false);
+	const [value, setValue] = useState();
+
+	const handleDialogOpen = (active) => {
+		setOpenDialog(true);
+		setValue(active)
+	}
+
 	return (
 		<div>
 			{actives.map((active) => (
 				<Card className={classes.cardLoan} elevation={0} key={active.id}>
-					<CardActionArea>
+					<CardActionArea onClick={() => handleDialogOpen(active)}>
 						<CardContent
 							sx={{
 								paddingX: { xs: '18px', sm: '25px', md: '30px' },
@@ -56,9 +66,9 @@ export default function CardLoanSummary({ actives }) {
 										</Typography>
 										<Typography
 											sx={{
-												fontSize: { xs: 12, sm: 12, md: 18, }
+												fontSize: { xs: 12, sm: 12, md: 16, }
 											}}>
-											Total Loan Amount
+											Loan Amount
 										</Typography>
 									</Box>
 								</Grid>
@@ -98,6 +108,7 @@ export default function CardLoanSummary({ actives }) {
 					</CardActionArea>
 				</Card>
 			))}
+			<DialogSummary openDialog={openDialog} setOpenDialog={setOpenDialog} value={value} />
 		</div>
 	);
 }

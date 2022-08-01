@@ -51,7 +51,7 @@ export default function Profile() {
 						(<SkeletonLoader />)
 					}
 
-					{/* <BtnGrp /> */}
+					<BtnGrp />
 				</div>
 			</Container >
 		</div >

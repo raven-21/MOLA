@@ -8,7 +8,7 @@ const myStyles = makeStyles(theme => ({
 		[theme.breakpoints.down('sm')]: {
 			padding: '20px 30px !important'
 		},
-		borderRadius: '15px !important',
+		borderRadius: '12px !important',
 	},
 	cardContent: {
 		padding: '60px 90px !important',

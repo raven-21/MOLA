@@ -4,6 +4,7 @@ import { makeStyles } from "@mui/styles";
 import Container from "@mui/material/Container";
 //Custom Components
 import LoanAppForm from "../../components/LoanApplication/LoanAppForm";
+import AppForm from "../../components/LoanAppComponents/AppForm";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -26,7 +27,8 @@ export default function LoanApply() {
 		<div className={classes.root}>
 			<Container maxWidth="md">
 				<div className={classes.content}>
-					<LoanAppForm />
+					<AppForm />
+					{/* <LoanAppForm /> */}
 				</div>
 			</Container>
 		</div>

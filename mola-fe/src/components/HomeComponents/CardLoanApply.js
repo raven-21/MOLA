@@ -132,11 +132,12 @@ export default function CardLoanApply({ savings }) {
 														// color: grey[400],
 														marginBottom: 1
 													}}>
-													Loan Application
+													Apply for a loan
 												</Typography>
 												<Typography
 													sx={{
-														fontSize: { xs: 12, sm: 12, md: 14 }
+														fontSize: { xs: 12, sm: 12, md: 14 },
+														color: grey[600]
 													}}>
 													Submit a loan application without visiting the branch!
 												</Typography>
@@ -151,18 +152,18 @@ export default function CardLoanApply({ savings }) {
 																letterSpacing: 1,
 																textTransform: 'none',
 															}}>
-															Apply now!
+															Get started
 														</Typography>
 													</Button>
 												</Link>
 											</Box>
 										</div>
 									</Grid>
-									<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+									<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
 										<Box
 											component="img"
 											sx={{
-												width: { xs: 180, sm: 200, md: 200 },
+												width: { xs: 160, sm: 200, md: 200 },
 											}}
 											alt="Memba Logo"
 											src={LoanSvg}
