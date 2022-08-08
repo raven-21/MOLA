@@ -46,7 +46,7 @@ export default function ProfileInfo({ user }) {
 									color: '#fff',
 								}}>
 								<Grid container spacing={2}>
-									<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+									<Grid item xs={3} sm={3} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
 										<Avatar
 											sx={{
 												background: 'linear-gradient(45deg, #113050 10%, #184470 90%)',
@@ -58,14 +58,13 @@ export default function ProfileInfo({ user }) {
 											{info.firstname.charAt(0)}
 										</Avatar>
 									</Grid>
-									<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+									<Grid item xs={9} sm={9} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
 										<Box ml={1}>
 											<Typography
 												sx={{
 													fontSize: { xs: 16, sm: 16, md: 20, },
 													fontWeight: 700,
 													color: '#000',
-													textAlign: 'center'
 												}}>
 												{info.firstname + ' ' + info.middlename + ' ' + info.lastname + ' '} {info.suffix ? info.suffix : ''}
 											</Typography>
@@ -74,7 +73,6 @@ export default function ProfileInfo({ user }) {
 													fontSize: { xs: 12, sm: 12, md: 14, },
 													color: grey[400],
 													fontWeight: 700,
-													textAlign: 'center'
 												}}>
 												ID: {info.employee_id}
 											</Typography>
@@ -83,7 +81,6 @@ export default function ProfileInfo({ user }) {
 													fontSize: { xs: 12, sm: 12, md: 14, },
 													color: '#649FEE',
 													fontWeight: 700,
-													textAlign: 'center'
 												}}>
 												{info.email}
 											</Typography>

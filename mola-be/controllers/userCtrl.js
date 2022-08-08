@@ -40,17 +40,22 @@ export const authToken = (req, res) => {
 }
 
 export const getUser = (req, res) => {
-	db.query('SELECT * FROM members a LEFT JOIN div_stations b ON a.id_statdiv = b.id WHERE MD5(a.id) = ?', req.params.id, (error, result) => {
+	db.query('SELECT a.*, b.stadiv, c.branch_code FROM members a LEFT JOIN div_stations b ON a.id_statdiv = b.id LEFT JOIN branches c ON a.branch_id = c.id WHERE MD5(a.id) = ?', req.params.id, (error, result) => {
 		if (error) throw error;
 		res.send(result);
 	});
 }
 
 export const getUserLoans = (req, res) => {
-	db.query('SELECT * FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE MD5(a.id) = ?', req.params.id, (error, result) => {
-		if (error) throw error;
-		res.send(result);
-	})
+	db.query('SELECT b.*, c.*, d.* ' +
+		'FROM members a ' +
+		'LEFT JOIN loans b ON a.id = b.member_id ' +
+		'LEFT JOIN loan_products c ON b.loanprod_id = c.id ' +
+		'LEFT JOIN purposes d ON b.loanpurp_id = d.id ' +
+		'WHERE MD5(a.id) = ?', req.params.id, (error, result) => {
+			if (error) throw error;
+			res.send(result);
+		})
 }
 
 export const getUserSavings = (req, res) => {
@@ -61,24 +66,39 @@ export const getUserSavings = (req, res) => {
 }
 //Loan APPLICATIONS
 export const getUserInactives = (req, res) => {
-	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Inactive" AND MD5(a.id) = ? ORDER BY b.date_applied', req.params.id, (error, result) => {
-		if (error) throw error;
-		res.send(result);
-	})
+	db.query('SELECT b.*, c.product_name, c.product_code, d.purpose ' +
+		'FROM members a ' +
+		'LEFT JOIN loans b ON a.id = b.member_id ' +
+		'LEFT JOIN loan_products c ON b.loanprod_id = c.id ' +
+		'LEFT JOIN purposes d ON b.loanpurp_id = d.id ' +
+		'WHERE status = "Inactive" AND MD5(a.id) = ? ORDER BY b.date_applied', req.params.id, (error, result) => {
+			if (error) throw error;
+			res.send(result);
+		})
 }
 //Loan SUMMARY (active/completed)
 export const getUserActives = (req, res) => {
-	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Active" AND MD5(a.id) = ?', req.params.id, (error, result) => {
-		if (error) throw error;
-		res.send(result);
-	})
+	db.query('SELECT b.*, c.product_name, c.product_code, d.purpose ' +
+		'FROM members a ' +
+		'LEFT JOIN loans b ON a.id = b.member_id ' +
+		'LEFT JOIN loan_products c ON b.loanprod_id = c.id ' +
+		'LEFT JOIN purposes d ON b.loanpurp_id = d.id ' +
+		'WHERE status = "Active" AND MD5(a.id) = ? ORDER BY b.date_applied', req.params.id, (error, result) => {
+			if (error) throw error;
+			res.send(result);
+		})
 }
 
 export const getUserCompleted = (req, res) => {
-	db.query('SELECT b.* FROM members a LEFT JOIN loans b ON a.id = b.member_id WHERE status = "Completed" AND MD5(a.id) = ?', req.params.id, (error, result) => {
-		if (error) throw error;
-		res.send(result);
-	})
+	db.query('SELECT b.*, c.product_name, c.product_code, d.purpose ' +
+		'FROM members a ' +
+		'LEFT JOIN loans b ON a.id = b.member_id ' +
+		'LEFT JOIN loan_products c ON b.loanprod_id = c.id ' +
+		'LEFT JOIN purposes d ON b.loanpurp_id = d.id ' +
+		'WHERE status = "Completed" AND MD5(a.id) = ? ORDER BY b.date_applied', req.params.id, (error, result) => {
+			if (error) throw error;
+			res.send(result);
+		})
 }
 
 

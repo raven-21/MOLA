@@ -1,122 +1,174 @@
-import React, { useState } from "react";
-import { makeStyles } from "@mui/styles";
-import { grey, red, blue } from "@mui/material/colors";
-//
-import Configs from "../../utils/Configs";
-import useFetch from "../../hooks/useFetch";
+import React, { useState, useEffect } from "react";
 //Material UI
+import { grey, red, blue, green } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-//
-import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceWalletTwoTone';
-import AccountBalanceTwoToneIcon from '@mui/icons-material/AccountBalanceTwoTone';
-import StoreTwoToneIcon from '@mui/icons-material/StoreTwoTone';
+import Button from "@mui/material/Button";
+//Custom hooks
+import Configs from "../../utils/Configs";
+import useFetch from "../../hooks/useFetch";
+import useFetchId from "../../hooks/useFetchId";
+import useSchema from "./useSchema";
+import useStyles from "./useStyles";
+//react-hook-form / yup resolver
+import { appendErrors, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+//Custom form components
+import { FormProduct } from "./FormProduct";
+import { FormPurpose } from "./FormPurpose";
+import { FormAmount } from "./FormAmount";
+import { FormTerm } from "./FormTerm";
+import SkeletonLoader from "../SkeletonLoader";
+import DialogApp from "./DialogApp";
+//MUI icons
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
+export default function AppForm() {
+	const { classes } = useStyles();
 
-const useStyles = makeStyles(theme => ({
-	customRadio: {
-		'& input': {
-			display: 'none'
-		},
-		'& input:checked + span': {
-			border: '3px solid #1565C0',
-			backgroundColor: '#F2F7FC'
-		}
-	},
-	radioBtn: {
-		padding: 10,
-		cursor: 'pointer',
-		minHeight: '130px',
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		border: '3px solid' + grey[300],
-		borderRadius: '10px !important',
-		backgroundColor: '#FFF'
-	},
-	radioLabel: {
-		display: 'flex'
-	},
-	label: {
-		fontWeight: 700 + '!important',
-		marginBottom: '15px !important'
-	}
-}));
-
-const AppForm = () => {
-	const classes = useStyles();
-	const { API } = Configs();
-
+	const { API, userId: id } = Configs();
+	const { data: user } = useFetchId(API + 'user/', id);
+	const { data: userLP } = useFetchId(API + 'loanApps/selectProduct/', id);
 	const { data: loanProducts } = useFetch(API + 'loanApps/loan_products');
 	const { data: loanPurposes } = useFetch(API + 'loanApps/loan_purposes');
-	const { data: interestTypes } = useFetch(API + 'loanApps/interest_types');
 
-	const [product, setProduct] = useState('');
+	const [selectProduct, setSelectProduct] = useState();
 
-	const handleChange = (event) => {
-		setProduct(event.target.value);
-	};
+	const [openDialog, setOpenDialog] = useState(false);
+	const [dataValue, setDataValue] = useState();
+
+	const { schema } = useSchema(userLP, selectProduct);
+
+	const defaultValues = {
+		product: 0,
+		purpose: 1,
+		amount: "",
+		term: 3
+	}
+
+	const { handleSubmit, reset, control, watch, setValue, formState: { errors } } = useForm({
+		defaultValues: defaultValues,
+		resolver: yupResolver(schema)
+	});
+
+	const handleClickReset = () => {
+		// reset();
+		window.location.reload();
+	}
+
+	const onSubmit = (data) => {
+		console.log(data)
+	}
+
+	const handleDialogOpen = () => {
+		setOpenDialog(true);
+		setDataValue()
+	}
+
+	useEffect(() => {
+		setSelectProduct(watch('product'));
+	}, [watch('product')])
 
 	return (
 		<div>
-			<Paper elevation={0} sx={{ padding: { xs: 4, sm: 4, md: 7 }, borderRadius: '12px' }}>
-				<Grid container spacing={2}>
-					<Grid item xs={12} sm={12} md={12}>
-						<FormLabel>
-							<Typography className={classes.label} sx={{ fontSize: { xs: 12, sm: 12, md: 15 } }}>
-								What is your preferred loan product?
-							</Typography>
-						</FormLabel>
-						<FormControl fullWidth>
-							{loanProducts &&
-								<Grid container spacing={2}>
-									{loanProducts.map((loanProduct) => (
-										<Grid item xs={12} sm={4} md={4} key={loanProduct.id}>
-											<label className={classes.customRadio}>
-												<input type="radio" name="product" value={loanProduct.product_name} onChange={handleChange} />
-												<span elevation={0} className={classes.radioBtn}>
-													<Grid container>
-														<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-															<Box>
-																{loanProduct.product_name === 'Long Term' ?
-																	<AccountBalanceTwoToneIcon sx={{ fontSize: '60px', color: product === loanProduct.product_name ? blue[800] : grey[400] }} /> :
-																	loanProduct.product_name === 'Short Term' ?
-																		<AccountBalanceWalletTwoToneIcon sx={{ fontSize: '60px', color: product === loanProduct.product_name ? blue[800] : grey[400] }} /> :
-																		<StoreTwoToneIcon sx={{ fontSize: '60px', color: product === loanProduct.product_name ? blue[800] : grey[400] }} />}
-															</Box>
-														</Grid>
-														<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-															<Box>
-																<Typography
-																	sx={{
-																		fontWeight: 700,
-																		color: product === loanProduct.product_name ? blue[800] : grey[700]
-																	}}>
-																	{loanProduct.product_name}
-																</Typography>
-															</Box>
-														</Grid>
-													</Grid>
-												</span>
-											</label>
-										</Grid>
-									))}
+			<Button onClick={() => handleDialogOpen()}>CLICK</Button>
+			<DialogApp openDialog={openDialog} setOpenDialog={setOpenDialog} />
+
+			<form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+				<Paper elevation={0} sx={{ paddingX: { xs: 4, sm: 7, md: 25 }, paddingY: { xs: 6, sm: 7, md: 12 }, borderRadius: '12px' }}>
+					{user && loanProducts && loanPurposes && userLP ?
+						(
+							<Grid container spacing={2}>
+								<Grid item xs={12} sm={12} md={12}>
+									<Typography
+										sx={{
+											fontSize: { xs: 16, sm: 16, md: 21 },
+											fontWeight: 700
+										}}>
+										Hi {user ? user[0].firstname : 'there'}! Let's get started with your application.
+									</Typography>
+									<br />
 								</Grid>
-							}
-						</FormControl>
-					</Grid>
 
-					<Grid item xs={12} sm={12} md={12}>
+								<Grid item xs={12} sm={12} md={12}>
+									<FormPurpose
+										name="purpose"
+										control={control}
+										label="What is the purpose?"
+										loanPurposes={loanPurposes}
+									/>
+									<br />
+								</Grid>
+								<Grid item xs={12} sm={12} md={12}>
+									<FormProduct
+										name="product"
+										control={control}
+										loanProducts={loanProducts}
+										product={watch('product')}
+									/>
+									<br />
+								</Grid>
+								<Grid item xs={12} sm={12} md={6}>
+									<FormAmount
+										name="amount"
+										control={control}
+										label="How much do you need?"
+										product={watch('product')}
+									/>
+									<br />
+								</Grid>
+								<Grid item xs={12} sm={12} md={6}>
+									<FormTerm
+										name="term"
+										control={control}
+										label="Repayment period"
+										product={watch('product')}
+									/>
+									<br /><br />
+								</Grid>
 
-					</Grid>
-				</Grid>
-			</Paper>
+								<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+									<Button
+										variant="contained"
+										color="success"
+										type="submit"
+										disabled={watch('product') && watch('amount') && watch('term') ? false : true}
+										sx={{
+											textTransform: 'none',
+											borderRadius: '25px',
+											boxShadow: 'none',
+										}}>
+										<Typography variant='overline'
+											sx={{
+												marginLeft: 2,
+												marginRight: .5,
+												marginY: -0.1,
+												letterSpacing: 1,
+												textTransform: 'none',
+												fontWeight: 600,
+												display: 'flex',
+												alignItems: 'center'
+											}}>
+											Continue <ChevronRightRoundedIcon />
+										</Typography>
+
+									</Button>
+								</Grid>
+							</Grid>
+						)
+						:
+						(
+							<div>
+								<SkeletonLoader />
+								<br /><br />
+								<SkeletonLoader />
+							</div>
+						)
+					}
+
+				</Paper>
+			</form>
 		</div >
 	);
 }
-
-export default AppForm;

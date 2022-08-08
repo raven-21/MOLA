@@ -10,34 +10,17 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Switch from "@mui/material/Switch";
+
 // Custom Home Components
 import CardLoanApply from "../../components/HomeComponents/CardLoanApply";
 import CardLoanStatus from "../../components/HomeComponents/CardLoanStatus";
 import CardLoanSummary from "../../components/HomeComponents/CardLoanSummary";
 import CardLoanCompleted from "../../components/HomeComponents/CardLoanCompleted";
 import SkeletonLoader from "../../components/SkeletonLoader";
-
-
-const useStyles = makeStyles(theme => ({
-	root: {
-		background: '#F0F1F3',
-		height: '100%',
-	},
-	content: {
-		padding: '24px 16px',
-		overflowX: 'auto',
-		[theme.breakpoints.down('sm')]: {
-			padding: '24px 0'
-		}
-	},
-	title: {
-		fontWeight: 'bold !important',
-		color: grey[600]
-	}
-}));
+import useStyles from "./usePageStyles";
 
 export default function Home() {
-	const classes = useStyles();
+	const { classes } = useStyles();
 	const { API, userId } = Configs();
 	const { data: savings } = useFetchId(API + 'user/savings/', userId);
 	const { data: inactives } = useFetchId(API + 'user/inactives/', userId);
@@ -49,6 +32,8 @@ export default function Home() {
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
 	};
+
+
 
 	return (
 		<div className={classes.root}>
@@ -134,7 +119,7 @@ export default function Home() {
 					{checked &&
 						<div>
 							<Grid container my="15px" sx={{ display: 'flex', alignItems: 'center', minWidth: '300px' }}>
-								<Grid item xs={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Grid item xs={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: { xs: '10px', sm: '20px' } }}>
 									<Typography className={classes.title}
 										sx={{
 											fontSize: { xs: '14px', sm: '18px', md: '18px' }

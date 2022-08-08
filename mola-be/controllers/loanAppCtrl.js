@@ -9,6 +9,23 @@ export const getLoanProducts = (req, res) => {
 	});
 }
 
+export const getLoanProductsByUser = (req, res) => {
+
+	db.query('SELECT a.branch, a.branch_code, b.loanprod_id, b.branch_id, b.min_term, b.max_term, c.product_name, c.product_code, c.min_amount, c.max_amount ' +
+		'FROM branches a ' +
+		'LEFT JOIN loan_terms b ON a.id = b.branch_id ' +
+		'LEFT JOIN loan_products c ON b.loanprod_id = c.id ' +
+		'WHERE a.id = ' +
+		'(SELECT bb.id FROM members aa ' +
+		'LEFT JOIN branches bb ON aa.branch_id = bb.id ' +
+		'WHERE MD5(aa.id) = ?)', req.params.id, (error, result) => {
+			if (error) throw error;
+
+			res.send(result);
+			console.log(result)
+		});
+}
+
 export const getLoanPurposes = (req, res) => {
 	db.query('SELECT * FROM purposes', (error, result) => {
 		if (error) throw error;

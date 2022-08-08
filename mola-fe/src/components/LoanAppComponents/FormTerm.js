@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import { Controller } from "react-hook-form";
 import useStyles from "./useStyles";
 
-export const FormSelectTerm = ({ control, name, label, product }) => {
+export const FormTerm = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
 
 	const [rangeMo, setRangeMo] = useState([]);
@@ -28,18 +28,15 @@ export const FormSelectTerm = ({ control, name, label, product }) => {
 				fieldState: { error },
 			}) => (
 				<div>
-					<FormLabel htmlFor="term">
-						<Typography
-							className={!error ? classes.formLabel : classes.formLabelError}
-							sx={{
-								fontSize: { xs: '11px', sm: '12px', md: '12px', lg: '13px' },
-							}}>
-							{label} ({rangeMo} mos.)
-							<span style={{ color: red[400] }}> *</span>
+					<FormLabel htmlFor="term" sx={{ display: 'flex', alignItems: 'center' }}>
+						<Typography className={classes.label} sx={{ fontSize: { xs: 12, sm: 12, md: 15 }, color: error ? red[700] : null }}>
+							{label}
+						</Typography> &nbsp;
+						<Typography sx={{ fontSize: { xs: 11, sm: 11, md: 12 }, marginBottom: '12px', letterSpacing: .5 }}>
+							(months)
 						</Typography>
 					</FormLabel>
 					<FormControl
-						margin="dense"
 						size="small"
 						error={!!error}
 						fullWidth>
@@ -51,8 +48,13 @@ export const FormSelectTerm = ({ control, name, label, product }) => {
 							placeholder="0"
 							error={!!error}
 							onChange={onChange}
-							value={value} />
-						<FormHelperText className={classes.formText}>{error ? error.message : null}</FormHelperText>
+							value={value}
+							InputProps={{
+								sx: ({ fontSize: { xs: 13, sm: 13, md: 16 } })
+							}}
+							disabled={product ? false : true}
+						/>
+						<FormHelperText sx={{ fontSize: { xs: 11, sm: 11, md: 12 } }}>{error ? error.message : null}</FormHelperText>
 					</FormControl>
 				</div>
 			)}

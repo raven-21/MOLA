@@ -125,7 +125,7 @@ const DialogSummary = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.loan_product}
+										{data.product_name}
 									</Typography>
 								</Box>
 							</Grid>
@@ -149,7 +149,7 @@ const DialogSummary = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.loan_purpose}
+										{data.purpose}
 									</Typography>
 								</Box>
 							</Grid>

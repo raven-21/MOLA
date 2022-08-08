@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { grey } from "@mui/material/colors";
+import { grey, green } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -46,7 +46,7 @@ export default function CardLoanApply({ savings }) {
 	return (
 		<div>
 			{savings &&
-				<Grid container spacing={2}>
+				<Grid container spacing={3}>
 					<Grid item xs={12} sm={12} md={6} >
 						<Card className={classes.card} elevation={0}>
 							<CardContent
@@ -144,7 +144,7 @@ export default function CardLoanApply({ savings }) {
 											</Box>
 											<Box>
 												<Link to="/loan_apply" className={classes.link}>
-													<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none', minWidth: 140 }}>
+													<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none', minWidth: 140, }}>
 														<Typography variant='overline'
 															sx={{
 																marginX: 2,
@@ -163,7 +163,7 @@ export default function CardLoanApply({ savings }) {
 										<Box
 											component="img"
 											sx={{
-												width: { xs: 160, sm: 200, md: 200 },
+												width: { xs: 160, sm: 180, md: 200 },
 											}}
 											alt="Memba Logo"
 											src={LoanSvg}

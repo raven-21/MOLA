@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 //Material UI
-import { red } from "@mui/material/colors";
+import { red, } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";

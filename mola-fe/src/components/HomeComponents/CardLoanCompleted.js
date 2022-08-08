@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 //MUI icons
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
+import ContentPasteSearchRoundedIcon from '@mui/icons-material/ContentPasteSearchRounded';
 //
 import DialogSummary from "./DialogSummary";
 
@@ -117,17 +118,27 @@ export default function CardLoanCompleted({ completed }) {
 				(
 					<Grid container spacing={1}>
 						<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+							<ContentPasteSearchRoundedIcon
+								sx={{
+									marginTop: 5,
+									fontSize: { xs: 50, sm: 55, md: 60 },
+									color: grey[500],
+								}}
+							/>
+						</Grid>
+						<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 							<Typography
 								sx={{
 									marginLeft: .5,
 									fontWeight: 'bold',
 									fontStyle: 'italic',
-									fontSize: { xs: 15, sm: 18, md: 18 },
+									fontSize: { xs: 12, sm: 13, md: 16 },
 									color: grey[500],
 								}}>
 								No loans completed  yet
 							</Typography>
 						</Grid>
+
 					</Grid>
 				)
 			}

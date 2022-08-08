@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { green } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 
 //HOOKS /CONTEXT
@@ -23,8 +24,15 @@ import LoanApply from "./pages/UserPages/LoanApply";
 //ADMIN
 import AdminHome from "./pages/AdminPages/Home";
 
-
 const theme = createTheme({
+	palette: {
+		success: {
+			main: '#57CBA7',
+			light: green['A400'],
+			dark: '#0ca678',
+			contrastText: '#FFF',
+		}
+	},
 	typography: {
 		fontFamily: 'Quicksand',
 		fontWeightLight: 400,
