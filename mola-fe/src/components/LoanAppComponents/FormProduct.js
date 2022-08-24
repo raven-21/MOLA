@@ -29,7 +29,7 @@ export const FormProduct = ({ control, name, loanProducts, product }) => {
 			}) => (
 				<div>
 					<FormLabel sx={{ display: 'flex', alignItems: 'center' }}>
-						<Typography className={classes.label} sx={{ fontSize: { xs: 12, sm: 12, md: 15 }, color: error ? red[700] : null }}>
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 15 }, color: error ? red[700] : null }}>
 							What is your preferred loan product?
 						</Typography>&nbsp;
 						<Typography className={classes.labelRequired} sx={{ fontSize: { xs: 11, sm: 11, md: 12 } }}>

@@ -1,20 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useFetch = (url) => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-		// fetch(url)
-		// 	.then(res => {
-		// 		return res.json();
-		// 	})
-		// 	.then(data => {
-		// 		setData(data);
-		// 	})
-		axios.get(url).then((res) => {
-			setData(res.data);
-		})
+		const cancelToken = axios.CancelToken.source();
+
+		axios.get(url, { cancelToken: cancelToken.token })
+			.then((res) => {
+				setData(res.data);
+			})
+			.catch((err) => {
+				if (axios.isCancel(err)) {
+					console.log('Request cancelled!')
+				} else {
+					console.log(err)
+				}
+			})
+
+		return () => {
+			cancelToken.cancel();
+		};
 	}, []);
 
 	return { data }

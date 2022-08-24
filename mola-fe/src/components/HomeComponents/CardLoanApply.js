@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
+import Configs from "../../utils/Configs";
 
 
 import LoanSvg from "../../assets/svg/undraw_online_payments_re_y8f2.svg";
@@ -42,6 +43,7 @@ const useStyles = makeStyles(theme => ({
 export default function CardLoanApply({ savings }) {
 	const classes = useStyles();
 	const value = savings[0];
+	const { userId } = Configs();
 
 	return (
 		<div>
@@ -143,7 +145,7 @@ export default function CardLoanApply({ savings }) {
 												</Typography>
 											</Box>
 											<Box>
-												<Link to="/loan_apply" className={classes.link}>
+												<Link to={`/loan_apply/${userId}`} className={classes.link}>
 													<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none', minWidth: 140, }}>
 														<Typography variant='overline'
 															sx={{

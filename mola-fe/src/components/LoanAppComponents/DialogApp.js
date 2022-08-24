@@ -1,10 +1,11 @@
-import React from "react";
-import { grey } from "@mui/material/colors";
+import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
+//
+import { grey, red } from "@mui/material/colors";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -14,20 +15,38 @@ import Divider from "@mui/material/Divider";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import useStyles from "./useStyles";
+import Configs from "../../utils/Configs";
+import useFetchId from "../../hooks/useFetchId";
 //
-import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
+import PostAddRoundedIcon from '@mui/icons-material/PostAddRounded';
 
 
 const DialogApp = (props) => {
 	const { classes } = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+	const { API } = Configs();
+	const { id } = useParams();
 
 	const handleDialogClose = () => {
 		props.setOpenDialog(false);
 	}
 
-	const data = props.dataValue;
+	const data = props.formValue;
+	const products = props.loanProducts;
+	const purposes = props.loanPurposes;
+
+	const [productC, setProductC] = useState(null);
+	const [purposeC, setPurposeC] = useState(null);
+
+	useEffect(() => {
+		if (products && data) {
+			setProductC(products.find(item => item.id === data.product));
+		}
+		if (purposes && data) {
+			setPurposeC(purposes.find(item => item.id === data.purpose));
+		}
+	}, [data])
 
 	return (
 		<div>
@@ -47,34 +66,35 @@ const DialogApp = (props) => {
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={12}>
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									<CreditCardRoundedIcon
+									<PostAddRoundedIcon
 										sx={{
 											fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-											color: '#74C0FC !important'
+											color: '#57CBA7 !important'
 										}}
 									/>
 								</Box>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={-.5} mt={-2}>
-									<Typography
-										sx={{
-											fontSize: { xs: 11, sm: 11, md: 12 },
-											fontWeight: 700,
-											color: grey[400],
-											letterSpacing: 1
-										}}>
-										Outstanding Balance
-									</Typography>
-								</Box>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mt={-1}>
 									<Typography
 										sx={{
 											fontSize: { xs: 25, sm: 25, md: 27 },
 											fontWeight: 700,
 											letterSpacing: 1
 										}}>
-										PHP {data.outstanding_bal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										Loan Application
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+									<Typography
+										sx={{
+											fontSize: { xs: 11, sm: 11, md: 12 },
+											fontWeight: 700,
+											color: red[400],
+											letterSpacing: 1,
+											textAlign: 'center',
+										}}>
+										Note: <span style={{ fontWeight: 500, color: grey[400] }}>Once your application is submitted, it is</span> <span style={{ fontWeight: 600, color: grey[500], fontStyle: 'italic' }}>non-editable</span>
 									</Typography>
 								</Box>
 							</Grid>
@@ -84,33 +104,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
-										sx={{
-											fontSize: { xs: 12, sm: 12, md: 13, },
-										}}>
-										Voucher No.
-									</Typography>
-								</Box>
-							</Grid>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dValue}>
-									<Typography
-										className={classes.appValue}
-										sx={{
-											fontSize: { xs: 14, sm: 14, md: 16 },
-											color: '#74C0FC',
-											letterSpacing: 2
-										}}>
-										{data.voucher_no}
-									</Typography>
-								</Box>
-							</Grid>
-						</Grid>
-						<Grid container spacing={2} className={classes.dContainer}>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dLabel}>
-									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -121,11 +115,11 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.product_name}
+										{productC ? productC.product_name : 'loading...'}
 									</Typography>
 								</Box>
 							</Grid>
@@ -134,7 +128,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -145,11 +139,12 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
-											fontSize: { xs: 13, sm: 13, md: 14 }
+											fontSize: { xs: 13, sm: 13, md: 14 },
+											textAlign: 'right'
 										}}>
-										{data.purpose}
+										{purposeC ? purposeC.purpose : 'loading...'}
 									</Typography>
 								</Box>
 							</Grid>
@@ -158,7 +153,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -169,11 +164,11 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.interest_type}
+										{productC ? productC.interest_type : 'loading...'}
 									</Typography>
 								</Box>
 							</Grid>
@@ -182,7 +177,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -193,11 +188,11 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.classification}
+										{data.loanType}
 									</Typography>
 								</Box>
 							</Grid>
@@ -206,46 +201,22 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
-										Date Granted
+										Date of Application
 									</Typography>
 								</Box>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.date_granted}
-									</Typography>
-								</Box>
-							</Grid>
-						</Grid>
-						<Grid container spacing={2} className={classes.dContainer}>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dLabel}>
-									<Typography
-										className={classes.appLabel}
-										sx={{
-											fontSize: { xs: 12, sm: 12, md: 13, },
-										}}>
-										Termination Date
-									</Typography>
-								</Box>
-							</Grid>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dValue}>
-									<Typography
-										className={classes.appValue}
-										sx={{
-											fontSize: { xs: 13, sm: 13, md: 14 }
-										}}>
-										{data.termination_date}
+										{data.dateApplied}
 									</Typography>
 								</Box>
 							</Grid>
@@ -257,7 +228,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -268,11 +239,11 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
@@ -281,7 +252,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -292,7 +263,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
@@ -305,7 +276,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -316,11 +287,11 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.interest_rate} %
+										{data.intRate} %
 									</Typography>
 								</Box>
 							</Grid>
@@ -329,7 +300,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -340,7 +311,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
@@ -356,7 +327,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -367,7 +338,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
@@ -395,20 +366,20 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.gross_proceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.grossProceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						{data.add_on !== 0 &&
+						{data.product !== 1 &&
 							<br />
 						}
-						{data.add_on !== 0 &&
+						{data.product !== 1 &&
 							<Grid container spacing={2} className={classes.dContainer}>
 								<Grid item xs={6} sm={6} md={6}>
 									<Box className={classes.dLabel}>
 										<Typography
-											className={classes.appLabel}
+											className={classes.label}
 											sx={{
 												fontSize: { xs: 12, sm: 12, md: 13, },
 											}}>
@@ -419,17 +390,17 @@ const DialogApp = (props) => {
 								<Grid item xs={6} sm={6} md={6}>
 									<Box className={classes.dValue}>
 										<Typography
-											className={classes.appValue}
+											className={classes.value}
 											sx={{
 												fontSize: { xs: 13, sm: 13, md: 14 }
 											}}>
-											PHP {data.add_on.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+											PHP {data.addOn.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 										</Typography>
 									</Box>
 								</Grid>
 							</Grid>
 						}
-						{data.add_on !== 0 &&
+						{data.product !== 1 &&
 							<Grid container spacing={2} className={classes.dContainer}>
 								<Grid item xs={6} sm={6} md={6}>
 									<Box className={classes.dLabel}>
@@ -449,7 +420,7 @@ const DialogApp = (props) => {
 											sx={{
 												fontSize: { xs: 13, sm: 13, md: 14 }
 											}}>
-											PHP {data.total_loan.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+											PHP {data.totalLoan.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 										</Typography>
 									</Box>
 								</Grid>
@@ -474,7 +445,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -485,11 +456,11 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.less_loanbal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										{/* PHP {data.less_loanbal.toLocaleString(undefined, { minimumFractionDigits: 2 })} */}
 									</Typography>
 								</Box>
 							</Grid>
@@ -498,7 +469,7 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
-										className={classes.appLabel}
+										className={classes.label}
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
@@ -509,11 +480,11 @@ const DialogApp = (props) => {
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dValue}>
 									<Typography
-										className={classes.appValue}
+										className={classes.value}
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.less_interest.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										{/* PHP {data.less_interest.toLocaleString(undefined, { minimumFractionDigits: 2 })} */}
 									</Typography>
 								</Box>
 							</Grid>
@@ -540,7 +511,7 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 14, sm: 14, md: 16 }
 										}}>
-										PHP {data.net_proceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										{/* PHP {data.net_proceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })} */}
 									</Typography>
 								</Box>
 							</Grid>
@@ -561,7 +532,23 @@ const DialogApp = (props) => {
 									textTransform: 'none',
 									fontWeight: 700
 								}}>
-								Close
+								Cancel
+							</Typography>
+						</Button>
+						<Button onClick={handleDialogClose} variant="contained" color="success"
+							sx={{
+								borderRadius: '25px',
+								boxShadow: 'none',
+							}}>
+							<Typography variant='overline'
+								sx={{
+									marginX: 2,
+									marginY: -0.5,
+									letterSpacing: 1,
+									textTransform: 'none',
+									fontWeight: 700
+								}}>
+								Submit
 							</Typography>
 						</Button>
 					</DialogActions>

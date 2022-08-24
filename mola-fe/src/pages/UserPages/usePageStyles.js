@@ -17,6 +17,10 @@ const myStyles = makeStyles(theme => ({
 		fontWeight: 'bold !important',
 		color: grey[600]
 	},
+	subTitle: {
+		fontWeight: 'bold !important',
+		color: grey[500]
+	},
 }));
 
 export default function useStyles() {

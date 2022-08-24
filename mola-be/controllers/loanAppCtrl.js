@@ -1,7 +1,7 @@
 import db from '../config/database.js';
 
 export const getLoanProducts = (req, res) => {
-	db.query('SELECT * FROM loan_products', (error, result) => {
+	db.query('SELECT a.*, b.interest_type FROM loan_products a LEFT JOIN interest_types b ON a.id_intype = b.id', (error, result) => {
 		if (error) throw error;
 
 		res.send(result);
@@ -46,13 +46,21 @@ export const getInterestTypes = (req, res) => {
 
 export const getProductCount = (req, res) => {
 	db.query(
-		'SELECT COUNT(IF(loan_product = "LT", 1, NULL)) "LT",' +
-		'COUNT(IF(loan_product = "ST", 1, NULL)) "ST",' +
-		'COUNT(IF(loan_product = "SL", 1, NULL)) "SL"' +
-		'FROM loans WHERE status = "Active"', (error, result) => {
+		'SELECT COUNT(IF(loanprod_id = 1, 1, NULL)) "count_LT", COUNT(IF(loanprod_id = 2, 1, NULL)) "count_ST", COUNT(IF(loanprod_id = 3, 1, NULL)) "count_SL" ' +
+		'FROM loans ' +
+		'WHERE STATUS IN ("Active", "Completed") AND MD5(member_id) = ?', req.params.id, (error, result) => {
 			if (error) throw error;
 
 			res.send(result);
 			console.log(result)
 		});
+}
+
+export const getLessByUser = (req, res) => {
+	db.query('SELECT * FROM less WHERE MD5(member_id) = ?', req.params.id, (error, result) => {
+		if (error) throw error;
+
+		res.send(result);
+		console.log(result)
+	});
 }

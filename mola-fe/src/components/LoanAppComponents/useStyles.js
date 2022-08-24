@@ -12,6 +12,9 @@ const myStyles = makeStyles(theme => ({
 			outlineOffset: '-2px',
 			outline: '2px solid #1565C0'
 		},
+		'& input:hover + span': {
+			border: '1px solid #000',
+		},
 	},
 	defaultRadio: {
 		padding: 10,
@@ -27,20 +30,20 @@ const myStyles = makeStyles(theme => ({
 	radioLabel: {
 		display: 'flex'
 	},
-	label: {
+	formLabel: {
 		fontWeight: 700 + '!important',
 		color: grey[500],
 		marginBottom: '12px !important'
 	},
-	labelRequired: {
+	formLabelRequired: {
 		marginBottom: '12px !important',
 		color: red[700]
 	},
 	formText: {
 		marginLeft: '0 !important',
 	},
-	//
-	appLabel: {
+	//DialogCSS
+	label: {
 		fontWeight: 700 + '!important',
 		color: grey[400],
 		letterSpacing: 0.7,
@@ -50,9 +53,9 @@ const myStyles = makeStyles(theme => ({
 		color: grey[600],
 		letterSpacing: 1,
 	},
-	appValue: {
-		fontWeight: 700 + '!important',
-		color: grey[600],
+	value: {
+		fontWeight: 600 + '!important',
+		color: grey[500],
 		letterSpacing: 1,
 	},
 	gValue: {
@@ -90,6 +93,7 @@ const myStyles = makeStyles(theme => ({
 			background: grey[400]
 		}
 	},
+
 }));
 
 export default function useStyles() {

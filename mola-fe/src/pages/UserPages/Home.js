@@ -120,9 +120,9 @@ export default function Home() {
 						<div>
 							<Grid container my="15px" sx={{ display: 'flex', alignItems: 'center', minWidth: '300px' }}>
 								<Grid item xs={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: { xs: '10px', sm: '20px' } }}>
-									<Typography className={classes.title}
+									<Typography className={classes.subTitle}
 										sx={{
-											fontSize: { xs: '14px', sm: '18px', md: '18px' }
+											fontSize: { xs: '12px', sm: '16px', md: '16px' },
 										}}>
 										Completed Loans
 									</Typography>

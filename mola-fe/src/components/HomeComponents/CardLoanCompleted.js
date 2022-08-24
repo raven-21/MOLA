@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 //MUI icons
-import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
+import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
 import ContentPasteSearchRoundedIcon from '@mui/icons-material/ContentPasteSearchRounded';
 //
 import DialogSummary from "./DialogSummary";
@@ -55,7 +55,7 @@ export default function CardLoanCompleted({ completed }) {
 										}}>
 										<Grid container spacing={2}>
 											<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center' }}>
-												<CreditCardOutlinedIcon
+												<CreditScoreOutlinedIcon
 													sx={{
 														fontSize: { xs: 30, sm: 35, md: 35 },
 														marginRight: 2

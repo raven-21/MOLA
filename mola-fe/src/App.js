@@ -72,7 +72,7 @@ function App() {
 							<Route path="/" element={<UserLayout />}>
 								<Route index path="/home" element={<Home />} />
 								<Route exact path="/profile/:id" element={<Profile />} />
-								<Route exact path="/loan_apply" element={<LoanApply />} />
+								<Route exact path="/loan_apply/:id" element={<LoanApply />} />
 							</Route>
 						)}
 						<Route path="*" element={<NotFound />} />

@@ -16,6 +16,7 @@ import { useTheme } from '@mui/material/styles';
 import useStyles from "./useStyles";
 //
 import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
+import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
 
 
 const DialogSummary = (props) => {
@@ -46,13 +47,23 @@ const DialogSummary = (props) => {
 					<DialogContent sx={{ padding: 4 }} className={fullScreen ? null : classes.scrollBar}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={12}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									<CreditCardRoundedIcon
-										sx={{
-											fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-											color: '#74C0FC !important'
-										}}
-									/>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={1}>
+									{data.status === 'Completed' ?
+										(<CreditScoreOutlinedIcon
+											sx={{
+												fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
+												color: '#74C0FC !important'
+											}}
+										/>)
+										:
+										(<CreditCardRoundedIcon
+											sx={{
+												fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
+												color: '#57CBA7 !important'
+											}}
+										/>)
+									}
+
 								</Box>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12}>

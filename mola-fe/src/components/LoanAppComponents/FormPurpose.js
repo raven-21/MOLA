@@ -25,7 +25,7 @@ export const FormPurpose = ({ control, name, label, loanPurposes }) => {
 			}) => (
 				<div>
 					<FormLabel htmlFor="purpose">
-						<Typography className={classes.label} sx={{ fontSize: { xs: 12, sm: 12, md: 15 } }}>
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 15 } }}>
 							{label}
 						</Typography>
 					</FormLabel >

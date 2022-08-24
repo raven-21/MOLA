@@ -5,9 +5,23 @@ const useFetchId = (url, id) => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-		axios.get(url + id).then((res) => {
-			setData(res.data);
-		});
+		const cancelToken = axios.CancelToken.source();
+
+		axios.get(url + id, { cancelToken: cancelToken.token })
+			.then((res) => {
+				setData(res.data);
+			})
+			.catch((err) => {
+				if (axios.isCancel(err)) {
+					console.log('Request cancelled!')
+				} else {
+					console.log(err)
+				}
+			})
+
+		return () => {
+			cancelToken.cancel();
+		};
 	}, [id]);
 
 	return { data }

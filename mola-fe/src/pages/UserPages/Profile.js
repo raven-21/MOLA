@@ -6,6 +6,7 @@ import Configs from '../../utils/Configs';
 //MATERIAL
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 //Custom components
 import BtnGrp from '../../components/ProfileComponents/BtnGrp';
 import ProfileInfo from '../../components/ProfileComponents/ProfileInfo';
@@ -38,7 +39,14 @@ export default function Profile() {
 						)
 						:
 						(
-							<SkeletonLoader />
+							<Grid container spacing={2}>
+								<Grid item xs={12} sm={12} md={6}>
+									<SkeletonLoader />
+								</Grid>
+								<Grid item xs={12} sm={12} md={6}>
+									<SkeletonLoader />
+								</Grid>
+							</Grid>
 						)
 					}
 

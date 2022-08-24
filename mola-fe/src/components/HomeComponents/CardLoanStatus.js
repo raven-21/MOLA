@@ -62,7 +62,7 @@ export default function CardLoanStatus({ inactives }) {
 											<Grid item xs={12} sm={12} md={12}>
 												<Box>
 													<Typography
-														className={inactive.app_status === 'Verified' ? classes.verified : classes.approved}
+														className={inactive.app_status === 'Verified' || inactive.app_status === 'For Verification' ? classes.verified : classes.approved}
 														sx={{
 															fontSize: { xs: 18, sm: 18, md: 20, },
 															fontWeight: 700,

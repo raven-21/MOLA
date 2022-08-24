@@ -24,7 +24,7 @@ export const FormAmount = ({ control, name, label, product }) => {
 			}) => (
 				<div>
 					<FormLabel htmlFor="amount">
-						<Typography className={classes.label} sx={{ fontSize: { xs: 12, sm: 12, md: 15 }, color: error ? red[700] : null }}>
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 15 }, color: error ? red[700] : null }}>
 							{label}
 						</Typography>
 					</FormLabel>
