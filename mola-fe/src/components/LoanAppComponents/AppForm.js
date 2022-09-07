@@ -44,6 +44,7 @@ export default function AppForm() {
 	const { schema } = useSchema(userLP, selectProduct);
 
 	const defaultValues = {
+		memberId: id,
 		product: 0,
 		purpose: 1,
 		amount: "",
@@ -58,10 +59,10 @@ export default function AppForm() {
 		lessBalance: 0,
 		lessInterest: 0,
 		netProceeds: 0,
-		outstandingBal: '',
+		outBal: 0,
 		appStatus: 'For Verification',
 		status: 'Inactive',
-		dateApplied: moment(new Date()).format('YYYY-MM-DD'),
+		dateApplied: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
 	}
 
 	const { handleSubmit, reset, control, watch, setValue, formState: { errors } } = useForm({
@@ -81,6 +82,9 @@ export default function AppForm() {
 	const watchAddon = watch('addOn');
 	const watchTotal = watch('totalLoan');
 	const watchCharges = watch('charges');
+	const watchLessBal = watch('lessBalance');
+	const watchLessInt = watch('lessInterest');
+	const watchGross = watch('grossProceeds');
 
 	useEffect(() => {
 		setSelectProduct(watchProduct);
@@ -110,10 +114,21 @@ export default function AppForm() {
 		}
 	}
 
-	const setLess = () => {
+	const setLessBal = () => {
 		if (lessBy) {
 			return lessBy.less_balance;
 		}
+	}
+
+	const setLessInt = () => {
+		if (lessBy) {
+			return lessBy.less_interest;
+		}
+	}
+
+	const setNet = (lessBal, lessInt, gross) => {
+		let totalNet = gross - (lessBal + lessInt);
+		return totalNet;
 	}
 
 	const setAddOn = (product, amount, rate) => {
@@ -144,7 +159,13 @@ export default function AppForm() {
 	}, [watchProduct])
 
 	useEffect(() => {
-		setValue('lessBalance', setLess())
+		if (lessBy) {
+			setValue("lessBalance", setLessBal());
+			setValue("lessInterest", setLessInt());
+		} else {
+			setValue("lessBalance", 0);
+			setValue("lessInterest", 0);
+		}
 	}, [lessBy]);
 
 	useEffect(() => {
@@ -158,7 +179,8 @@ export default function AppForm() {
 	}, [watchAmount, watchRate, watchProduct])
 
 	useEffect(() => {
-		setValue("totalLoan", setTotalLoan(+watchProduct, watchAmount, watchAddon))
+		setValue("totalLoan", setTotalLoan(+watchProduct, watchAmount, watchAddon));
+		setValue("outBal", setTotalLoan(+watchProduct, watchAmount, watchAddon));
 	}, [watchAmount, watchAddon])
 
 	useEffect(() => {
@@ -169,8 +191,12 @@ export default function AppForm() {
 		setValue("grossProceeds", parseFloat(watchAmount.replace(/,/g, "")) - watchCharges)
 	}, [watchCharges])
 
+	useEffect(() => {
+		setValue("netProceeds", setNet(watchLessBal, watchLessInt, watchGross))
+	}, [watchLessBal, watchLessInt, watchGross])
+
 	const onSubmit = (data) => {
-		console.log(data)
+		// console.log(data)
 		setOpenDialog(true);
 		setFormValue(data)
 	}

@@ -40,7 +40,7 @@ export default function ProfileInfoLG({ user }) {
 	const classes = useStyles();
 	let info = user[0];
 
-	console.log()
+	console.log(info)
 
 	return (
 		<div>
@@ -51,7 +51,8 @@ export default function ProfileInfoLG({ user }) {
 							<Box sx={{ padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
 								<Avatar
 									sx={{
-										background: 'linear-gradient(45deg, #113050 10%, #184470 90%)',
+										// background: 'linear-gradient(45deg, #113050 10%, #184470 90%)',
+										background: '#' + info.prof_color,
 										width: { xs: 70, sm: 80, md: 80 },
 										height: { xs: 70, sm: 80, md: 80 },
 										fontSize: { xs: 30, sm: 35, md: 35 },

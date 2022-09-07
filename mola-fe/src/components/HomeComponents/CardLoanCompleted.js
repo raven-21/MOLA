@@ -117,7 +117,7 @@ export default function CardLoanCompleted({ completed }) {
 				:
 				(
 					<Grid container spacing={1}>
-						<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+						{/* <Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 							<ContentPasteSearchRoundedIcon
 								sx={{
 									marginTop: 5,
@@ -125,7 +125,7 @@ export default function CardLoanCompleted({ completed }) {
 									color: grey[500],
 								}}
 							/>
-						</Grid>
+						</Grid> */}
 						<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 							<Typography
 								sx={{

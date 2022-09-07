@@ -55,7 +55,7 @@ const myStyles = makeStyles(theme => ({
 	},
 	value: {
 		fontWeight: 600 + '!important',
-		color: grey[500],
+		color: grey[600],
 		letterSpacing: 1,
 	},
 	gValue: {

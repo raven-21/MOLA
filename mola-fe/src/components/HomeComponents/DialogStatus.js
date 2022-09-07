@@ -1,5 +1,5 @@
 import React from "react";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -23,6 +23,7 @@ import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
 import LoopRoundedIcon from '@mui/icons-material/LoopRounded';
 import ManageSearchRoundedIcon from '@mui/icons-material/ManageSearchRounded';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import ThumbDownAltRoundedIcon from '@mui/icons-material/ThumbDownAltRounded';
 
 
 const DialogStatus = (props) => {
@@ -77,12 +78,19 @@ const DialogStatus = (props) => {
 															color: '#74C0FC !important'
 														}}
 													/> :
-													<VerifiedRoundedIcon
-														sx={{
-															fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-															color: '#74C0FC !important'
-														}}
-													/>
+													data.app_status === 'Disapproved' ?
+														<ThumbDownAltRoundedIcon
+															sx={{
+																fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
+																color: red['A200'],
+															}}
+														/> :
+														<VerifiedRoundedIcon
+															sx={{
+																fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
+																color: '#74C0FC !important'
+															}}
+														/>
 									}
 								</Box>
 							</Grid>
@@ -213,7 +221,7 @@ const DialogStatus = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.classification}
+										{data.loan_type}
 									</Typography>
 								</Box>
 							</Grid>

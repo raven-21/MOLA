@@ -85,7 +85,15 @@ export default function UserNavbar() {
 					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
 						<Link to={`/profile/${userId}`} className={classes.link}>
 							<IconButton className={location.pathname == `/profile/${userId}` ? classes.active : classes.btnIcon}>
-								<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>{user ? user[0].firstname.charAt(0) : null}</Avatar>
+								{user ?
+									(
+										<Avatar sx={{ bgcolor: '#' + user[0].prof_color, width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>{user[0].firstname.charAt(0)}</Avatar>
+									)
+									:
+									(
+										<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>{null}</Avatar>
+									)
+								}
 							</IconButton>
 						</Link>
 					</Tooltip>

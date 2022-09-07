@@ -208,7 +208,7 @@ const DialogSummary = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.classification}
+										{data.loan_type}
 									</Typography>
 								</Box>
 							</Grid>

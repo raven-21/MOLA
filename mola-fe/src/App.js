@@ -29,7 +29,7 @@ const theme = createTheme({
 		success: {
 			main: '#57CBA7',
 			light: green['A400'],
-			dark: '#0ca678',
+			dark: '#00bfa5',
 			contrastText: '#FFF',
 		}
 	},
@@ -78,14 +78,6 @@ function App() {
 						<Route path="*" element={<NotFound />} />
 					</Route>
 
-					{/* <Route element={<Navigate to="/" />} path="*" />
-						<Route element={<Login />} path="/" />
-						<Route element={<PrivateRoutes />}>
-							<Route element={<Home />} path="/home" exact />
-							<Route element={<Profile />} path="/profile" exact />
-							<Route element={<Settings />} path="/settings" exact />
-							<Route element={<LoanApply />} path="/loan_apply" exact />
-						</Route> */}
 				</Routes>
 			</Router>
 		</ThemeProvider >

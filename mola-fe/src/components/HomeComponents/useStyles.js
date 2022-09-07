@@ -27,6 +27,7 @@ const myStyles = makeStyles(theme => ({
 		fontWeight: 700 + '!important',
 		color: grey[600],
 		letterSpacing: 1,
+		textAlign: 'right',
 	},
 	gValue: {
 		fontWeight: 700 + '!important',

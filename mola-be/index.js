@@ -6,11 +6,11 @@ import userRoutes from './routes/user.js'
 
 const app = express();
 const PORT = 5000;
-
+//CORS
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+//ROUTES
 app.use('/loanApps', loanAppRoutes);
 app.use('/user', userRoutes);
 

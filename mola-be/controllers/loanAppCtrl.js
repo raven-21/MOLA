@@ -11,10 +11,10 @@ export const getLoanProducts = (req, res) => {
 
 export const getLoanProductsByUser = (req, res) => {
 
-	db.query('SELECT a.branch, a.branch_code, b.loanprod_id, b.branch_id, b.min_term, b.max_term, c.product_name, c.product_code, c.min_amount, c.max_amount ' +
+	db.query('SELECT a.branch, a.branch_code, b.product_id, b.branch_id, b.min_term, b.max_term, c.product_name, c.product_code, c.min_amount, c.max_amount ' +
 		'FROM branches a ' +
 		'LEFT JOIN loan_terms b ON a.id = b.branch_id ' +
-		'LEFT JOIN loan_products c ON b.loanprod_id = c.id ' +
+		'LEFT JOIN loan_products c ON b.product_id = c.id ' +
 		'WHERE a.id = ' +
 		'(SELECT bb.id FROM members aa ' +
 		'LEFT JOIN branches bb ON aa.branch_id = bb.id ' +
@@ -44,11 +44,20 @@ export const getInterestTypes = (req, res) => {
 	});
 }
 
+export const getBranches = (req, res) => {
+	db.query('SELECT * FROM branches', (error, result) => {
+		if (error) throw error;
+
+		res.send(result);
+		console.log(result)
+	});
+}
+
 export const getProductCount = (req, res) => {
 	db.query(
-		'SELECT COUNT(IF(loanprod_id = 1, 1, NULL)) "count_LT", COUNT(IF(loanprod_id = 2, 1, NULL)) "count_ST", COUNT(IF(loanprod_id = 3, 1, NULL)) "count_SL" ' +
+		'SELECT COUNT(IF(product_id = 1, 1, NULL)) "count_LT", COUNT(IF(product_id = 2, 1, NULL)) "count_ST", COUNT(IF(product_id = 3, 1, NULL)) "count_SL" ' +
 		'FROM loans ' +
-		'WHERE STATUS IN ("Active", "Completed") AND MD5(member_id) = ?', req.params.id, (error, result) => {
+		'WHERE STATUS IN ("Active", "Completed") AND member_id = ?', req.params.id, (error, result) => {
 			if (error) throw error;
 
 			res.send(result);
@@ -63,4 +72,60 @@ export const getLessByUser = (req, res) => {
 		res.send(result);
 		console.log(result)
 	});
+}
+
+export const getLoans = (req, res) => {
+	db.query('SELECT a.*, b.lastname, b.firstname, b.middlename, b.suffix, b.employee_id, b.prof_color, c.product_name, d.purpose, e.interest_type, f.branch, f.branch_code ' +
+		'FROM loans a ' +
+		'LEFT JOIN members b ON a.member_id = MD5(b.id) ' +
+		'LEFT JOIN loan_products c ON a.product_id = c.id ' +
+		'LEFT JOIN purposes d ON a.purpose_id = d.id ' +
+		'LEFT JOIN interest_types e ON c.id_intype = e.id ' +
+		'LEFT JOIN branches f ON b.branch_id = f.id ORDER BY a.id'
+		, (error, result) => {
+			if (error) throw error;
+
+			res.send(result);
+			console.log(result)
+		});
+}
+
+export const postLoan = (req, res) => {
+	var info = req.body;
+	let data = [
+		info.memberId,
+		info.product,
+		info.purpose,
+		info.amount,
+		info.term,
+		info.intRate,
+		info.amort,
+		info.addOn,
+		info.loanType,
+		info.totalLoan,
+		info.charges,
+		info.grossProceeds,
+		info.lessBalance,
+		info.lessInterest,
+		info.netProceeds,
+		info.outBal,
+		info.appStatus,
+		info.status,
+		info.dateApplied,
+	];
+	console.log(data);
+
+	db.query(
+		'INSERT INTO loans ' +
+		'(member_id, product_id, purpose_id, loan_amount, term, ' +
+		'interest_rate, amort, add_on, loan_type, total_loan, ' +
+		'charges, gross_proceeds, less_loanbal, less_interest, net_proceeds, ' +
+		'outstanding_bal, app_status, status, date_applied) ' +
+		'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data, (error, result) => {
+			if (error) throw error;
+
+			res.send(result);
+			console.log(result)
+		});
+
 }

@@ -19,6 +19,13 @@ import CottageIcon from '@mui/icons-material/Cottage';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import PersonSearchRoundedIcon from '@mui/icons-material/PersonSearchRounded';
+
+import CottageOutlinedIcon from '@mui/icons-material/CottageOutlined';
+import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import MeetingRoomOutlinedIcon from '@mui/icons-material/MeetingRoomOutlined';
+import PersonSearchOutlinedIcon from '@mui/icons-material/PersonSearchOutlined';
 
 
 const useStyles = makeStyles(theme => ({
@@ -81,26 +88,35 @@ export default function AdminNavbar() {
 						/>
 					</Typography>
 					<Box ml={5}></Box>
-					<Tooltip TransitionComponent={Zoom} title="Profile" arrow>
+					{/* <Tooltip TransitionComponent={Zoom} title="Profile" arrow>
 						<Link to="/profile" className={classes.link}>
 							<IconButton className={location.pathname == '/profile' ? classes.active : classes.btnIcon}>
 								<Avatar sx={{ bgcolor: '#184470', width: 25, height: 25, fontSize: 11, fontWeight: 'bold' }}>A</Avatar>
 							</IconButton>
 
 						</Link>
-					</Tooltip>
-					<Tooltip TransitionComponent={Zoom} title="Home" arrow>
+					</Tooltip> */}
+					<Tooltip TransitionComponent={Zoom} title="Members" arrow>
 						<Link to="/home" className={classes.link}>
-							<IconButton className={location.pathname == '/home' ? classes.active : classes.btnIcon}>
-								<CottageIcon />
+							<IconButton className={location.pathname == '/users' ? classes.active : classes.btnIcon}>
+								<PersonSearchOutlinedIcon />
 							</IconButton>
 						</Link>
 					</Tooltip>
+
+					<Tooltip TransitionComponent={Zoom} title="Home" arrow>
+						<Link to="/home" className={classes.link}>
+							<IconButton className={location.pathname == '/home' ? classes.active : classes.btnIcon}>
+								<CottageOutlinedIcon />
+							</IconButton>
+						</Link>
+					</Tooltip>
+
 					<Tooltip TransitionComponent={Zoom} title="Notifications" arrow>
 						<Link to="/home" className={classes.link}>
 							<IconButton className={classes.btnIcon}>
 								<Badge badgeContent="7" color="error">
-									<NotificationsIcon />
+									<NotificationsNoneRoundedIcon />
 								</Badge>
 							</IconButton>
 						</Link>
@@ -109,14 +125,14 @@ export default function AdminNavbar() {
 					<Tooltip TransitionComponent={Zoom} title="Settings" arrow>
 						<Link to="/settings" className={classes.link}>
 							<IconButton className={location.pathname == '/settings' ? classes.active : classes.btnIcon}>
-								<SettingsIcon />
+								<TuneRoundedIcon />
 							</IconButton>
 						</Link>
 					</Tooltip>
 					<Tooltip TransitionComponent={Zoom} title="Sign Out" arrow>
 						<Link to="/" onClick={handleLogOut} className={classes.link}>
 							<IconButton className={classes.btnIcon}>
-								<MeetingRoomIcon />
+								<MeetingRoomOutlinedIcon />
 							</IconButton>
 						</Link>
 					</Tooltip>

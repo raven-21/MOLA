@@ -33,8 +33,6 @@ export default function Home() {
 		setChecked(event.target.checked);
 	};
 
-
-
 	return (
 		<div className={classes.root}>
 			<Container maxWidth="lg">

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import swal from 'sweetalert';
 //
 import { grey, red } from "@mui/material/colors";
 import Button from '@mui/material/Button';
@@ -16,21 +18,18 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import useStyles from "./useStyles";
 import Configs from "../../utils/Configs";
-import useFetchId from "../../hooks/useFetchId";
 //
 import PostAddRoundedIcon from '@mui/icons-material/PostAddRounded';
 
 
 const DialogApp = (props) => {
+	const navigate = useNavigate();
 	const { classes } = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 	const { API } = Configs();
 	const { id } = useParams();
-
-	const handleDialogClose = () => {
-		props.setOpenDialog(false);
-	}
+	const [isLoading, setIsLoading] = useState(false);
 
 	const data = props.formValue;
 	const products = props.loanProducts;
@@ -46,7 +45,39 @@ const DialogApp = (props) => {
 		if (purposes && data) {
 			setPurposeC(purposes.find(item => item.id === data.purpose));
 		}
-	}, [data])
+	}, [data]);
+
+	const handleDialogClose = () => {
+		props.setOpenDialog(false);
+	}
+
+	const handlePost = () => {
+		setIsLoading(true);
+		console.log(data)
+		axios.post(API + 'loanApps/add_loan', data).then((response) => {
+			setIsLoading(false);
+			if (response.data.error) {
+				swal({
+					icon: "danger",
+					title: "Opps! Something went wrong",
+					text: "Please try it again later.",
+					buttons: false,
+					timer: 2000,
+				});
+			} else {
+				swal({
+					icon: "success",
+					title: "Success!",
+					text: "Loan application submitted.",
+					buttons: false,
+					timer: 2000,
+				});
+				setTimeout(() => {
+					navigate('/home');
+				}, 1500)
+			}
+		});
+	}
 
 	return (
 		<div>
@@ -173,7 +204,7 @@ const DialogApp = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer}>
+						<Grid container spacing={2} className={classes.dContainer} mb={2}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -197,31 +228,6 @@ const DialogApp = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer}>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dLabel}>
-									<Typography
-										className={classes.label}
-										sx={{
-											fontSize: { xs: 12, sm: 12, md: 13, },
-										}}>
-										Date of Application
-									</Typography>
-								</Box>
-							</Grid>
-							<Grid item xs={6} sm={6} md={6}>
-								<Box className={classes.dValue}>
-									<Typography
-										className={classes.value}
-										sx={{
-											fontSize: { xs: 13, sm: 13, md: 14 }
-										}}>
-										{data.dateApplied}
-									</Typography>
-								</Box>
-							</Grid>
-						</Grid>
-						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -296,7 +302,7 @@ const DialogApp = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer}>
+						<Grid container spacing={2} className={classes.dContainer} mb={2}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -320,7 +326,6 @@ const DialogApp = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
-						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -347,7 +352,7 @@ const DialogApp = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer}>
+						<Grid container spacing={2} className={classes.dContainer} mb={2}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -372,10 +377,7 @@ const DialogApp = (props) => {
 							</Grid>
 						</Grid>
 						{data.product !== 1 &&
-							<br />
-						}
-						{data.product !== 1 &&
-							<Grid container spacing={2} className={classes.dContainer}>
+							<Grid container spacing={2} className={classes.dContainer} mt={2}>
 								<Grid item xs={6} sm={6} md={6}>
 									<Box className={classes.dLabel}>
 										<Typography
@@ -401,7 +403,7 @@ const DialogApp = (props) => {
 							</Grid>
 						}
 						{data.product !== 1 &&
-							<Grid container spacing={2} className={classes.dContainer}>
+							<Grid container spacing={2} className={classes.dContainer} mb={2}>
 								<Grid item xs={6} sm={6} md={6}>
 									<Box className={classes.dLabel}>
 										<Typography
@@ -426,7 +428,6 @@ const DialogApp = (props) => {
 								</Grid>
 							</Grid>
 						}
-						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -460,12 +461,12 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{/* PHP {data.less_loanbal.toLocaleString(undefined, { minimumFractionDigits: 2 })} */}
+										PHP {data.lessBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer}>
+						<Grid container spacing={2} className={classes.dContainer} mb={2}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -484,12 +485,11 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{/* PHP {data.less_interest.toLocaleString(undefined, { minimumFractionDigits: 2 })} */}
+										PHP {data.lessInterest.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -509,9 +509,10 @@ const DialogApp = (props) => {
 									<Typography
 										className={classes.gValue}
 										sx={{
-											fontSize: { xs: 14, sm: 14, md: 16 }
+											fontSize: { xs: 14, sm: 14, md: 17 },
+											letterSpacing: 2
 										}}>
-										{/* PHP {data.net_proceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })} */}
+										PHP {data.netProceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
@@ -535,22 +536,42 @@ const DialogApp = (props) => {
 								Cancel
 							</Typography>
 						</Button>
-						<Button onClick={handleDialogClose} variant="contained" color="success"
-							sx={{
-								borderRadius: '25px',
-								boxShadow: 'none',
-							}}>
-							<Typography variant='overline'
+						{!isLoading &&
+							<Button onClick={handlePost} variant="contained" color="success"
 								sx={{
-									marginX: 2,
-									marginY: -0.5,
-									letterSpacing: 1,
-									textTransform: 'none',
-									fontWeight: 700
+									borderRadius: '25px',
+									boxShadow: 'none',
 								}}>
-								Submit
-							</Typography>
-						</Button>
+								<Typography variant='overline'
+									sx={{
+										marginX: 2,
+										marginY: -0.5,
+										letterSpacing: 1,
+										textTransform: 'none',
+										fontWeight: 700
+									}}>
+									Submit
+								</Typography>
+							</Button>
+						}
+						{isLoading &&
+							<Button variant="contained" color="success"
+								sx={{
+									borderRadius: '25px',
+									boxShadow: 'none',
+								}}>
+								<Typography variant='overline'
+									sx={{
+										marginX: 2,
+										marginY: -0.5,
+										letterSpacing: 1,
+										textTransform: 'none',
+										fontWeight: 700
+									}}>
+									Submitting...
+								</Typography>
+							</Button>
+						}
 					</DialogActions>
 				</Dialog>
 			}

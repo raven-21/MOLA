@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 //MUI Components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -12,6 +12,10 @@ import CardActionArea from "@mui/material/CardActionArea";
 import NoData from "../../assets/svg/undraw_no_data.svg";
 //CUSTOM Components
 import DialogStatus from "./DialogStatus";
+//
+import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
+import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
+import StoreRoundedIcon from '@mui/icons-material/StoreRounded';
 
 const useStyles = makeStyles(theme => ({
 
@@ -29,6 +33,9 @@ const useStyles = makeStyles(theme => ({
 	},
 	approved: {
 		color: '#74C0FC !important'
+	},
+	disapproved: {
+		color: red['A100'],
 	}
 
 }));
@@ -59,10 +66,34 @@ export default function CardLoanStatus({ inactives }) {
 											color: grey[600],
 										}}>
 										<Grid container spacing={2}>
-											<Grid item xs={12} sm={12} md={12}>
+											<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center' }}>
+												{inactive.product_id === 1 &&
+													<AccountBalanceRoundedIcon
+														sx={{
+															fontSize: { xs: 30, sm: 35, md: 40 },
+															marginRight: { xs: 1.5, sm: 1.5, md: 2 },
+															color: grey[500]
+														}} />
+												}
+												{inactive.product_id === 2 &&
+													<AccountBalanceWalletRoundedIcon
+														sx={{
+															fontSize: { xs: 30, sm: 35, md: 40 },
+															marginRight: { xs: 1.5, sm: 1.5, md: 2 },
+															color: grey[500]
+														}} />
+												}
+												{inactive.product_id === 3 &&
+													<StoreRoundedIcon
+														sx={{
+															fontSize: { xs: 30, sm: 35, md: 40 },
+															marginRight: { xs: 1.5, sm: 1.5, md: 2 },
+															color: grey[500]
+														}} />
+												}
 												<Box>
 													<Typography
-														className={inactive.app_status === 'Verified' || inactive.app_status === 'For Verification' ? classes.verified : classes.approved}
+														className={inactive.app_status === 'Verified' || inactive.app_status === 'For Verification' ? classes.verified : inactive.app_status === 'Disapproved' ? classes.disapproved : classes.approved}
 														sx={{
 															fontSize: { xs: 18, sm: 18, md: 20, },
 															fontWeight: 700,
@@ -82,7 +113,7 @@ export default function CardLoanStatus({ inactives }) {
 													sx={{
 														fontSize: { xs: 10, sm: 12, md: 14 }
 													}}>
-													Date Applied: {inactive.date_applied}
+													{inactive.date_applied}
 												</Typography>
 											</Grid>
 											<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
