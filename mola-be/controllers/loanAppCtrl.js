@@ -75,13 +75,13 @@ export const getLessByUser = (req, res) => {
 }
 
 export const getLoans = (req, res) => {
-	db.query('SELECT a.*, b.lastname, b.firstname, b.middlename, b.suffix, b.employee_id, b.prof_color, c.product_name, d.purpose, e.interest_type, f.branch, f.branch_code ' +
+	db.query('SELECT a.*, b.lastname, b.firstname, b.middlename, b.suffix, b.employee_id, b.prof_color, c.product_name, c.product_code, d.purpose, e.interest_type, f.branch, f.branch_code ' +
 		'FROM loans a ' +
 		'LEFT JOIN members b ON a.member_id = MD5(b.id) ' +
 		'LEFT JOIN loan_products c ON a.product_id = c.id ' +
 		'LEFT JOIN purposes d ON a.purpose_id = d.id ' +
 		'LEFT JOIN interest_types e ON c.id_intype = e.id ' +
-		'LEFT JOIN branches f ON b.branch_id = f.id ORDER BY a.id'
+		'LEFT JOIN branches f ON b.branch_id = f.id ORDER BY a.date_applied DESC'
 		, (error, result) => {
 			if (error) throw error;
 
@@ -123,9 +123,18 @@ export const postLoan = (req, res) => {
 		'outstanding_bal, app_status, status, date_applied) ' +
 		'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data, (error, result) => {
 			if (error) throw error;
-
 			res.send(result);
 			console.log(result)
 		});
 
+}
+
+export const updateLoan = (req, res) => {
+	var info = req.body;
+	let data = [info.appStatus, info.voucherNo, info.id];
+	db.query('UPDATE loans SET app_status = ?, voucher_no = ? WHERE id = ?', data, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+		console.log(result)
+	})
 }

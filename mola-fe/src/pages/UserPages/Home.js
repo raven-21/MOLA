@@ -61,7 +61,7 @@ export default function Home() {
 								sx={{
 									fontSize: { xs: '14px', sm: '18px', md: '18px' }
 								}}>
-								Loan Application Status
+								Loan Requests
 							</Typography>
 						</Grid>
 					</Grid>

@@ -1,6 +1,17 @@
 import express from 'express';
 
-import { getInterestTypes, getLessByUser, getLoanProducts, getBranches, getLoanProductsByUser, getLoanPurposes, getLoans, getProductCount, postLoan } from '../controllers/loanAppCtrl.js';
+import {
+	getInterestTypes,
+	getLessByUser,
+	getLoanProducts,
+	getBranches,
+	getLoanProductsByUser,
+	getLoanPurposes,
+	getLoans,
+	getProductCount,
+	postLoan,
+	updateLoan
+} from '../controllers/loanAppCtrl.js';
 
 const router = express.Router();
 
@@ -14,6 +25,7 @@ router.get('/selectProduct/:id', getLoanProductsByUser);
 router.get('/less/:id', getLessByUser);
 router.get('/loans', getLoans);
 router.post('/add_loan', postLoan);
+router.patch('/update_loan', updateLoan);
 
 
 export default router;

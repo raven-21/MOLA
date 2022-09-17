@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/authContext";
 import { makeStyles } from "@mui/styles";
 import { grey } from "@mui/material/colors";
 //MUI components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 //MUI icons
 
 //Hooks
@@ -41,13 +43,17 @@ export default function Home() {
 				<div className={classes.content}>
 					<Grid container spacing={2}>
 						<Grid item xs={12} sm={12} md={12}>
-							{loans ?
+							{loans && branches ?
 								(
 									<LoansList loans={loans} branches={branches} />
 								)
 								:
 								(
-									<SkeletonLoader />
+									<>
+										<Backdrop open={true} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+											<CircularProgress color="inherit" />
+										</Backdrop>
+									</>
 								)
 							}
 						</Grid>

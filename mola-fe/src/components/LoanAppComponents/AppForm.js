@@ -287,7 +287,7 @@ export default function AppForm() {
 						)
 						:
 						(
-							<div>
+							<>
 								<SkeletonLoader />
 								<br /><br />
 								<Grid container spacing={2}>
@@ -297,7 +297,7 @@ export default function AppForm() {
 								</Grid>
 								<br /><br />
 								<SkeletonLoader />
-							</div>
+							</>
 						)
 					}
 					<DialogApp

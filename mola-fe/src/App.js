@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { green } from '@mui/material/colors';
+import { green, grey } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 
 //HOOKS /CONTEXT
@@ -16,12 +16,12 @@ import AdminLayout from './components/AdminComponents/AdminLayout';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 
-//USER PAGE
+//USER PAGES
 import Home from "./pages/UserPages/Home";
 import Profile from "./pages/UserPages/Profile";
 import LoanApply from "./pages/UserPages/LoanApply";
 
-//ADMIN
+//ADMIN PAGES
 import AdminHome from "./pages/AdminPages/Home";
 
 const theme = createTheme({
@@ -30,6 +30,18 @@ const theme = createTheme({
 			main: '#57CBA7',
 			light: green['A400'],
 			dark: '#00bfa5',
+			contrastText: '#FFF',
+		},
+		default: {
+			main: grey[500],
+			light: grey[400],
+			dark: grey[700],
+			contrastText: '#000',
+		},
+		secondary: {
+			main: '#184470',
+			light: '#65829F',
+			dark: '#102D4A',
 			contrastText: '#FFF',
 		}
 	},
@@ -40,6 +52,7 @@ const theme = createTheme({
 		fontWeightMedium: 600,
 		fontWeightBold: 700,
 	},
+
 });
 
 function App() {
@@ -55,13 +68,11 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<Router>
 				<Routes>
-
 					<Route element={<PublicRoutes />}>
 						<Route path="/" element={<LoginLayout />}>
 							<Route index element={<Login />} />
 						</Route>
 					</Route>
-
 					<Route element={<ProtectedRoutes />}>
 						{role === 'admin' && (
 							<Route path="/" element={<AdminLayout />}>
@@ -77,7 +88,6 @@ function App() {
 						)}
 						<Route path="*" element={<NotFound />} />
 					</Route>
-
 				</Routes>
 			</Router>
 		</ThemeProvider >

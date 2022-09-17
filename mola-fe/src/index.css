@@ -8,3 +8,20 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+
+::-webkit-scrollbar {
+	width: '7px !important';
+}
+
+::-webkit-scrollbar-track {
+	 	background: '#FFF';
+}
+
+::-webkit-scrollbar-thumb {
+	 	background: #65829F;
+	 	border-radius: 10px;
+}
+	 
+::-webkit-scrollbar-thumb:hover {
+	 	background: #184470;
+}

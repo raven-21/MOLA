@@ -14,7 +14,7 @@ export const login = (req, res) => {
 			res.send({ error: "Account doesn't exist!" });
 		}
 		else {
-			let isMatch = data.password.localeCompare(result[0].password);
+			let isMatch = MD5(data.password).localeCompare(result[0].password);
 			//isMatch == 0 : true
 			if (isMatch != 0) {
 				res.send({ error: "Invalid username or password!" });
