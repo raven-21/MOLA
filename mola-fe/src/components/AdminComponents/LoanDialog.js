@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import { useNavigate } from 'react-router-dom';
+//Hooks
 import axios from "axios";
 import swal from 'sweetalert';
 import Configs from '../../utils/Configs';
+import moment from "moment";
 
 import { grey, red } from "@mui/material/colors";
 import Button from '@mui/material/Button';
@@ -27,6 +29,8 @@ import useStyles from "./useStyles";
 //
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import FindReplaceRoundedIcon from '@mui/icons-material/FindReplaceRounded';
+import { InputAdornment } from "@mui/material";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -46,6 +50,8 @@ const LoanDialog = (props) => {
 
 	const [voucherNo, setVoucherNo] = useState(null);
 	const [appStatus, setAppStatus] = useState("");
+	const [voucherExist, setVoucherExist] = useState("");
+	const [voucherBool, setVoucherBool] = useState(true);
 
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -55,9 +61,50 @@ const LoanDialog = (props) => {
 		setAppStatus("");
 	}
 
-	const handleSubmitUpdate = (id) => {
-		console.log(voucherNo, appStatus)
-		const newData = { appStatus, voucherNo, id }
+	const disableSave = (voucher) => {
+		if (appStatus || voucherNo) {
+			if (appStatus === 'Approved') {
+				if (voucherNo || voucher) {
+					return false;
+				}
+				else {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
+
+	const handleVoucherExist = () => {
+		const exist = props.loans.find(item => item.voucher_no === voucherNo);
+		if (exist) {
+			setVoucherExist("EXIST! This number is taken.");
+			setVoucherBool(prev => !prev)
+		} else {
+			setVoucherExist("OK. Number not taken.");
+			setVoucherBool(prev => prev)
+		}
+	}
+
+	useEffect(() => {
+		handleVoucherExist();
+	}, [voucherNo])
+
+	const handleSubmitUpdate = (id, voucher, app_status, term) => {
+
+		var startdate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+
+		const newData = {
+			'appStatus': appStatus ? appStatus : app_status,
+			'voucherNo': voucherNo ? voucherNo : voucher,
+			'status': appStatus === 'Approved' ? 'Active' : 'Inactive',
+			'dateGrant': appStatus === 'Approved' ? startdate : null,
+			'dateTerminate': appStatus === 'Approved' ? moment(startdate).add(term, 'months').format('YYYY-MM-DD HH:mm:ss') : null,
+			'id': id,
+		}
 		setIsLoading(true);
 
 		axios.patch(API + 'loanApps/update_loan', newData)
@@ -117,12 +164,12 @@ const LoanDialog = (props) => {
 							</Typography>
 						</Box>
 						<Grid container spacing={4}>
-							<Grid item>
+							<Grid item xs={12} sm={2} md={2}>
 								<Avatar sx={{ bgcolor: '#' + data.prof_color, width: 60, height: 60, fontSize: 30, fontWeight: 'bold' }}>
 									{data.firstname.charAt(0)}
 								</Avatar>
 							</Grid>
-							<Grid item>
+							<Grid item xs={12} sm={10} md={10}>
 								<Box>
 									<Typography sx={{ fontSize: { xs: 16, sm: 16, md: 18 }, fontWeight: 700, color: '#184470' }}>
 										{data.firstname + ' ' + data.middlename.charAt(0) + '. ' + data.lastname} {data.suffix ? data.suffix : ""}
@@ -174,12 +221,33 @@ const LoanDialog = (props) => {
 												fullWidth
 												size="small"
 												InputProps={{
-													sx: { fontSize: 13, paddingY: .2, }
+													sx: { fontSize: 13, paddingY: .2, },
+													endAdornment: (
+														<InputAdornment position="end">
+															<IconButton fontSize="small" edge="end" onClick={handleVoucherExist}>
+																<FindReplaceRoundedIcon fontSize="small" />
+															</IconButton>
+														</InputAdornment>
+													),
 												}} />
+											{appStatus === 'Approved' && !voucherNo && !data.voucher_no ?
+												<Typography sx={{ fontSize: 12, marginTop: .7, marginLeft: .7, color: red[700] }}>
+													Required!
+												</Typography>
+												:
+												null
+											}
+											{voucherNo ?
+												<Typography sx={{ fontSize: 12, marginTop: .7, marginLeft: .7, color: red[700] }}>
+													{voucherExist}
+												</Typography>
+												:
+												""
+											}
+
 										</Box>
 									</Grid>
 								</Grid>
-
 							</Grid>
 						</Grid>
 					</DialogTitle>
@@ -616,7 +684,7 @@ const LoanDialog = (props) => {
 								Close
 							</Typography>
 						</Button>
-						<Button onClick={() => handleSubmitUpdate(data.id)} variant="contained" color="secondary" disabled={appStatus || voucherNo ? false : true}
+						<Button onClick={() => handleSubmitUpdate(data.id, data.voucher_no, data.app_status, data.term)} variant="contained" color="secondary" disabled={disableSave(data.voucher_no)}
 							sx={{
 								borderRadius: '25px',
 								boxShadow: 'none',

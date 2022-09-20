@@ -57,11 +57,13 @@ const myStyles = makeStyles(theme => ({
 		fontWeight: 600 + '!important',
 		color: grey[600],
 		letterSpacing: 1,
+		textAlign: 'right',
 	},
 	gValue: {
 		fontWeight: 700 + '!important',
 		color: grey[900],
 		letterSpacing: 1,
+		textAlign: 'right',
 	},
 	dContainer: {
 		display: 'flex',

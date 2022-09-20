@@ -38,6 +38,9 @@ import PersonSearchOutlinedIcon from '@mui/icons-material/PersonSearchOutlined';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
+import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
+import ViewStreamRoundedIcon from '@mui/icons-material/ViewStreamRounded';
 
 const useStyles = makeStyles(theme => ({
 	btnIcon: {
@@ -151,8 +154,9 @@ export default function AdminNavbar() {
 					{/* Drawer */}
 					<Box sx={{ display: { xs: 'block', sm: 'none' } }}>
 						<IconButton className={classes.btnIcon} onClick={() => setIsDrawerOpen(true)}>
-							<MenuRoundedIcon />
+							<ViewListRoundedIcon />
 						</IconButton>
+
 						<Drawer anchor="right" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
 							<Box sx={{ maxWidth: 330, padding: 1 }}>
 								<Paper
@@ -166,7 +170,7 @@ export default function AdminNavbar() {
 										alignItems: 'center',
 									}}>
 									<Avatar src={AdminAvatar} sx={{ width: 50, height: 50 }} />
-									<Box sx={{ flexGrow: 1, marginLeft: 1.5, marginRight: 1, }}>
+									<Box sx={{ flexGrow: 1, marginLeft: 2.5, marginRight: 1, }}>
 										<Typography sx={{ fontWeight: "bold", fontSize: '1.0625rem', color: '#184470' }}>
 											Administrator
 										</Typography>
@@ -194,7 +198,7 @@ export default function AdminNavbar() {
 										</ListItemButton>
 									</ListItem>
 									<ListItem disablePadding>
-										<ListItemButton className={classes.linkBtn}>
+										<ListItemButton component={Link} to="/home" className={classes.linkBtn}>
 											<ListItemIcon className={classes.linkList}>
 												<Avatar className={classes.avatarIcon}>
 													<CottageOutlinedIcon />

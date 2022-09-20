@@ -7,7 +7,7 @@ const useSchema = (userLP, selectProduct) => {
 
 	useEffect(() => {
 		if (userLP)
-			setChosenProduct(userLP.find(item => item.loanprod_id === +selectProduct))
+			setChosenProduct(userLP.find(item => item.product_id === +selectProduct))
 	}, [userLP, selectProduct])
 
 	const schema = yup.object().shape({

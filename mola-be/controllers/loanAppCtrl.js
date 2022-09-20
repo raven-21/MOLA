@@ -131,8 +131,8 @@ export const postLoan = (req, res) => {
 
 export const updateLoan = (req, res) => {
 	var info = req.body;
-	let data = [info.appStatus, info.voucherNo, info.id];
-	db.query('UPDATE loans SET app_status = ?, voucher_no = ? WHERE id = ?', data, (error, result) => {
+	let data = [info.appStatus, info.voucherNo, info.status, info.dateGrant, info.dateTerminate, info.id];
+	db.query('UPDATE loans SET app_status = ?, voucher_no = ?, status = ?, date_granted = ?, termination_date = ?  WHERE id = ?', data, (error, result) => {
 		if (error) throw error;
 		res.send(result);
 		console.log(result)

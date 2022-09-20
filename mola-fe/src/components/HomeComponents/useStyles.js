@@ -33,6 +33,7 @@ const myStyles = makeStyles(theme => ({
 		fontWeight: 700 + '!important',
 		color: grey[900],
 		letterSpacing: 1,
+		textAlign: 'right',
 	},
 	dContainer: {
 		display: 'flex',

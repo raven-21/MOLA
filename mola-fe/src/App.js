@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 import Home from "./pages/UserPages/Home";
 import Profile from "./pages/UserPages/Profile";
 import LoanApply from "./pages/UserPages/LoanApply";
+import Settings from "./pages/UserPages/Settings";
 
 //ADMIN PAGES
 import AdminHome from "./pages/AdminPages/Home";
@@ -84,6 +85,7 @@ function App() {
 								<Route index path="/home" element={<Home />} />
 								<Route exact path="/profile/:id" element={<Profile />} />
 								<Route exact path="/loan_apply/:id" element={<LoanApply />} />
+								<Route exact path="/settings" element={<Settings />} />
 							</Route>
 						)}
 						<Route path="*" element={<NotFound />} />

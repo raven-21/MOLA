@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
 //
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -18,12 +20,15 @@ import useStyles from "./useStyles";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
 import ContentPasteSearchRoundedIcon from '@mui/icons-material/ContentPasteSearchRounded';
+import FactCheckRoundedIcon from '@mui/icons-material/FactCheckRounded';
 import ApprovalRoundedIcon from '@mui/icons-material/ApprovalRounded';
 import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
 import LoopRoundedIcon from '@mui/icons-material/LoopRounded';
+import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRounded';
 import ManageSearchRoundedIcon from '@mui/icons-material/ManageSearchRounded';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ThumbDownAltRoundedIcon from '@mui/icons-material/ThumbDownAltRounded';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 
 const DialogStatus = (props) => {
@@ -48,54 +53,42 @@ const DialogStatus = (props) => {
 					onClose={handleDialogClose}
 					maxWidth="sm"
 					fullWidth>
-					<DialogTitle>
-						<Box sx={{ display: 'flex', alignItems: 'center' }}>
+					<DialogTitle sx={{ paddingX: 3.5, paddingBottom: 4, boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}>
+						<IconButton onClick={handleDialogClose} size="small" sx={{ position: 'absolute', top: 10, right: 10 }}>
+							<CloseRoundedIcon fontSize="small" />
+						</IconButton>
+						<Box mb={4} sx={{ display: 'flex', alignItems: 'center' }}>
+							<Typography sx={{ fontWeight: 'bold', fontSize: 19 }}>
+								{data.app_status === 'Approved' ? 'Loan Details' : 'Application Details'}
+							</Typography>
 						</Box>
-					</DialogTitle>
-					<DialogContent sx={{ padding: 4 }} className={fullScreen ? null : classes.scrollBar}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={12}>
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									{
-										data.app_status === 'For Verification' ?
-											<ContentPasteSearchRoundedIcon
-												sx={{
-													fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-													color: '#57CBA7 !important'
-												}}
-											/> :
-											data.app_status === 'Verified' ?
-												<TaskAltRoundedIcon
-													sx={{
-														fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-														color: '#57CBA7 !important'
-													}}
-												/> :
-												data.app_status === 'For Approval' ?
-													<ManageSearchRoundedIcon
-														sx={{
-															fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-															color: '#74C0FC !important'
-														}}
-													/> :
-													data.app_status === 'Disapproved' ?
-														<ThumbDownAltRoundedIcon
-															sx={{
-																fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-																color: red['A200'],
-															}}
-														/> :
-														<VerifiedRoundedIcon
-															sx={{
-																fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-																color: '#74C0FC !important'
-															}}
-														/>
+									{data.app_status === 'For Verification' &&
+										<Avatar sx={{ bgcolor: '#57CBA7', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<ContentPasteSearchRoundedIcon sx={{ fontSize: { xs: 30, sm: 30, md: 35 } }} />
+										</Avatar>
+									}
+									{data.app_status === 'Verified' &&
+										<Avatar sx={{ bgcolor: '#57CBA7', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<FactCheckRoundedIcon sx={{ fontSize: { xs: 30, sm: 30, md: 35 } }} />
+										</Avatar>
+									}
+									{data.app_status === 'For Approval' &&
+										<Avatar sx={{ bgcolor: '#74C0FC', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<ManageSearchRoundedIcon sx={{ fontSize: { xs: 30, sm: 30, md: 35 } }} />
+										</Avatar>
+									}
+									{data.app_status === 'Disapproved' &&
+										<Avatar sx={{ bgcolor: red['A200'], width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<ThumbDownAltRoundedIcon sx={{ fontSize: { xs: 20, sm: 20, md: 25 } }} />
+										</Avatar>
 									}
 								</Box>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={-.7} mt={-1.5}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: -.2 }}>
 									<Typography
 										sx={{
 											fontSize: { xs: 11, sm: 11, md: 12 },
@@ -106,30 +99,50 @@ const DialogStatus = (props) => {
 										Status
 									</Typography>
 								</Box>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={.5}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: { xs: -1, sm: -1, md: -.5 } }}>
 									<Typography
 										sx={{
-											fontSize: { xs: 23, sm: 23, md: 25 },
+											fontSize: { xs: 20, sm: 20, md: 22 },
 											fontWeight: 700,
-											letterSpacing: 1
+											letterSpacing: .5,
+											color: '#184470'
 										}}>
 										{data.app_status}
 									</Typography>
 								</Box>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									<LoopRoundedIcon fontSize="small" className={classes.rotateIcon} /> &nbsp;
-									<Typography color="primary"
-										sx={{
-											fontSize: { xs: 11, sm: 11, md: 12 },
-											fontWeight: 700,
-											letterSpacing: 1
-										}}>
-										Processing...
-									</Typography>
-								</Box>
+								{data.app_status !== 'Disapproved' &&
+									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: -1 }}>
+										<HourglassBottomRoundedIcon className={classes.rotateIcon} sx={{ fontSize: 13 }} /> &nbsp;
+										<Typography
+											sx={{
+												fontSize: { xs: 11, sm: 11, md: 12 },
+												fontWeight: 700,
+												letterSpacing: 1
+											}}>
+											Processing...
+										</Typography>
+									</Box>
+								}
+								{data.app_status === 'Disapproved' &&
+									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: -1 }}>
+										<InfoOutlinedIcon sx={{ fontSize: 14, color: grey[500] }} /> &nbsp;
+										<Typography
+											sx={{
+												fontSize: { xs: 11, sm: 11, md: 12 },
+												fontWeight: 600,
+												letterSpacing: 1,
+												color: grey[500]
+											}}>
+											For more info. Contact your admin.
+										</Typography>
+									</Box>
+								}
+
 							</Grid>
 						</Grid>
-						<br /><br />
+					</DialogTitle>
+					<Divider sx={{ opacity: 0 }} />
+					<DialogContent sx={{ padding: 4, backgroundColor: '#F0F1F3' }} className={fullScreen ? null : classes.scrollBar}>
 						<Grid container spacing={2} className={classes.dContainer}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
@@ -542,7 +555,8 @@ const DialogStatus = (props) => {
 							</Grid>
 						</Grid>
 					</DialogContent>
-					<DialogActions>
+					<Divider sx={{ opacity: 0.5 }} />
+					<DialogActions sx={{ padding: 2, }}>
 						<Button onClick={handleDialogClose} variant="text" color="inherit"
 							sx={{
 								borderRadius: '25px',

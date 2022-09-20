@@ -14,11 +14,6 @@ import useStyles from "./useStyles";
 export const FormTerm = ({ control, name, label, product }) => {
 	const { classes } = useStyles();
 
-	const [rangeMo, setRangeMo] = useState([]);
-	useEffect(() => {
-		product === "ST" ? setRangeMo("3-12") : setRangeMo("3-36")
-	}, [product])
-
 	return (
 		<Controller
 			name={name}

@@ -40,8 +40,6 @@ export default function ProfileInfoLG({ user }) {
 	const classes = useStyles();
 	let info = user[0];
 
-	console.log(info)
-
 	return (
 		<div>
 			{info &&

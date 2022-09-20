@@ -338,7 +338,7 @@ const LoansList = ({ loans, branches, setLoanData }) => {
 															{value.firstname + ' ' + value.middlename.charAt(0) + '. ' + value.lastname} {value.suffix ? value.suffix : ""}
 														</Typography>
 														<Typography sx={{ fontSize: { xs: 11, sm: 11, md: 12 }, fontWeight: 600, color: grey[400] }}>
-															{'Memba-' + value.branch_code}
+															{'Memba-' + value.branch_code} &nbsp;|&nbsp; {'ID No: ' + value.employee_id}
 														</Typography>
 													</Box>
 
@@ -406,7 +406,7 @@ const LoansList = ({ loans, branches, setLoanData }) => {
 										</CardActionArea>
 									</Paper>
 								))}
-								<LoanDialog openDialog={openDialog} setOpenDialog={setOpenDialog} value={value} />
+								<LoanDialog openDialog={openDialog} setOpenDialog={setOpenDialog} value={value} loans={loans} />
 							</>
 						)
 						:

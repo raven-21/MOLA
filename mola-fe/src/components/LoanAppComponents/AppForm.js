@@ -87,7 +87,7 @@ export default function AppForm() {
 	const watchGross = watch('grossProceeds');
 
 	useEffect(() => {
-		setSelectProduct(watchProduct);
+		setSelectProduct(prev => watchProduct);
 	}, [watchProduct])
 
 	const setLoanType = (product) => {

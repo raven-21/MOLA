@@ -130,12 +130,10 @@ export default function CardLoanCompleted({ completed }) {
 							<Typography
 								sx={{
 									marginLeft: .5,
-									fontWeight: 'bold',
-									fontStyle: 'italic',
 									fontSize: { xs: 12, sm: 13, md: 16 },
 									color: grey[500],
 								}}>
-								No loans completed  yet
+								No loans completed yet.
 							</Typography>
 						</Grid>
 

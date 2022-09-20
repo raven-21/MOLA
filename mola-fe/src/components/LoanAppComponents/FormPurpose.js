@@ -7,6 +7,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from "@mui/material/FormHelperText";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 import { Controller } from "react-hook-form";
 import useStyles from "./useStyles";
@@ -33,14 +36,18 @@ export const FormPurpose = ({ control, name, label, loanPurposes }) => {
 						size="small"
 						error={!!error}
 						fullWidth >
-
 						{loanPurposes &&
-							<Select
+							<TextField
+								select
+								size="small"
 								id="purpose"
 								onChange={onChange}
 								value={value}
-								sx={{
-									fontSize: { xs: 13, sm: 13, md: 16 }
+								SelectProps={{
+									IconComponent: (props) => <KeyboardArrowDownRoundedIcon {...props} fontSize="small" />,
+								}}
+								InputProps={{
+									sx: { fontSize: { xs: 13, sm: 13, md: 16, paddingY: .7 } }
 								}}>
 								{loanPurposes.map((loanPurpose) => (
 									<MenuItem
@@ -52,7 +59,7 @@ export const FormPurpose = ({ control, name, label, loanPurposes }) => {
 										{loanPurpose.purpose}
 									</MenuItem>
 								))}
-							</Select>
+							</TextField>
 						}
 						<FormHelperText className={classes.formText} sx={{ fontSize: { xs: 11, sm: 11, md: 12 } }}>{error ? error.message : null}</FormHelperText>
 					</FormControl>
