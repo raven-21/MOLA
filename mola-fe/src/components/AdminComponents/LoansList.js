@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-const LoansList = ({ loans, branches, setLoanData }) => {
+const LoansList = ({ loans, branches }) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.up('sm'));

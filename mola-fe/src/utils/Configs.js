@@ -1,5 +1,4 @@
 const Configs = () => {
-
 	// const API = "http://localhost:5000/";
 	const API = "http://192.168.0.145:5000/"
 	const userId = localStorage.getItem("userId");

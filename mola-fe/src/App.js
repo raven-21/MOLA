@@ -24,6 +24,7 @@ import Settings from "./pages/UserPages/Settings";
 
 //ADMIN PAGES
 import AdminHome from "./pages/AdminPages/Home";
+import Members from "./pages/AdminPages/Members";
 
 const theme = createTheme({
 	palette: {
@@ -53,7 +54,18 @@ const theme = createTheme({
 		fontWeightMedium: 600,
 		fontWeightBold: 700,
 	},
-
+	components: {
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: {
+					borderRadius: 8,
+					padding: 10,
+					fontSize: 12,
+					boxShadow: 'rgba(0, 0, 0, 0.4) 1px 2px 5px'
+				}
+			}
+		}
+	}
 });
 
 function App() {
@@ -78,6 +90,7 @@ function App() {
 						{role === 'admin' && (
 							<Route path="/" element={<AdminLayout />}>
 								<Route index path="/home" element={<AdminHome />} />
+								<Route exact path="/members" element={<Members />} />
 							</Route>
 						)}
 						{role === 'member' && (

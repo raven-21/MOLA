@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import swal from 'sweetalert';
 import { useAuth } from "../context/authContext";
+import Configs from "../utils/Configs";
+import CryptoJS from "crypto-js";
 
 const useLogin = () => {
 
 	const navigate = useNavigate();
 	const { login } = useAuth();
+	const { API } = Configs();
 
 	const [loginError, setLoginError] = useState('');
 	const [loginBool, setLoginBool] = useState(false);
@@ -31,9 +34,12 @@ const useLogin = () => {
 	};
 
 	const onSubmit = (data) => {
-		setIsPending(true);
+		setIsPending(true)
+		const ACCESS_KEY = process.env.REACT_APP_KEY;
+		//Encrypt
+		const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), ACCESS_KEY).toString();
 
-		axios.post('http://localhost:5000/user/login', data).then((response) => {
+		axios.post(API + 'user/login', { 'key': encryptedData }).then((response) => {
 
 			setIsPending(false);
 

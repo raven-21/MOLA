@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
 //
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -17,6 +19,7 @@ import useStyles from "./useStyles";
 //
 import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
 import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 
 const DialogSummary = (props) => {
@@ -40,38 +43,39 @@ const DialogSummary = (props) => {
 					onClose={handleDialogClose}
 					maxWidth="sm"
 					fullWidth>
-					<DialogTitle>
-						<Box sx={{ display: 'flex', alignItems: 'center' }}>
+					<DialogTitle sx={{ paddingX: 3.5, paddingBottom: 4, boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}>
+						<IconButton onClick={handleDialogClose} size="small" sx={{ position: 'absolute', top: 10, right: 10 }}>
+							<CloseRoundedIcon fontSize="small" />
+						</IconButton>
+						<Box mb={4} sx={{ display: 'flex', alignItems: 'center' }}>
+							<Typography sx={{ fontWeight: 'bold', fontSize: 19 }}>
+								Loan Details
+							</Typography>
 						</Box>
-					</DialogTitle>
-					<DialogContent sx={{ padding: 4 }} className={fullScreen ? null : classes.scrollBar}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={12}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={1}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 									{data.status === 'Completed' ?
-										(<CreditScoreOutlinedIcon
-											sx={{
-												fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-												color: '#74C0FC !important'
-											}}
-										/>)
+										(
+											<Avatar sx={{ bgcolor: '#74C0FC', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+												<CreditScoreOutlinedIcon sx={{ fontSize: { xs: 25, sm: 25, md: 30 } }} />
+											</Avatar>
+										)
 										:
-										(<CreditCardRoundedIcon
-											sx={{
-												fontSize: { xs: '80px !important', sm: '80px !important', md: '90px !important' },
-												color: '#57CBA7 !important'
-											}}
-										/>)
+										(
+											<Avatar sx={{ bgcolor: '#57CBA7', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+												<CreditCardRoundedIcon sx={{ fontSize: { xs: 25, sm: 25, md: 30 } }} />
+											</Avatar>
+										)
 									}
-
 								</Box>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} mb={-.5} mt={-2}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 									<Typography
 										sx={{
 											fontSize: { xs: 11, sm: 11, md: 12 },
-											fontWeight: 700,
+											fontWeight: 600,
 											color: grey[400],
 											letterSpacing: 1
 										}}>
@@ -81,16 +85,19 @@ const DialogSummary = (props) => {
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 									<Typography
 										sx={{
-											fontSize: { xs: 25, sm: 25, md: 27 },
+											fontSize: { xs: 20, sm: 20, md: 22 },
 											fontWeight: 700,
-											letterSpacing: 1
+											letterSpacing: 1,
+											color: '#184470'
 										}}>
 										PHP {data.outstanding_bal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						<br /><br />
+					</DialogTitle>
+					<Divider sx={{ opacity: 0 }} />
+					<DialogContent sx={{ padding: 4, backgroundColor: '#F0F1F3' }} className={fullScreen ? null : classes.scrollBar}>
 						<Grid container spacing={2} className={classes.dContainer}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
@@ -557,7 +564,7 @@ const DialogSummary = (props) => {
 							</Grid>
 						</Grid>
 					</DialogContent>
-					<DialogActions>
+					<DialogActions sx={{ padding: 2, }}>
 						<Button onClick={handleDialogClose} variant="text" color="inherit"
 							sx={{
 								borderRadius: '25px',

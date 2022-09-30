@@ -5,7 +5,7 @@ export const getLoanProducts = (req, res) => {
 		if (error) throw error;
 
 		res.send(result);
-		console.log(result)
+		// console.log(result)
 	});
 }
 
@@ -22,7 +22,7 @@ export const getLoanProductsByUser = (req, res) => {
 			if (error) throw error;
 
 			res.send(result);
-			console.log(result)
+			// console.log(result)
 		});
 }
 
@@ -31,7 +31,7 @@ export const getLoanPurposes = (req, res) => {
 		if (error) throw error;
 
 		res.send(result);
-		console.log(result)
+		// console.log(result)
 	});
 }
 
@@ -40,7 +40,7 @@ export const getInterestTypes = (req, res) => {
 		if (error) throw error;
 
 		res.send(result);
-		console.log(result)
+		// console.log(result)
 	});
 }
 
@@ -49,7 +49,7 @@ export const getBranches = (req, res) => {
 		if (error) throw error;
 
 		res.send(result);
-		console.log(result)
+		// console.log(result)
 	});
 }
 
@@ -61,7 +61,7 @@ export const getProductCount = (req, res) => {
 			if (error) throw error;
 
 			res.send(result);
-			console.log(result)
+			// console.log(result)
 		});
 }
 
@@ -70,7 +70,7 @@ export const getLessByUser = (req, res) => {
 		if (error) throw error;
 
 		res.send(result);
-		console.log(result)
+		// console.log(result)
 	});
 }
 
@@ -86,7 +86,7 @@ export const getLoans = (req, res) => {
 			if (error) throw error;
 
 			res.send(result);
-			console.log(result)
+			// console.log(result)
 		});
 }
 
@@ -124,7 +124,7 @@ export const postLoan = (req, res) => {
 		'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data, (error, result) => {
 			if (error) throw error;
 			res.send(result);
-			console.log(result)
+			// console.log(result)
 		});
 
 }
@@ -135,6 +135,6 @@ export const updateLoan = (req, res) => {
 	db.query('UPDATE loans SET app_status = ?, voucher_no = ?, status = ?, date_granted = ?, termination_date = ?  WHERE id = ?', data, (error, result) => {
 		if (error) throw error;
 		res.send(result);
-		console.log(result)
+		// console.log(result)
 	})
 }

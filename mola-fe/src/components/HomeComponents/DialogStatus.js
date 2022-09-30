@@ -67,7 +67,7 @@ const DialogStatus = (props) => {
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 									{data.app_status === 'For Verification' &&
 										<Avatar sx={{ bgcolor: '#57CBA7', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
-											<ContentPasteSearchRoundedIcon sx={{ fontSize: { xs: 30, sm: 30, md: 35 } }} />
+											<ContentPasteSearchRoundedIcon sx={{ fontSize: { xs: 25, sm: 25, md: 30 } }} />
 										</Avatar>
 									}
 									{data.app_status === 'Verified' &&
@@ -128,7 +128,7 @@ const DialogStatus = (props) => {
 										<InfoOutlinedIcon sx={{ fontSize: 14, color: grey[500] }} /> &nbsp;
 										<Typography
 											sx={{
-												fontSize: { xs: 11, sm: 11, md: 12 },
+												fontSize: { xs: 10, sm: 11, md: 12 },
 												fontWeight: 600,
 												letterSpacing: 1,
 												color: grey[500]

@@ -61,37 +61,51 @@ const LoanDialog = (props) => {
 		setAppStatus("");
 	}
 
-	const disableSave = (voucher) => {
-		if (appStatus || voucherNo) {
-			if (appStatus === 'Approved') {
-				if (voucherNo || voucher) {
-					return false;
-				}
-				else {
+	const disableSave = (voucher, status) => {
+		if (appStatus) {
+			if (appStatus === status) {
+				return true;
+			}
+			if (appStatus === "Approved") {
+				if (voucherNo) {
+					if (voucherExist === "OK. Number not taken.") {
+						return false;
+					}
 					return true;
 				}
-			} else {
+				if (voucher) {
+					return false;
+				}
+				return true;
+			}
+			return false;
+		}
+		if (voucherNo) {
+			if (voucherExist === "OK. Number not taken.") {
 				return false;
 			}
-		} else {
-			return true;
+			if (voucher) {
+				return true;
+			}
 		}
+		return true;
 	}
 
 	const handleVoucherExist = () => {
 		const exist = props.loans.find(item => item.voucher_no === voucherNo);
 		if (exist) {
 			setVoucherExist("EXIST! This number is taken.");
-			setVoucherBool(prev => !prev)
+			setVoucherBool(prev => prev);
 		} else {
 			setVoucherExist("OK. Number not taken.");
-			setVoucherBool(prev => prev)
+			setVoucherBool(prev => !prev);
 		}
 	}
 
 	useEffect(() => {
 		handleVoucherExist();
 	}, [voucherNo])
+
 
 	const handleSubmitUpdate = (id, voucher, app_status, term) => {
 
@@ -215,7 +229,7 @@ const LoanDialog = (props) => {
 												Voucher No.
 											</Typography>
 											<TextField
-												placeholder='Unknown'
+												placeholder={data.voucher_no ? data.voucher_no : "Unknown"}
 												defaultValue={data.voucher_no}
 												onChange={(e) => setVoucherNo(e.target.value)}
 												fullWidth
@@ -237,12 +251,15 @@ const LoanDialog = (props) => {
 												:
 												null
 											}
-											{voucherNo ?
+											{voucherNo && voucherNo !== data.voucher_no ?
 												<Typography sx={{ fontSize: 12, marginTop: .7, marginLeft: .7, color: red[700] }}>
 													{voucherExist}
 												</Typography>
 												:
-												""
+												voucherNo === data.voucher_no ?
+													""
+													:
+													""
 											}
 
 										</Box>
@@ -684,7 +701,11 @@ const LoanDialog = (props) => {
 								Close
 							</Typography>
 						</Button>
-						<Button onClick={() => handleSubmitUpdate(data.id, data.voucher_no, data.app_status, data.term)} variant="contained" color="secondary" disabled={disableSave(data.voucher_no)}
+						<Button
+							onClick={() => handleSubmitUpdate(data.id, data.voucher_no, data.app_status, data.term)}
+							variant="contained"
+							color="secondary"
+							disabled={disableSave(data.voucher_no, data.app_status)}
 							sx={{
 								borderRadius: '25px',
 								boxShadow: 'none',

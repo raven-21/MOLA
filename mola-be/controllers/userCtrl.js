@@ -2,11 +2,16 @@ import db from '../config/database.js';
 import dotenv from "dotenv";
 import jwt from 'jsonwebtoken';
 import MD5 from 'MD5';
+import CryptoJS from 'crypto-js';
 
 dotenv.config();
 
 export const login = (req, res) => {
-	const data = req.body;
+	const key = req.body.key;
+	// //Decrypt
+	var bytes = CryptoJS.AES.decrypt(key, process.env.ACCESS_KEY);
+	var data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
 	db.query('SELECT a.*, b.role FROM user_accounts  a LEFT JOIN roles b ON a.id_role = b.id WHERE username = ?', [data.username], (error, result) => {
 		if (error) throw error;
 
@@ -37,7 +42,7 @@ export const login = (req, res) => {
 
 export const authToken = (req, res) => {
 	res.send(req.user)
-	console.log(req.user)
+	// console.log(req.user)
 }
 
 export const getUser = (req, res) => {
@@ -76,7 +81,7 @@ export const getUserInactives = (req, res) => {
 		'WHERE status = "Inactive" AND MD5(a.id) = ? ORDER BY b.date_applied DESC', req.params.id, (error, result) => {
 			if (error) throw error;
 			res.send(result);
-			console.log(result)
+			// console.log(result)
 		})
 }
 //Loan SUMMARY (active/completed)

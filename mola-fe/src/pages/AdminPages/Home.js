@@ -49,13 +49,12 @@ export default function Home() {
 								)
 								:
 								(
-									<>
-										<Backdrop open={true} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-											<CircularProgress color="inherit" />
-										</Backdrop>
-									</>
+									<Backdrop open={true} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+										<CircularProgress color="inherit" />
+									</Backdrop>
 								)
 							}
+
 						</Grid>
 					</Grid>
 				</div>

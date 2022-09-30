@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useFetchId = (url, id) => {
-	const [data, setData] = useState(null);
+	const [data, setData] = useState();
 
 	useEffect(() => {
 		const cancelToken = axios.CancelToken.source();

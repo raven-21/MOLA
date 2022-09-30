@@ -47,13 +47,21 @@ const AdminLayout = () => {
 	const [showTopBtn, setShowTopBtn] = useState(false);
 
 	useEffect(() => {
+		let isScrolled = false;
 		window.addEventListener("scroll", () => {
 			if (window.scrollY > 150) {
-				setShowTopBtn(true);
+				if (!isScrolled) {
+					setShowTopBtn(true);
+				}
 			} else {
-				setShowTopBtn(false);
+				if (!isScrolled) {
+					setShowTopBtn(false);
+				}
 			}
 		});
+		return () => {
+			isScrolled = true;
+		};
 	}, []);
 
 	const goToTop = () => {

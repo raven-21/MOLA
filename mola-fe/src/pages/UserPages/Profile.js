@@ -50,7 +50,8 @@ export default function Profile() {
 						)
 					}
 
-					{/* <BtnGrp /> */}
+
+					<BtnGrp />
 				</div>
 			</Container >
 		</div >
