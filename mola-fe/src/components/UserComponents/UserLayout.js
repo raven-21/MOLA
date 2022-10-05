@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 		paddingTop: '70px',
 		height: 'auto',
 		[theme.breakpoints.only('xs')]: {
-			paddingTop: '55px',
+			paddingTop: '40px',
 		},
 		// overflow: 'auto',
 		// '&::-webkit-scrollbar': {

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { grey } from "@mui/material/colors";
-//MUI
+import { grey, red } from "@mui/material/colors";
+//MUI Components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,11 +9,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 
-import NoData from "../../assets/svg/undraw_blank_canvas.svg";
-//MUI icons
-import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
+import NoData from "../../../assets/svg/undraw_no_data.svg";
 //CUSTOM Components
-import DialogSummary from "./DialogSummary";
+import DialogStatus from "./DialogStatus";
+//
+import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
+import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
+import StoreRoundedIcon from '@mui/icons-material/StoreRounded';
 
 const useStyles = makeStyles(theme => ({
 
@@ -26,28 +28,37 @@ const useStyles = makeStyles(theme => ({
 		cursor: 'pointer',
 		marginBottom: '20px !important'
 	},
+	verified: {
+		color: '#57CBA7 !important'
+	},
+	approved: {
+		color: '#74C0FC !important'
+	},
+	disapproved: {
+		color: red['A100'],
+	}
 
 }));
 
-export default function CardLoanSummary({ actives }) {
+export default function CardLoanStatus({ inactives }) {
 	const classes = useStyles();
 
 	const [openDialog, setOpenDialog] = useState(false);
 	const [value, setValue] = useState();
 
-	const handleDialogOpen = (active) => {
+	const handleDialogOpen = (inactive) => {
 		setOpenDialog(true);
-		setValue(active)
+		setValue(inactive)
 	}
 
 	return (
 		<div>
-			{actives.length !== 0 ?
+			{inactives.length !== 0 ?
 				(
 					<div>
-						{actives.map((active) => (
-							<Card className={classes.cardLoan} elevation={0} key={active.id}>
-								<CardActionArea onClick={() => handleDialogOpen(active)}>
+						{inactives.map((inactive) => (
+							<Card className={classes.cardLoan} elevation={0} key={inactive.id}>
+								<CardActionArea onClick={() => handleDialogOpen(inactive)}>
 									<CardContent
 										sx={{
 											paddingX: { xs: '18px', sm: '25px', md: '30px' },
@@ -56,24 +67,44 @@ export default function CardLoanSummary({ actives }) {
 										}}>
 										<Grid container spacing={2}>
 											<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center' }}>
-												<CreditCardOutlinedIcon
-													sx={{
-														fontSize: { xs: 30, sm: 35, md: 35 },
-														marginRight: 2
-													}} />
+												{inactive.product_id === 1 &&
+													<AccountBalanceRoundedIcon
+														sx={{
+															fontSize: { xs: 30, sm: 35, md: 40 },
+															marginRight: { xs: 1.5, sm: 1.5, md: 2 },
+															color: grey[500]
+														}} />
+												}
+												{inactive.product_id === 2 &&
+													<AccountBalanceWalletRoundedIcon
+														sx={{
+															fontSize: { xs: 30, sm: 35, md: 40 },
+															marginRight: { xs: 1.5, sm: 1.5, md: 2 },
+															color: grey[500]
+														}} />
+												}
+												{inactive.product_id === 3 &&
+													<StoreRoundedIcon
+														sx={{
+															fontSize: { xs: 30, sm: 35, md: 40 },
+															marginRight: { xs: 1.5, sm: 1.5, md: 2 },
+															color: grey[500]
+														}} />
+												}
 												<Box>
 													<Typography
+														className={inactive.app_status === 'Verified' || inactive.app_status === 'For Verification' ? classes.verified : inactive.app_status === 'Disapproved' ? classes.disapproved : classes.approved}
 														sx={{
-															fontSize: { xs: 15, sm: 18, md: 20, },
-															fontWeight: 700
+															fontSize: { xs: 18, sm: 18, md: 20, },
+															fontWeight: 700,
 														}}>
-														PHP {active.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+														{inactive.app_status}
 													</Typography>
 													<Typography
 														sx={{
-															fontSize: { xs: 12, sm: 12, md: 16, }
+															fontSize: { xs: 13, sm: 13, md: 16, }
 														}}>
-														Loan Amount
+														Loan Status
 													</Typography>
 												</Box>
 											</Grid>
@@ -82,7 +113,7 @@ export default function CardLoanSummary({ actives }) {
 													sx={{
 														fontSize: { xs: 10, sm: 12, md: 14 }
 													}}>
-													Voucher NO. {active.voucher_no}
+													{inactive.date_applied}
 												</Typography>
 											</Grid>
 											<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -90,9 +121,9 @@ export default function CardLoanSummary({ actives }) {
 													<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
 														<Typography
 															sx={{
-																fontSize: { xs: 10, sm: 14, md: 16 }
+																fontSize: { xs: 11, sm: 14, md: 16 }
 															}}>
-															Outstanding Balance
+															Loan Amount
 														</Typography>
 													</Box>
 													<Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
@@ -101,9 +132,9 @@ export default function CardLoanSummary({ actives }) {
 															sx={{
 																marginLeft: .5,
 																fontWeight: 'bold',
-																fontSize: { xs: 18, sm: 21, md: 21 }
+																fontSize: { xs: 18, sm: 20, md: 20 }
 															}}>
-															{active.outstanding_bal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+															{inactive.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 														</Typography>
 													</Box>
 												</div>
@@ -113,7 +144,7 @@ export default function CardLoanSummary({ actives }) {
 								</CardActionArea>
 							</Card>
 						))}
-						<DialogSummary openDialog={openDialog} setOpenDialog={setOpenDialog} value={value} />
+						<DialogStatus openDialog={openDialog} setOpenDialog={setOpenDialog} value={value} />
 					</div>
 				)
 				:
@@ -138,7 +169,7 @@ export default function CardLoanSummary({ actives }) {
 									fontSize: { xs: 15, sm: 15, md: 18 },
 									color: grey[500],
 								}}>
-								No active loans.
+								No Applications, yet.
 							</Typography>
 						</Grid>
 						<Grid item xs={12} sm={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -150,7 +181,7 @@ export default function CardLoanSummary({ actives }) {
 										color: grey[500],
 										textAlign: 'center'
 									}}>
-									You don't have any active loans.
+									You have no loan applications at this moment.
 								</Typography>
 								<Typography
 									sx={{

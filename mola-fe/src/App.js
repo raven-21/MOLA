@@ -29,9 +29,9 @@ import Members from "./pages/AdminPages/Members";
 const theme = createTheme({
 	palette: {
 		success: {
-			main: '#57CBA7',
+			main: '#96c90a',
 			light: green['A400'],
-			dark: '#00bfa5',
+			dark: '#7ba909',
 			contrastText: '#FFF',
 		},
 		default: {
@@ -41,9 +41,9 @@ const theme = createTheme({
 			contrastText: '#000',
 		},
 		secondary: {
-			main: '#184470',
+			main: '#4994d8',
 			light: '#65829F',
-			dark: '#102D4A',
+			dark: '#2268a4',
 			contrastText: '#FFF',
 		}
 	},

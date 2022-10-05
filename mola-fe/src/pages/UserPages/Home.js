@@ -12,10 +12,10 @@ import Paper from "@mui/material/Paper";
 import Switch from "@mui/material/Switch";
 
 // Custom Home Components
-import CardLoanApply from "../../components/HomeComponents/CardLoanApply";
-import CardLoanStatus from "../../components/HomeComponents/CardLoanStatus";
-import CardLoanSummary from "../../components/HomeComponents/CardLoanSummary";
-import CardLoanCompleted from "../../components/HomeComponents/CardLoanCompleted";
+import CardLoanApply from "../../components/UserComponents/HomeComponents/CardLoanApply";
+import CardLoanStatus from "../../components/UserComponents/HomeComponents/CardLoanStatus";
+import CardLoanSummary from "../../components/UserComponents/HomeComponents/CardLoanSummary";
+import CardLoanCompleted from "../../components/UserComponents/HomeComponents/CardLoanCompleted";
 import SkeletonLoader from "../../components/SkeletonLoader";
 import useStyles from "./usePageStyles";
 

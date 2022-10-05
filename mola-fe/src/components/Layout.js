@@ -60,7 +60,7 @@ export default function Layout({ children }) {
 							sx={{
 								width: 250,
 							}}
-							alt="Memba Logo hihi"
+							alt="Memba Logo"
 							src={LogoMemba}
 						/>
 					</div>

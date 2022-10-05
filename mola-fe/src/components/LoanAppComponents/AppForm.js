@@ -276,11 +276,10 @@ export default function AppForm() {
 												textTransform: 'none',
 												fontWeight: 600,
 												display: 'flex',
-												alignItems: 'center'
+												alignItems: 'center',
 											}}>
 											Continue <ChevronRightRoundedIcon />
 										</Typography>
-
 									</Button>
 								</Grid>
 							</Grid>

@@ -9,11 +9,12 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import Configs from "../../utils/Configs";
+import Configs from "../../../utils/Configs";
 
 
-import LoanSvg from "../../assets/svg/undraw_online_payments_re_y8f2.svg";
+import LoanSvg from "../../../assets/svg/undraw_online_payments_re_y8f2.svg";
 import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
+import SavingsRoundedIcon from '@mui/icons-material/SavingsRounded';
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 		height: '100%',
 	},
 	card: {
-		background: 'linear-gradient(45deg, #113050 10%, #184470 90%)',
+		background: 'linear-gradient(45deg, #2268a4 10%, #4994d8 90%)',
 		borderRadius: '12px !important',
 		minWidth: '300px',
 		height: '100%'
@@ -62,11 +63,11 @@ export default function CardLoanApply({ savings }) {
 										<Avatar
 											sx={{
 												bgcolor: '#fff',
-												color: 'rgba(0, 0, 0, 0.54)',
+												color: '#b9b9b9',
 												width: { xs: 50, sm: 60, md: 60 },
 												height: { xs: 50, sm: 60, md: 60 },
 											}}>
-											<SavingsOutlinedIcon sx={{ fontSize: { xs: 30, sm: 35, md: 35 } }} />
+											<SavingsRoundedIcon sx={{ fontSize: { xs: 30, sm: 35, md: 35 } }} />
 										</Avatar>
 										<Box ml={2}>
 											<Typography
@@ -80,7 +81,7 @@ export default function CardLoanApply({ savings }) {
 											<Typography
 												sx={{
 													fontSize: { xs: 14, sm: 14, md: 18, },
-													color: grey[400],
+													color: grey[300],
 												}}>
 												Total Savings
 											</Typography>
@@ -131,7 +132,7 @@ export default function CardLoanApply({ savings }) {
 													sx={{
 														fontSize: { xs: 16, sm: 16, md: 18 },
 														fontWeight: 700,
-														// color: grey[400],
+														color: grey[600],
 														marginBottom: 1
 													}}>
 													Apply for a loan
@@ -146,7 +147,7 @@ export default function CardLoanApply({ savings }) {
 											</Box>
 											<Box>
 												<Link to={`/loan_apply/${userId}`} className={classes.link}>
-													<Button variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none', minWidth: 140, }}>
+													<Button color="secondary" variant="contained" sx={{ borderRadius: '25px', boxShadow: 'none', minWidth: 140, }}>
 														<Typography variant='overline'
 															sx={{
 																marginX: 2,

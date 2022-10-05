@@ -21,6 +21,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Avatar from '@mui/material/Avatar';
 import Drawer from "@mui/material/Drawer";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -30,8 +31,7 @@ import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 
 //IMAGES
-import LogoMemba from '../../assets/memba_logo/memba_app.png';
-import LogoMembaM from '../../assets/memba_logo/memba_abbrv.png';
+import LogoOlivia from '../../assets/olivia_logos/olivia_rectangle.png';
 
 // ICONS
 import CottageRoundedIcon from '@mui/icons-material/CottageRounded';
@@ -43,7 +43,7 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import NoteAltRoundedIcon from '@mui/icons-material/NoteAltRounded';
 import SettingsRounded from "@mui/icons-material/SettingsRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-
+import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 
 const useStyles = makeStyles(theme => ({
 	btnIcon: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	active: {
 		background: '#DAE6F1 !important',
-		color: '#1770E6 !important',
+		color: '#4994d8 !important',
 		marginLeft: '7px !important',
 	},
 	// link: {
@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	avatarIconActive: {
 		background: '#DAE6F1 !important',
-		color: '#1770E6 !important',
+		color: '#4994d8 !important',
 	},
 	linkTypo: {
 		fontSize: '14px !important',
@@ -122,11 +122,11 @@ export default function UserNavbar() {
 					<Box
 						component="img"
 						sx={{
-							width: 150,
+							width: 100,
 							// width: 40,
 						}}
-						alt="Memba Logo"
-						src={LogoMemba}
+						alt="Olivia Logo"
+						src={LogoOlivia}
 					/>
 					{/* Spacer */}
 					<Typography sx={{ flexGrow: 1 }} />
@@ -177,17 +177,8 @@ export default function UserNavbar() {
 							<TableRowsRoundedIcon />
 						</IconButton>
 
-						<Drawer anchor="right" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-							<Box sx={{ maxWidth: 330, padding: 1 }}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: 1 }}>
-									<IconButton onClick={() => setIsDrawerOpen(false)}>
-										<ChevronRightRoundedIcon />
-									</IconButton>
-									{/* <Typography sx={{ marginLeft: 1, fontWeight: 700 }}>
-										Memba Online Loan App
-									</Typography> */}
-								</Box>
-								<Divider sx={{ opacity: 0.7, marginBottom: 2 }} />
+						<SwipeableDrawer anchor="left" open={isDrawerOpen} onOpen={() => isDrawerOpen(true)} onClose={() => setIsDrawerOpen(false)}>
+							<Box sx={{ maxWidth: '100%', padding: 1 }}>
 								<Paper
 									elevation={0}
 									sx={{
@@ -261,12 +252,12 @@ export default function UserNavbar() {
 										<ListItemButton component={Link} to={`/loan_apply/${userId}`} className={classes.linkBtn}>
 											<ListItemIcon className={classes.linkList}>
 												<Avatar className={location.pathname === `/loan_apply/${userId}` ? classes.avatarIconActive : classes.avatarIcon}>
-													<NoteAltRoundedIcon />
+													<DriveFileRenameOutlineRoundedIcon />
 												</Avatar>
 											</ListItemIcon>
 											<ListItemText>
 												<Typography className={classes.linkTypo}>
-													Loan Apply
+													Apply Loan
 												</Typography>
 											</ListItemText>
 										</ListItemButton>
@@ -328,7 +319,8 @@ export default function UserNavbar() {
 									</Typography>
 								</Box>
 							</Box>
-						</Drawer>
+						</SwipeableDrawer>
+
 					</Box>
 				</Toolbar>
 			</Container>

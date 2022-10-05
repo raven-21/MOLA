@@ -4,7 +4,8 @@ import { Outlet } from "react-router-dom";
 //Material UI Components
 import Box from '@mui/material/Box';
 //SRC IMG
-import LogoMemba from '../../assets/memba_logo/memba.png';
+import LogoMemba from '../../assets/memba_logo/memba_header.png';
+import LogoOlivia from '../../assets/olivia_logos/oliviaSquare.png';
 //Custom Components
 import Footer from "./Footer";
 
@@ -33,12 +34,14 @@ const LoginLayout = () => {
 		<div className={classes.root}>
 			<div className={classes.logo}>
 				<Box
+					mb={4}
+					mt={4}
 					component="img"
 					sx={{
-						width: 250,
+						width: 140,
 					}}
-					alt="Memba Logo hihi"
-					src={LogoMemba}
+					alt="Olivia Logo"
+					src={LogoOlivia}
 				/>
 			</div>
 			<div className={classes.page}>

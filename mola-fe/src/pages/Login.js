@@ -16,17 +16,19 @@ import IconButton from '@mui/material/IconButton';
 import FormHelperText from '@mui/material/FormHelperText';
 import CircularProgress from '@mui/material/CircularProgress';
 // ICONS
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 const useStyles = makeStyles(theme => ({
 	loginBtn: {
-		background: 'linear-gradient(45deg, #113050 20%, #184470 90%)',
+		background: 'linear-gradient(45deg, #2268a4 20%, #4994d8 90%)',
 		textTransform: 'none !important',
-		color: '#FFF'
+		color: '#FFF',
+		paddingTop: '12px !important',
+		paddingBottom: '12px !important',
+		borderRadius: '25px !important',
+		letterSpacing: 1,
 	},
 }));
 
@@ -43,56 +45,51 @@ export default function Login() {
 			sx={{
 				width: { xs: '100%', sm: 400, md: 400 },
 				margin: 'auto',
-				boxShadow: { xs: 'none', sm: '0 .4rem .5rem rgba(0,0,0,.10)' },
+				// boxShadow: { xs: 'none', sm: '0 .4rem .5rem rgba(0,0,0,.10)' },
+				boxShadow: { xs: 'none', sm: 'rgb(0 0 0 / 10%) 0px 0px 10px' },
 				paddingX: { xs: 0, sm: 0, md: 0 },
 				paddingY: { xs: 0, sm: 3, md: 3 },
-				borderRadius: 3,
+				borderRadius: 2,
 			}}>
 			<CardContent
 				sx={{
-					padding: { xs: '0 30px 0' }
+					padding: { xs: '10px 30px 0' }
 				}}>
-				<Typography sx={{ fontWeight: 'bold', fontSize: { xs: 30, md: 30 } }}>
-					Sign in
-				</Typography>
-				<Typography variant='subtitle2' mb={2} sx={{ fontWeight: 'light', fontStyle: 'italic' }}>
-					Loan application made easier
+				<Typography sx={{ fontWeight: 900, fontSize: { xs: 15, md: 15 }, textAlign: 'center', marginBottom: 3 }}>
+					Log in to your account
 				</Typography>
 				<form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 					<Box mb={2}>
 						<Typography sx={{ fontSize: 13, fontWeight: 'regular', color: red[700] }}>{loginError}</Typography>
 					</Box>
-
 					<Box mb={2}>
 						<TextField
-							{...register("username", { required: '*Username is required!' })}
+							{...register("username", { required: '*Required!' })}
 							error={!!errors?.username || loginBool}
 							id="input-with-icon-textfield"
-							placeholder='Username...'
-							InputProps={{
-								startAdornment: (
-									<InputAdornment position="start">
-										<AccountCircleOutlinedIcon />
-									</InputAdornment>
-								),
-							}}
+							label="Username"
 							variant="outlined"
+							color="secondary"
+							InputProps={{
+								sx: { fontSize: 13 },
+							}}
+							InputLabelProps={{
+								sx: { fontSize: 13 },
+							}}
 							fullWidth
 						/>
 						<FormHelperText sx={{ color: red[700] }}>{errors.username ? errors.username.message : null}</FormHelperText>
 					</Box>
-					<Box mb={3}>
+					<Box mb={2}>
 						<TextField
-							{...register("password", { required: '*Password is required!' })}
+							{...register("password", { required: '*Required!' })}
 							error={!!errors?.password || loginBool}
 							type={values.showPassword ? 'text' : 'password'}
-							placeholder='Password...'
+							label="Password"
+							variant="outlined"
+							color="secondary"
 							InputProps={{
-								startAdornment: (
-									<InputAdornment position="start">
-										<LockOpenOutlinedIcon />
-									</InputAdornment>
-								),
+								sx: { fontSize: 13 },
 								endAdornment: (
 									<InputAdornment position='end'>
 										<IconButton
@@ -106,37 +103,36 @@ export default function Login() {
 									</InputAdornment>
 								)
 							}}
-							variant="outlined"
+							InputLabelProps={{
+								sx: { fontSize: 13 },
+							}}
 							fullWidth
 						/>
 						<FormHelperText sx={{ color: red[700] }}>{errors.password ? errors.password.message : null}</FormHelperText>
 					</Box>
-					<Typography mb={3} sx={{ fontWeight: 'medium', fontSize: 11, marginTop: 3 }}>
+					<Typography mb={3} color="primary" sx={{ fontWeight: 400, fontSize: 11, textAlign: 'center' }}>
 						Forgot password? Please contact your administrator.
 					</Typography>
 					<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-						{!isPending &&
-							<Button
-								className={classes.loginBtn}
-								type='submit'
-								variant='contained'
-								color='primary'
-								size='large'
-								sx={{ borderRadius: 6, paddingLeft: 8, paddingRight: 8, paddingY: 1 }}>
-								Sign In
-							</Button>}
-						{isPending &&
-							<Button
-								className={classes.loginBtn}
-								variant='contained'
-								color='primary'
-								size='large'
-								sx={{ borderRadius: 6, paddingLeft: 5, paddingRight: 5, paddingY: 1, }}>
-								Signing in... &nbsp;&nbsp;
-								<CircularProgress
-									color="inherit"
-									size={23} />
-							</Button>}
+						<Button
+							className={classes.loginBtn}
+							type="submit"
+							variant="contained"
+							color="secondary"
+							size="large"
+							sx={{ fontSize: 13 }}
+							fullWidth>
+							{!isPending ?
+								(
+									'LOGIN'
+								) :
+								(
+									<CircularProgress
+										color="inherit"
+										size={23} />
+								)
+							}
+						</Button>
 					</Box>
 				</form>
 			</CardContent>
