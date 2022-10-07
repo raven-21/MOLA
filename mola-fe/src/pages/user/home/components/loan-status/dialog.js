@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from "axios";
-import swal from 'sweetalert';
-//
+import React from "react";
 import { grey, red } from "@mui/material/colors";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -18,69 +14,33 @@ import Avatar from "@mui/material/Avatar";
 //
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import useStyles from "../../pages/user/apply-loan/styles";
-import Configs from "../../utils/Configs";
+import useStyles from "../../styles";
 //
-import PostAddRoundedIcon from '@mui/icons-material/PostAddRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
+import ContentPasteSearchRoundedIcon from '@mui/icons-material/ContentPasteSearchRounded';
+import FactCheckRoundedIcon from '@mui/icons-material/FactCheckRounded';
+import ApprovalRoundedIcon from '@mui/icons-material/ApprovalRounded';
+import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
+import LoopRoundedIcon from '@mui/icons-material/LoopRounded';
+import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRounded';
+import ManageSearchRoundedIcon from '@mui/icons-material/ManageSearchRounded';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import ThumbDownAltRoundedIcon from '@mui/icons-material/ThumbDownAltRounded';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 
-const DialogApp = (props) => {
-	const navigate = useNavigate();
+const DialogStatus = (props) => {
+
 	const { classes } = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-	const { API } = Configs();
-	const { id } = useParams();
-	const [isLoading, setIsLoading] = useState(false);
-
-	const data = props.formValue;
-	const products = props.loanProducts;
-	const purposes = props.loanPurposes;
-
-	const [productC, setProductC] = useState(null);
-	const [purposeC, setPurposeC] = useState(null);
-
-	useEffect(() => {
-		if (products && data) {
-			setProductC(products.find(item => item.id === data.product));
-		}
-		if (purposes && data) {
-			setPurposeC(purposes.find(item => item.id === data.purpose));
-		}
-	}, [data]);
 
 	const handleDialogClose = () => {
 		props.setOpenDialog(false);
 	}
 
-	const handlePost = () => {
-		setIsLoading(true);
-		console.log(data)
-		axios.post(API + 'loanApps/add_loan', data).then((response) => {
-			setIsLoading(false);
-			if (response.data.error) {
-				swal({
-					icon: "danger",
-					title: "Opps! Something went wrong",
-					text: "Please try again later.",
-					buttons: false,
-					timer: 2000,
-				});
-			} else {
-				swal({
-					icon: "success",
-					title: "Success!",
-					text: "Loan application submitted.",
-					buttons: false,
-					timer: 2000,
-				});
-				setTimeout(() => {
-					navigate('/home');
-				}, 1500)
-			}
-		});
-	}
+	const data = props.value;
 
 	return (
 		<div>
@@ -98,19 +58,47 @@ const DialogApp = (props) => {
 						</IconButton>
 						<Box mb={4} sx={{ display: 'flex', alignItems: 'center' }}>
 							<Typography sx={{ fontWeight: 'bold', fontSize: 19 }}>
-								Application Details
+								{data.app_status === 'Approved' ? 'Loan Details' : 'Application Details'}
 							</Typography>
 						</Box>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={12}>
 								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									<Avatar sx={{ bgcolor: '#57CBA7', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
-										<PostAddRoundedIcon sx={{ fontSize: { xs: 30, sm: 30, md: 35 } }} />
-									</Avatar>
+									{data.app_status === 'For Verification' &&
+										<Avatar sx={{ bgcolor: '#57CBA7', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<ContentPasteSearchRoundedIcon sx={{ fontSize: { xs: 25, sm: 25, md: 30 } }} />
+										</Avatar>
+									}
+									{data.app_status === 'Verified' &&
+										<Avatar sx={{ bgcolor: '#57CBA7', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<FactCheckRoundedIcon sx={{ fontSize: { xs: 30, sm: 30, md: 35 } }} />
+										</Avatar>
+									}
+									{data.app_status === 'For Approval' &&
+										<Avatar sx={{ bgcolor: '#74C0FC', width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<ManageSearchRoundedIcon sx={{ fontSize: { xs: 30, sm: 30, md: 35 } }} />
+										</Avatar>
+									}
+									{data.app_status === 'Disapproved' &&
+										<Avatar sx={{ bgcolor: red['A200'], width: { xs: 60, sm: 60, md: 80 }, height: { xs: 60, sm: 60, md: 80 }, }}>
+											<ThumbDownAltRoundedIcon sx={{ fontSize: { xs: 20, sm: 20, md: 25 } }} />
+										</Avatar>
+									}
 								</Box>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12}>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: -.2 }}>
+									<Typography
+										sx={{
+											fontSize: { xs: 11, sm: 11, md: 12 },
+											fontWeight: 700,
+											color: grey[400],
+											letterSpacing: 1
+										}}>
+										Status
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: { xs: -1, sm: -1, md: -.5 } }}>
 									<Typography
 										sx={{
 											fontSize: { xs: 20, sm: 20, md: 22 },
@@ -118,21 +106,37 @@ const DialogApp = (props) => {
 											letterSpacing: .5,
 											color: '#184470'
 										}}>
-										Loan Application
+										{data.app_status}
 									</Typography>
 								</Box>
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-									<Typography
-										sx={{
-											fontSize: { xs: 11, sm: 11, md: 12 },
-											fontWeight: 700,
-											color: red[400],
-											letterSpacing: 1,
-											textAlign: 'center',
-										}}>
-										Note: <span style={{ fontWeight: 500, color: grey[400] }}>Once your application is submitted, it is</span> <span style={{ fontWeight: 600, color: grey[500], fontStyle: 'italic' }}>non-editable</span>
-									</Typography>
-								</Box>
+								{data.app_status !== 'Disapproved' &&
+									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: -1 }}>
+										<HourglassBottomRoundedIcon className={classes.rotateIcon} sx={{ fontSize: 13 }} /> &nbsp;
+										<Typography
+											sx={{
+												fontSize: { xs: 11, sm: 11, md: 12 },
+												fontWeight: 700,
+												letterSpacing: 1
+											}}>
+											Processing...
+										</Typography>
+									</Box>
+								}
+								{data.app_status === 'Disapproved' &&
+									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: -1 }}>
+										<InfoOutlinedIcon sx={{ fontSize: 14, color: grey[500] }} /> &nbsp;
+										<Typography
+											sx={{
+												fontSize: { xs: 10, sm: 11, md: 12 },
+												fontWeight: 600,
+												letterSpacing: 1,
+												color: grey[500]
+											}}>
+											For more info. Contact your admin.
+										</Typography>
+									</Box>
+								}
+
 							</Grid>
 						</Grid>
 					</DialogTitle>
@@ -157,7 +161,7 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{productC ? productC.product_name : 'loading...'}
+										{data.product_name}
 									</Typography>
 								</Box>
 							</Grid>
@@ -170,7 +174,7 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 12, sm: 12, md: 13, },
 										}}>
-										Purpose
+										Purpose of Loan
 									</Typography>
 								</Box>
 							</Grid>
@@ -179,10 +183,9 @@ const DialogApp = (props) => {
 									<Typography
 										className={classes.value}
 										sx={{
-											fontSize: { xs: 13, sm: 13, md: 14 },
-											textAlign: 'right'
+											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{purposeC ? purposeC.purpose : 'loading...'}
+										{data.purpose}
 									</Typography>
 								</Box>
 							</Grid>
@@ -206,12 +209,12 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{productC ? productC.interest_type : 'loading...'}
+										{data.interest_type}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer} mb={2}>
+						<Grid container spacing={2} className={classes.dContainer}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -230,11 +233,36 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.loanType}
+										{data.loan_type}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
+						<Grid container spacing={2} className={classes.dContainer}>
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dLabel}>
+									<Typography
+										className={classes.label}
+										sx={{
+											fontSize: { xs: 12, sm: 12, md: 13, },
+										}}>
+										Date Applied
+									</Typography>
+								</Box>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dValue}>
+									<Typography
+										className={classes.value}
+										sx={{
+											fontSize: { xs: 13, sm: 13, md: 14 }
+										}}>
+										{data.date_applied}
+									</Typography>
+								</Box>
+							</Grid>
+						</Grid>
+						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -256,7 +284,7 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
@@ -304,12 +332,12 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.intRate} %
+										{data.interest_rate} %
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer} mb={2}>
+						<Grid container spacing={2} className={classes.dContainer}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -333,6 +361,7 @@ const DialogApp = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
+						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -359,7 +388,7 @@ const DialogApp = (props) => {
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer} mb={2}>
+						<Grid container spacing={2} className={classes.dContainer}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -378,13 +407,14 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.grossProceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.gross_proceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						{data.product !== 1 &&
-							<Grid container spacing={2} className={classes.dContainer} mt={2}>
+						<br />
+						{data.add_on !== 0 &&
+							<Grid container spacing={2} className={classes.dContainer}>
 								<Grid item xs={6} sm={6} md={6}>
 									<Box className={classes.dLabel}>
 										<Typography
@@ -403,38 +433,37 @@ const DialogApp = (props) => {
 											sx={{
 												fontSize: { xs: 13, sm: 13, md: 14 }
 											}}>
-											PHP {data.addOn.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+											PHP {data.add_on.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 										</Typography>
 									</Box>
 								</Grid>
 							</Grid>
 						}
-						{data.product !== 1 &&
-							<Grid container spacing={2} className={classes.dContainer} mb={2}>
-								<Grid item xs={6} sm={6} md={6}>
-									<Box className={classes.dLabel}>
-										<Typography
-											className={classes.gLabel}
-											sx={{
-												fontSize: { xs: 12, sm: 12, md: 13, },
-											}}>
-											Total Loan
-										</Typography>
-									</Box>
-								</Grid>
-								<Grid item xs={6} sm={6} md={6}>
-									<Box className={classes.dValue}>
-										<Typography
-											className={classes.gValue}
-											sx={{
-												fontSize: { xs: 13, sm: 13, md: 14 }
-											}}>
-											PHP {data.totalLoan.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-										</Typography>
-									</Box>
-								</Grid>
+						<Grid container spacing={2} className={classes.dContainer}>
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dLabel}>
+									<Typography
+										className={classes.gLabel}
+										sx={{
+											fontSize: { xs: 12, sm: 12, md: 13, },
+										}}>
+										Total Loan
+									</Typography>
+								</Box>
 							</Grid>
-						}
+							<Grid item xs={6} sm={6} md={6}>
+								<Box className={classes.dValue}>
+									<Typography
+										className={classes.gValue}
+										sx={{
+											fontSize: { xs: 13, sm: 13, md: 14 }
+										}}>
+										PHP {data.total_loan.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+									</Typography>
+								</Box>
+							</Grid>
+						</Grid>
+						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -468,12 +497,12 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.lessBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.less_loanbal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
-						<Grid container spacing={2} className={classes.dContainer} mb={2}>
+						<Grid container spacing={2} className={classes.dContainer}>
 							<Grid item xs={6} sm={6} md={6}>
 								<Box className={classes.dLabel}>
 									<Typography
@@ -492,11 +521,12 @@ const DialogApp = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.lessInterest.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.less_interest.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
+						<br />
 						<Divider sx={{ opacity: 0.5 }} />
 						<br />
 						<Grid container spacing={2} className={classes.dContainer}>
@@ -516,15 +546,15 @@ const DialogApp = (props) => {
 									<Typography
 										className={classes.gValue}
 										sx={{
-											fontSize: { xs: 14, sm: 14, md: 17 },
-											letterSpacing: 2
+											fontSize: { xs: 14, sm: 14, md: 16 }
 										}}>
-										PHP {data.netProceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.net_proceeds.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 									</Typography>
 								</Box>
 							</Grid>
 						</Grid>
 					</DialogContent>
+					<Divider sx={{ opacity: 0.5 }} />
 					<DialogActions sx={{ padding: 2, }}>
 						<Button onClick={handleDialogClose} variant="text" color="inherit"
 							sx={{
@@ -540,45 +570,9 @@ const DialogApp = (props) => {
 									textTransform: 'none',
 									fontWeight: 700
 								}}>
-								Cancel
+								Close
 							</Typography>
 						</Button>
-						{!isLoading &&
-							<Button onClick={handlePost} variant="contained" color="success"
-								sx={{
-									borderRadius: '25px',
-									boxShadow: 'none',
-								}}>
-								<Typography variant='overline'
-									sx={{
-										marginX: 2,
-										marginY: -0.5,
-										letterSpacing: 1,
-										textTransform: 'none',
-										fontWeight: 700
-									}}>
-									Submit
-								</Typography>
-							</Button>
-						}
-						{isLoading &&
-							<Button variant="contained" color="success"
-								sx={{
-									borderRadius: '25px',
-									boxShadow: 'none',
-								}}>
-								<Typography variant='overline'
-									sx={{
-										marginX: 2,
-										marginY: -0.5,
-										letterSpacing: 1,
-										textTransform: 'none',
-										fontWeight: 700
-									}}>
-									Submitting...
-								</Typography>
-							</Button>
-						}
 					</DialogActions>
 				</Dialog>
 			}
@@ -587,4 +581,4 @@ const DialogApp = (props) => {
 	);
 }
 
-export default DialogApp;
+export default DialogStatus;

@@ -9,49 +9,44 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 
 import { Controller } from "react-hook-form";
-import useStyles from "../../pages/user/apply-loan/styles";
+import useStyles from "../../styles";
 
-export const FormTerm = ({ control, name, label, product }) => {
+export const InputTerm = (props) => {
 	const { classes } = useStyles();
 
 	return (
 		<Controller
-			name={name}
-			control={control}
+			name={props.name}
+			control={props.control}
 			render={({
 				field: { onChange, value },
 				fieldState: { error },
 			}) => (
-				<div>
+				<>
 					<FormLabel htmlFor="term" sx={{ display: 'flex', alignItems: 'center' }}>
-						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 15 }, color: error ? red[700] : null }}>
-							{label}
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 14 }, color: error ? red[700] : null }}>
+							{props.label} <span style={{ fontWeight: 400 }}>(mos.)</span>
 						</Typography> &nbsp;
-						<Typography sx={{ fontSize: { xs: 11, sm: 11, md: 12 }, marginBottom: '12px', letterSpacing: .5 }}>
-							(months)
-						</Typography>
 					</FormLabel>
 					<FormControl
-						size="small"
 						error={!!error}
 						fullWidth>
 						<TextField
 							id="term"
 							type="number"
 							variant="outlined"
-							size="small"
+							color="secondary"
 							placeholder="0"
 							error={!!error}
 							onChange={onChange}
 							value={value}
 							InputProps={{
-								sx: ({ fontSize: { xs: 13, sm: 13, md: 16 } })
+								sx: ({ fontSize: { xs: 14, sm: 14, md: 14 } })
 							}}
-							disabled={product ? false : true}
 						/>
-						<FormHelperText sx={{ fontSize: { xs: 11, sm: 11, md: 12 } }}>{error ? error.message : null}</FormHelperText>
+						<FormHelperText sx={{ fontSize: { xs: 11, sm: 11, md: 12 }, marginLeft: 0.5 }}>{error ? error.message : null}</FormHelperText>
 					</FormControl>
-				</div>
+				</>
 			)}
 		/>
 	)

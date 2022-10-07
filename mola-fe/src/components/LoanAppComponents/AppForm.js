@@ -10,7 +10,7 @@ import Configs from "../../utils/Configs";
 import useFetch from "../../hooks/useFetch";
 import useFetchId from "../../hooks/useFetchId";
 import useSchema from "./useSchema";
-import useStyles from "./useStyles";
+import useStyles from "../../pages/user/apply-loan/styles";
 //react-hook-form / yup resolver
 import { appendErrors, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

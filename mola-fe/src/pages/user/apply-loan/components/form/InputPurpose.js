@@ -12,49 +12,48 @@ import TextField from "@mui/material/TextField";
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 import { Controller } from "react-hook-form";
-import useStyles from "../../pages/user/apply-loan/styles";
+import useStyles from "../../styles";
 
-export const FormPurpose = ({ control, name, label, loanPurposes }) => {
+export const InputPurpose = (props) => {
 	const { classes } = useStyles();
 
 	return (
 
 		<Controller
-			name={name}
-			control={control}
+			name={props.name}
+			control={props.control}
 			render={({
 				field: { onChange, value },
 				fieldState: { error },
 			}) => (
 				<div>
 					<FormLabel htmlFor="purpose">
-						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 15 } }}>
-							{label}
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 14 } }}>
+							{props.label}
 						</Typography>
 					</FormLabel >
 					<FormControl
-						size="small"
 						error={!!error}
 						fullWidth >
-						{loanPurposes &&
+						{props.loanPurposes &&
 							<TextField
-								select
-								size="small"
 								id="purpose"
+								select
+								color="secondary"
 								onChange={onChange}
 								value={value}
 								SelectProps={{
 									IconComponent: (props) => <KeyboardArrowDownRoundedIcon {...props} fontSize="small" />,
 								}}
 								InputProps={{
-									sx: { fontSize: { xs: 13, sm: 13, md: 16, paddingY: .7 } }
+									sx: { fontSize: { xs: 14, sm: 14, md: 14, paddingY: .7 } }
 								}}>
-								{loanPurposes.map((loanPurpose) => (
+								{props.loanPurposes.map((loanPurpose) => (
 									<MenuItem
 										key={loanPurpose.id}
 										value={loanPurpose.id}
 										sx={{
-											fontSize: { xs: 13, sm: 13, md: 16 }
+											fontSize: { xs: 14, sm: 14, md: 14 }
 										}}>
 										{loanPurpose.purpose}
 									</MenuItem>

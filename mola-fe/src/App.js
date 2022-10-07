@@ -9,22 +9,23 @@ import { useAuth } from './context/authContext';
 //COMPONENTS
 import ProtectedRoutes from './utils/ProtectedRoutes';
 import PublicRoutes from './utils/PublicRoutes';
-import LoginLayout from './components/LoginComponents/LoginLayout';
-import UserLayout from './components/UserComponents/UserLayout';
-import AdminLayout from './components/AdminComponents/AdminLayout';
 
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
+import UserLayout from '../src/layout/user/layout/index';
+import AdminLayout from '../src/layout/admin/layout/index';
+
+import Login from '../src/pages/login/index';
+import LoginLayout from '../src/pages/login/components/layout';
+import NotFound from './pages/others/not-found';
 
 //USER PAGES
-import Home from "./pages/UserPages/Home";
-import Profile from "./pages/UserPages/Profile";
-import LoanApply from "./pages/UserPages/LoanApply";
-import Settings from "./pages/UserPages/Settings";
+import Home from "../src/pages/user/home/index";
+import Profile from "../src/pages/user/profile/index";
+import LoanApply from "../src/pages/user/apply-loan/index";
+import Settings from "../src/pages/user/settings/index";
 
 //ADMIN PAGES
-import AdminHome from "./pages/AdminPages/Home";
-import Members from "./pages/AdminPages/Members";
+import AdminHome from "../src/pages/admin/home/index";
+import Members from "../src/pages/admin/members/index";
 
 const theme = createTheme({
 	palette: {
@@ -91,6 +92,7 @@ function App() {
 							<Route path="/" element={<AdminLayout />}>
 								<Route index path="/home" element={<AdminHome />} />
 								<Route exact path="/members" element={<Members />} />
+								<Route path="*" element={<NotFound />} />
 							</Route>
 						)}
 						{role === 'member' && (
@@ -99,6 +101,7 @@ function App() {
 								<Route exact path="/profile/:id" element={<Profile />} />
 								<Route exact path="/loan_apply/:id" element={<LoanApply />} />
 								<Route exact path="/settings" element={<Settings />} />
+								<Route path="*" element={<NotFound />} />
 							</Route>
 						)}
 						<Route path="*" element={<NotFound />} />

@@ -13,7 +13,7 @@ import AccountBalanceTwoToneIcon from '@mui/icons-material/AccountBalanceTwoTone
 import StoreTwoToneIcon from '@mui/icons-material/StoreTwoTone';
 //Libraries
 import { Controller } from "react-hook-form";
-import useStyles from "./useStyles";
+import useStyles from "../../pages/user/apply-loan/styles";
 //
 
 export const FormProduct = ({ control, name, loanProducts, product }) => {

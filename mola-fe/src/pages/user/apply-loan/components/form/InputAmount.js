@@ -9,32 +9,32 @@ import FormLabel from "@mui/material/FormLabel";
 
 import { Controller } from "react-hook-form";
 import NumberFormat from "react-number-format";
-import useStyles from "../../pages/user/apply-loan/styles";
+import useStyles from "../../styles";
 
-export const FormAmount = ({ control, name, label, product }) => {
+export const InputAmount = (props) => {
 	const { classes } = useStyles();
 
 	return (
 		<Controller
-			name={name}
-			control={control}
+			name={props.name}
+			control={props.control}
 			render={({
 				field: { onChange, value },
 				fieldState: { error },
 			}) => (
 				<div>
 					<FormLabel htmlFor="amount">
-						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 15 }, color: error ? red[700] : null }}>
-							{label}
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 14 }, color: error ? red[700] : null }}>
+							{props.label}
 						</Typography>
 					</FormLabel>
 					<FormControl
-						size="small"
 						error={!!error}
 						fullWidth>
 						<NumberFormat
 							id="amount"
 							customInput={TextField}
+							color="secondary"
 							decimalScale={2}
 							allowEmptyFormatting={false}
 							fixedDecimalScale={true}
@@ -44,18 +44,16 @@ export const FormAmount = ({ control, name, label, product }) => {
 							value={value}
 							placeholder="0.00"
 							variant="outlined"
-							size="small"
 							InputProps={{
-								readOnly: product ? false : true,
-								sx: ({ fontSize: { xs: 13, sm: 13, md: 16 } }),
+								sx: ({ fontSize: { xs: 14, sm: 14, md: 14 } }),
 								startAdornment: (
 									<InputAdornment position='start'>
-										<Typography sx={{ sx: ({ fontSize: { xs: 13, sm: 13, md: 16 } }) }}> &#8369;</Typography>
+										<Typography sx={{ sx: ({ fontSize: { xs: 13, sm: 13, md: 14 } }) }}> &#8369;</Typography>
 									</InputAdornment>
 								),
 							}}
 						/>
-						<FormHelperText sx={{ fontSize: { xs: 11, sm: 11, md: 12 } }}>{error ? error.message : null}</FormHelperText>
+						<FormHelperText sx={{ fontSize: { xs: 11, sm: 11, md: 12 }, marginLeft: 0.5 }}>{error ? error.message : null}</FormHelperText>
 					</FormControl>
 				</div>
 			)}
