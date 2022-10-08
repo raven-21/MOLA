@@ -94,21 +94,9 @@ export const postLoan = (req, res) => {
 	var info = req.body;
 	let data = [
 		info.memberId,
-		info.product,
 		info.purpose,
 		info.amount,
 		info.term,
-		info.intRate,
-		info.amort,
-		info.addOn,
-		info.loanType,
-		info.totalLoan,
-		info.charges,
-		info.grossProceeds,
-		info.lessBalance,
-		info.lessInterest,
-		info.netProceeds,
-		info.outBal,
 		info.appStatus,
 		info.status,
 		info.dateApplied,
@@ -117,11 +105,8 @@ export const postLoan = (req, res) => {
 
 	db.query(
 		'INSERT INTO loans ' +
-		'(member_id, product_id, purpose_id, loan_amount, term, ' +
-		'interest_rate, amort, add_on, loan_type, total_loan, ' +
-		'charges, gross_proceeds, less_loanbal, less_interest, net_proceeds, ' +
-		'outstanding_bal, app_status, status, date_applied) ' +
-		'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data, (error, result) => {
+		'(member_id, purpose_id, initial_amount, term, app_status, status, date_applied)  ' +
+		'VALUES (?,?,?,?,?,?,?)', data, (error, result) => {
 			if (error) throw error;
 			res.send(result);
 			// console.log(result)

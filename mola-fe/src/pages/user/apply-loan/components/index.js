@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 
 //MUI
-import { grey, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-
-//MUI icons
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 //Hooks
 import { useForm } from 'react-hook-form';
@@ -23,6 +17,7 @@ import Configs from "../../../../utils/Configs";
 import useFetchId from "../../../../hooks/useFetchId";
 import useFetch from "../../../../hooks/useFetch";
 import useSchema from "../hooks/useSchema";
+import useApply from "../hooks/useApply";
 
 //Custom Components
 import { InputAmount } from './form/InputAmount';
@@ -36,7 +31,7 @@ export default function LoanForm() {
 	const { data: loanPurposes } = useFetch(API + 'loanApps/loan_purposes');
 
 	const { schema } = useSchema();
-	const [isLoading, setIsLoading] = useState(false);
+	const { handlePost, isLoading } = useApply();
 
 	const defaultValues = {
 		memberId: id,
@@ -48,14 +43,13 @@ export default function LoanForm() {
 		dateApplied: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
 	}
 
-	const { reset, register, handleSubmit, control, formState: { errors } } = useForm({
+	const { reset, handleSubmit, control, formState: { errors } } = useForm({
 		defaultValues: defaultValues,
 		resolver: yupResolver(schema)
 	});
 
 	const onSubmit = (data) => {
-		console.log(data)
-		setIsLoading(prev => !prev)
+		handlePost(data);
 	}
 
 	return (
@@ -112,9 +106,6 @@ export default function LoanForm() {
 								}}>
 								<Typography variant='overline'
 									sx={{
-										// marginLeft: 2,
-										// marginRight: .5,
-										// marginY: -0.1,
 										letterSpacing: 1,
 										textTransform: 'none',
 										fontWeight: 600,
@@ -139,9 +130,6 @@ export default function LoanForm() {
 								}}>
 								<Typography variant='overline'
 									sx={{
-										// marginX: 1,
-										// marginY: -0.1,
-										// letterSpacing: 1,
 										textTransform: 'none',
 										fontWeight: 600,
 										display: 'flex',

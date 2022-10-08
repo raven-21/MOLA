@@ -28,7 +28,7 @@ export const InputPurpose = (props) => {
 			}) => (
 				<div>
 					<FormLabel htmlFor="purpose">
-						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 14 } }}>
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 13 } }}>
 							{props.label}
 						</Typography>
 					</FormLabel >
@@ -40,13 +40,14 @@ export const InputPurpose = (props) => {
 								id="purpose"
 								select
 								color="secondary"
+								size="small"
 								onChange={onChange}
 								value={value}
 								SelectProps={{
 									IconComponent: (props) => <KeyboardArrowDownRoundedIcon {...props} fontSize="small" />,
 								}}
 								InputProps={{
-									sx: { fontSize: { xs: 14, sm: 14, md: 14, paddingY: .7 } }
+									sx: { fontSize: { xs: 14, sm: 14, md: 14, paddingTop: 4, paddingBottom: 4 } }
 								}}>
 								{props.loanPurposes.map((loanPurpose) => (
 									<MenuItem

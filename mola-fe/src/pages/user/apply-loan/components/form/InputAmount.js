@@ -24,7 +24,7 @@ export const InputAmount = (props) => {
 			}) => (
 				<div>
 					<FormLabel htmlFor="amount">
-						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 14 }, color: error ? red[700] : null }}>
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 13 }, color: error ? red[700] : null }}>
 							{props.label}
 						</Typography>
 					</FormLabel>
@@ -44,8 +44,9 @@ export const InputAmount = (props) => {
 							value={value}
 							placeholder="0.00"
 							variant="outlined"
+							size="small"
 							InputProps={{
-								sx: ({ fontSize: { xs: 14, sm: 14, md: 14 } }),
+								sx: ({ fontSize: { xs: 14, sm: 14, md: 14, paddingTop: 4, paddingBottom: 4 } }),
 								startAdornment: (
 									<InputAdornment position='start'>
 										<Typography sx={{ sx: ({ fontSize: { xs: 13, sm: 13, md: 14 } }) }}> &#8369;</Typography>

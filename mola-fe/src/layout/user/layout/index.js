@@ -16,27 +16,13 @@ const useStyles = makeStyles(theme => ({
 		background: '#F0F1F3'
 	},
 	page: {
-		background: 'transparent', //'#4e73df'
+		background: 'transparent',
 		width: '100%',
 		paddingTop: '70px',
 		height: 'auto',
 		[theme.breakpoints.only('xs')]: {
 			paddingTop: '50px',
 		},
-		// overflow: 'auto',
-		// '&::-webkit-scrollbar': {
-		// 	width: '7px !important'
-		// },
-		// '&::-webkit-scrollbar-track': {
-		// 	background: '#FFF'
-		// },
-		// '&::-webkit-scrollbar-thumb': {
-		// 	background: grey[300],
-		// 	borderRadius: '10px'
-		// },
-		// '&::-webkit-scrollbar-thumb:hover': {
-		// 	background: grey[400]
-		// }
 	},
 	toolbar: theme.mixins.toolbar
 }));

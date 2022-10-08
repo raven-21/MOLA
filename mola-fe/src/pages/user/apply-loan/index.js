@@ -14,7 +14,9 @@ export default function LoanApply() {
 		<div className={classes.root}>
 			<Container maxWidth="md">
 				<div className={classes.content}>
+
 					<LoanForm />
+
 					{/* <LoanAppForm /> */}
 				</div>
 			</Container>

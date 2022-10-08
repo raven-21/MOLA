@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 		marginBottom: '20px !important'
 	},
 	verified: {
-		color: '#57CBA7 !important'
+		color: '#96c90a !important'
 	},
 	approved: {
 		color: '#74C0FC !important'
@@ -52,10 +52,10 @@ export default function CardLoanStatus({ inactives }) {
 	}
 
 	return (
-		<div>
+		<>
 			{inactives.length !== 0 ?
 				(
-					<div>
+					<>
 						{inactives.map((inactive) => (
 							<Card className={classes.cardLoan} elevation={0} key={inactive.id}>
 								<CardActionArea onClick={() => handleDialogOpen(inactive)}>
@@ -104,7 +104,7 @@ export default function CardLoanStatus({ inactives }) {
 														sx={{
 															fontSize: { xs: 13, sm: 13, md: 16, }
 														}}>
-														Loan Status
+														{inactive.purpose}
 													</Typography>
 												</Box>
 											</Grid>
@@ -134,7 +134,7 @@ export default function CardLoanStatus({ inactives }) {
 																fontWeight: 'bold',
 																fontSize: { xs: 18, sm: 20, md: 20 }
 															}}>
-															{inactive.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+															{inactive.initial_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
 														</Typography>
 													</Box>
 												</div>
@@ -145,7 +145,7 @@ export default function CardLoanStatus({ inactives }) {
 							</Card>
 						))}
 						<DialogStatus openDialog={openDialog} setOpenDialog={setOpenDialog} value={value} />
-					</div>
+					</>
 				)
 				:
 				(
@@ -196,6 +196,6 @@ export default function CardLoanStatus({ inactives }) {
 						</Grid>
 					</Grid>
 				)}
-		</div>
+		</>
 	);
 }
