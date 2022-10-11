@@ -28,7 +28,7 @@ export const InputPurpose = (props) => {
 			}) => (
 				<div>
 					<FormLabel htmlFor="purpose">
-						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 13 } }}>
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 13 } }}>
 							{props.label}
 						</Typography>
 					</FormLabel >

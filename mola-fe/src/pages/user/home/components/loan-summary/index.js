@@ -156,15 +156,6 @@ export default function CardLoanSummary({ actives }) {
 									}}>
 									You don't have any active loans.
 								</Typography>
-								<Typography
-									sx={{
-										fontWeight: 'regular',
-										fontSize: { xs: 12, sm: 13, md: 15 },
-										color: grey[500],
-										textAlign: 'center'
-									}}>
-									Apply for a loan now!
-								</Typography>
 							</Box>
 						</Grid>
 					</Grid>

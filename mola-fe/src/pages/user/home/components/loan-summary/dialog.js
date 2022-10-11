@@ -21,6 +21,8 @@ import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
 import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
+import moment from "moment";
+
 
 const DialogSummary = (props) => {
 	const { classes } = useStyles();
@@ -239,7 +241,7 @@ const DialogSummary = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.date_granted}
+										{moment(data.date_granted).format('MM/DD/YYYY')}
 									</Typography>
 								</Box>
 							</Grid>
@@ -263,7 +265,7 @@ const DialogSummary = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										{data.termination_date}
+										{moment(data.termination_date).format('MM/DD/YYYY')}
 									</Typography>
 								</Box>
 							</Grid>

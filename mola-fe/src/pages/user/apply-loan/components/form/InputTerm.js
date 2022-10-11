@@ -24,7 +24,7 @@ export const InputTerm = (props) => {
 			}) => (
 				<>
 					<FormLabel htmlFor="term" sx={{ display: 'flex', alignItems: 'center' }}>
-						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 13, sm: 13, md: 13 }, color: error ? red[700] : null }}>
+						<Typography className={classes.formLabel} sx={{ fontSize: { xs: 12, sm: 12, md: 13 }, color: error ? red[700] : null }}>
 							{props.label} <span style={{ fontWeight: 400 }}>(mos.)</span>
 						</Typography> &nbsp;
 					</FormLabel>

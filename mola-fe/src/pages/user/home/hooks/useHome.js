@@ -5,34 +5,33 @@ import axios from "axios";
 import swal from 'sweetalert';
 //Custom components
 import Configs from "../../../../utils/Configs";
-import "../../../styles.css";
+import "../../../../pages/styles.css";
 
-const useApply = () => {
+const useHome = () => {
 	const { API } = Configs();
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const handlePost = (data) => {
+	const handleUpdate = (data) => {
 
-		const template = "This action cannot be reversed once submitted. <br /> Do you want to keep going?"
+		const template = "Are you sure you want to " + data.title + "? <br /> You can't undo this action."
 
 		swal({
-			title: "Confirm submit?",
+			title: data.title + " Loan?",
 			content: {
 				element: 'p',
 				attributes: {
 					innerHTML: `${template}`,
 				}
 			},
-			buttons: ["No", "Yes"],
-			// buttons: true,
+			buttons: ["Cancel", "Confirm"],
 			dangerMode: true,
 		})
 			.then((willUpdate) => {
 				if (willUpdate) {
 					setIsLoading(prev => !prev);
 
-					axios.post(API + 'loan/add_loan', data).then((response) => {
+					axios.patch(API + 'loan/update_app_status', data).then((response) => {
 						setIsLoading(prev => !prev);
 						if (response.data.error) {
 							swal({
@@ -45,25 +44,23 @@ const useApply = () => {
 						} else {
 							swal({
 								icon: "success",
-								title: "Success!",
-								text: "Loan application submitted.",
+								title: "Saved changes!",
+								text: "Loan request updated.",
 								buttons: false,
 								timer: 2000,
 							});
 							setTimeout(() => {
-								navigate('/home');
-							}, 1500)
+								window.location.reload();
+							}, 1000)
 						}
 					});
 				} else {
 					swal.close();
 				}
 			});
-
-
 	}
 
-	return { handlePost, isLoading }
+	return { handleUpdate, isLoading }
 }
 
-export default useApply;
+export default useHome;

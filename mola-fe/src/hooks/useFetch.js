@@ -4,9 +4,7 @@ import axios from "axios";
 const useFetch = (url) => {
 	const [data, setData] = useState();
 
-	useEffect(() => {
-		const cancelToken = axios.CancelToken.source();
-
+	const getData = (cancelToken) => {
 		axios.get(url, { cancelToken: cancelToken.token })
 			.then((res) => {
 				setData(res.data);
@@ -18,6 +16,12 @@ const useFetch = (url) => {
 					console.log(err)
 				}
 			})
+	}
+
+	useEffect(() => {
+		const cancelToken = axios.CancelToken.source();
+
+		getData(cancelToken);
 
 		return () => {
 			cancelToken.cancel();

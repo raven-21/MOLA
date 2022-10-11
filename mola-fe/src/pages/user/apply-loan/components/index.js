@@ -6,6 +6,9 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 //Hooks
 import { useForm } from 'react-hook-form';
@@ -28,7 +31,7 @@ export default function LoanForm() {
 
 	const { API, userId: id } = Configs();
 	const { data: user } = useFetchId(API + 'user/', id);
-	const { data: loanPurposes } = useFetch(API + 'loanApps/loan_purposes');
+	const { data: loanPurposes } = useFetch(API + 'loan/loan_purposes');
 
 	const { schema } = useSchema();
 	const { handlePost, isLoading } = useApply();
@@ -63,6 +66,7 @@ export default function LoanForm() {
 									fontSize: { xs: 16, sm: 16, md: 21 },
 									fontWeight: 700,
 									color: grey[700],
+									textAlign: 'center'
 								}}>
 								Hi {user ? user[0].firstname : 'there'}! Let's get started with your application.
 							</Typography>

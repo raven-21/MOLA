@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
-import loanAppRoutes from './routes/loanApps.js';
+import loanRoutes from './routes/loan.js';
 import userRoutes from './routes/user.js'
 
 const app = express();
@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //ROUTES
-app.use('/loanApps', loanAppRoutes);
+app.use('/loan', loanRoutes);
 app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {

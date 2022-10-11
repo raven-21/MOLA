@@ -4,9 +4,7 @@ import axios from "axios";
 const useFetchId = (url, id) => {
 	const [data, setData] = useState();
 
-	useEffect(() => {
-		const cancelToken = axios.CancelToken.source();
-
+	const getData = (cancelToken) => [
 		axios.get(url + id, { cancelToken: cancelToken.token })
 			.then((res) => {
 				setData(res.data);
@@ -18,9 +16,19 @@ const useFetchId = (url, id) => {
 					console.log(err)
 				}
 			})
+	]
+
+	useEffect(() => {
+		const cancelToken = axios.CancelToken.source();
+
+		// const interval = setInterval(() => {
+		// 	getData(cancelToken);
+		// }, 1000)
+		getData(cancelToken);
 
 		return () => {
 			cancelToken.cancel();
+			// clearInterval(interval);
 		};
 	}, [id]);
 

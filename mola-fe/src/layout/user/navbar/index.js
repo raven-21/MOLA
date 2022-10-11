@@ -186,7 +186,7 @@ export default function UserNavbar() {
 							<TableRowsRoundedIcon />
 						</IconButton>
 
-						<SwipeableDrawer anchor="left" open={isDrawerOpen} onOpen={() => isDrawerOpen(true)} onClose={() => setIsDrawerOpen(false)}>
+						<SwipeableDrawer anchor="left" open={isDrawerOpen} onOpen={() => setIsDrawerOpen(true)} onClose={() => setIsDrawerOpen(false)}>
 							<Box sx={{ maxWidth: '320px', padding: 0 }}>
 								<Box
 									sx={{

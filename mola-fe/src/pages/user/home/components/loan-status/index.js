@@ -13,9 +13,13 @@ import NoData from "../../../../../assets/svg/undraw_no_data.svg";
 //CUSTOM Components
 import DialogStatus from "./dialog";
 //
+import Configs from "../../../../../utils/Configs";
+//
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import StoreRoundedIcon from '@mui/icons-material/StoreRounded';
+//
+import moment from "moment";
 
 const useStyles = makeStyles(theme => ({
 
@@ -42,6 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CardLoanStatus({ inactives }) {
 	const classes = useStyles();
+	const { userId } = Configs();
 
 	const [openDialog, setOpenDialog] = useState(false);
 	const [value, setValue] = useState();
@@ -93,7 +98,7 @@ export default function CardLoanStatus({ inactives }) {
 												}
 												<Box>
 													<Typography
-														className={inactive.app_status === 'Verified' || inactive.app_status === 'For Verification' ? classes.verified : inactive.app_status === 'Disapproved' ? classes.disapproved : classes.approved}
+														className={inactive.app_status === 'Verified' || inactive.app_status === 'For Verification' ? classes.verified : inactive.app_status === 'Disapproved' || inactive.app_status === 'Cancelled' ? classes.disapproved : classes.approved}
 														sx={{
 															fontSize: { xs: 18, sm: 18, md: 20, },
 															fontWeight: 700,
@@ -113,7 +118,7 @@ export default function CardLoanStatus({ inactives }) {
 													sx={{
 														fontSize: { xs: 10, sm: 12, md: 14 }
 													}}>
-													{inactive.date_applied}
+													{moment(inactive.date_applied).format('MM/DD/YYYY HH:mm A')}
 												</Typography>
 											</Grid>
 											<Grid item xs={6} sm={6} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>

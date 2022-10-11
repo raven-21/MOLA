@@ -31,8 +31,8 @@ const myStyles = makeStyles(theme => ({
 		display: 'flex'
 	},
 	formLabel: {
-		fontWeight: 700 + '!important',
-		color: grey[400],
+		fontWeight: 600 + '!important',
+		color: grey[500],
 		marginBottom: '7px !important'
 	},
 	formLabelRequired: {

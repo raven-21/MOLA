@@ -101,11 +101,10 @@ export const postLoan = (req, res) => {
 		info.status,
 		info.dateApplied,
 	];
-	console.log(data);
 
 	db.query(
 		'INSERT INTO loans ' +
-		'(member_id, purpose_id, initial_amount, term, app_status, status, date_applied)  ' +
+		'(member_id, purpose_id, initial_amount, initial_term, app_status, status, date_applied)  ' +
 		'VALUES (?,?,?,?,?,?,?)', data, (error, result) => {
 			if (error) throw error;
 			res.send(result);
@@ -123,3 +122,17 @@ export const updateLoan = (req, res) => {
 		// console.log(result)
 	})
 }
+
+export const updateAppStatus = (req, res) => {
+	var info = req.body;
+	let data = [info.appStatus, info.id];
+
+	console.log(req.body)
+	db.query('UPDATE loans SET app_status = ? WHERE id = ?', data, (error, result) => {
+		if (error) throw error;
+		res.send(result);
+		// console.log(result)
+	})
+}
+
+
