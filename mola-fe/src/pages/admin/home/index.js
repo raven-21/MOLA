@@ -33,8 +33,8 @@ export default function Home() {
 	const classes = useStyles();
 	const auth = useAuth();
 	const { API } = Configs();
-	const { data: loans } = useFetch(API + 'loanApps/loans');
-	const { data: branches } = useFetch(API + 'loanApps/branches');
+	const { data: loans } = useFetch(API + 'loan/loans');
+	const { data: branches } = useFetch(API + 'loan/branches');
 
 	return (
 		<div className={classes.root}>

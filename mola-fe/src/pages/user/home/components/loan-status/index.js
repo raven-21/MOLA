@@ -139,7 +139,7 @@ export default function CardLoanStatus({ inactives }) {
 																fontWeight: 'bold',
 																fontSize: { xs: 18, sm: 20, md: 20 }
 															}}>
-															{inactive.initial_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+															{inactive.initial_amount ? inactive.initial_amount.toLocaleString(undefined, { minimumFractionDigits: 2 }) : 0.00}
 														</Typography>
 													</Box>
 												</div>

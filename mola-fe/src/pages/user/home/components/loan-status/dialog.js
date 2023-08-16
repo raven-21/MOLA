@@ -276,7 +276,7 @@ const DialogStatus = (props) => {
 										sx={{
 											fontSize: { xs: 13, sm: 13, md: 14 }
 										}}>
-										PHP {data.initial_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+										PHP {data.initial_amount ? data.initial_amount.toLocaleString(undefined, { minimumFractionDigits: 2 }) : "0.00"}
 									</Typography>
 								</Box>
 							</Grid>
@@ -468,7 +468,7 @@ const DialogStatus = (props) => {
 													sx={{
 														fontSize: { xs: 13, sm: 13, md: 14 }
 													}}>
-													PHP {data.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+													PHP {data.loan_amount ? data.loan_amount.toLocaleString(undefined, { minimumFractionDigits: 2 }) : "0.00"}
 												</Typography>
 											</Box>
 										</Grid>

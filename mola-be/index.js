@@ -15,7 +15,7 @@ app.use('/loan', loanRoutes);
 app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
-	res.send('Hello!')
+	res.send('Olivia is running!')
 });
 
 app.listen(PORT, () => console.log(`Server Running on port: http://192.168.0.145:${PORT}`));
